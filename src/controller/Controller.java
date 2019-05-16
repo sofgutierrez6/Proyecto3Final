@@ -323,7 +323,70 @@ public class Controller {
 
 	public void loadJSON(String rutaArchivo) 
 	{
-		// TODO Auto-generated method stub
+		int numCargados=0;
+		JsonParser parser = new JsonParser();
+		try 
+		{
+			Reader reader = Files.newBufferedReader(Paths.get(rutaArchivo));
+			JsonArray arreglo = (JsonArray)parser.parse(new FileReader(rutaArchivo));
+
+			for(int i=0; arreglo != null && i < arreglo.size(); i++)
+			{
+				//System.out.println("Entra for");
+				JsonObject objeto = (JsonObject)arreglo.get(i);
+				//------------------------------------
+				//------ Lectura de atributos de la interseccion
+				//------------------------------------
+				int ID=0;
+				JsonElement elementoID = objeto.get("id");
+				if(elementoID!=null && !elementoID.isJsonNull())
+				{
+					ID=elementoID.getAsInt();
+					//System.out.print("a");
+				}
+				double LAT=0;
+				JsonElement elementoLAT = objeto.get("lat");
+				if(elementoLAT!=null && !elementoLAT.isJsonNull())
+				{
+					LAT=elementoLAT.getAsDouble();
+					//System.out.print("b");
+				}
+				double LON=0;
+				JsonElement elementoLON = objeto.get("lon");
+				if(elementoLON!=null && !elementoLON.isJsonNull())
+				{
+					LON=elementoLON.getAsDouble();
+					//System.out.print("c");
+				}
+				
+				VOIntersections nuevaInter= new VOIntersections(ID, LAT, LON);
+				LinkedList<Long>adj=new LinkedList<Long>();
+				
+				boolean cargoArreglo=objeto.get("adj").isJsonArray();
+				//System.out.println(cargoArreglo);
+				if(cargoArreglo)
+				{
+					JsonArray JAdj=(JsonArray) objeto.get("adj").getAsJsonArray();
+
+					//Pasar Adj a linked List
+					for(int j=0; JAdj != null && i < JAdj.size(); j++)
+					{
+						JsonObject objetoAdj = (JsonObject)arreglo.get(j);
+						long IDAdj = objetoAdj.getAsLong();
+						adj.add(IDAdj);
+					}
+				}
+
+				//Agregar vertice al grafo
+				grafoJson.addVertexSecondForm(nuevaInter.getId(), nuevaInter, adj);
+				numCargados++;
+			}
+		}
+		catch (Exception e)
+		{
+			System.out.println(e.getStackTrace().toString());
+			System.out.println(e.getMessage());
+		}
 	}
 
 
