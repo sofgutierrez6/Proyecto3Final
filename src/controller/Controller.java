@@ -68,6 +68,11 @@ public class Controller {
 	 * @param args
 	 */
 	public void run(String args[]) {
+		
+		long startTime;
+		long endTime;
+		long duration;
+		
 		Scanner sc = new Scanner(System.in);
 		boolean fin=false;
 		Counter contador = new Counter();
