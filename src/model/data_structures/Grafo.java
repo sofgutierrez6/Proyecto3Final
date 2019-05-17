@@ -54,6 +54,18 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 		vertices.put(idVertex, nuevoVertice);
 		cantVertices++;
 	}
+	
+	public void addVertexWithAdj(K idVertex, V infoVertex, ArregloDinamico<K> adj) 
+	{
+		Vertice nuevoVertice = new Vertice(idVertex, infoVertex, adj);
+		vertices.put(idVertex, nuevoVertice);
+		cantVertices++;
+		
+		for(int i=0; i<adj.darTamano();i++)
+		{
+			addEdge(idVertex, adj.darElemento(i), null);
+		}
+	}
 
 	public void addVertexSecondForm(K idVertex, V infoVertex, LinkedList<Arco> adj) 
 	{
@@ -209,6 +221,8 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 		private V info;
 
 		private LinkedList<Arco> arcos;
+		
+		private ArregloDinamico<K> adjNodes;
 
 		private boolean marcado;
 
@@ -228,6 +242,19 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 			marcado = false;
 		}
 
+		public Vertice(K pKey, V pInfo, ArregloDinamico<K> pAdjNodes )
+		{
+			key = pKey;
+			info = pInfo;
+			adjNodes = pAdjNodes;
+			marcado = false;
+		}
+		
+		public void addAdj(K idVertexAdj) 
+		{
+			adjNodes.agregar(idVertexAdj);
+		}
+		
 		public K getKey()
 		{
 			return key;

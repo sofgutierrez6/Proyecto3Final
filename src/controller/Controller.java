@@ -50,15 +50,25 @@ public class Controller {
 	private static Grafo grafo;
 
 	private Grafo grafoJson;
+	
+	private Grafo grafoJson2;
 	// Constructor -------------------------------------------------------------------
 
 	/**
 	 * Construye el controlador 
 	 */
-	public Controller() {
+	public Controller() 
+	{
 		view = new MovingViolationsManagerView();
+		
+		//Grafo generado leyendo XML
 		//grafo= new Grafo<Long,VOIntersections,VOWay>();
+		
+		//Para el centro de la ciudad cargando el grafo generado 
 		grafoJson = new Grafo<Long,VOIntersections,VOWay>();
+		
+		//Para la ciudad completa cargando el grafo dado
+		grafoJson2 = new Grafo<Long,VOIntersections,Long>();
 	}
 
 	// MÃ©todos -----------------------------------------------------------------------------
@@ -360,7 +370,9 @@ public class Controller {
 				}
 				
 				VOIntersections nuevaInter= new VOIntersections(ID, LAT, LON);
-				LinkedList<Long>adj=new LinkedList<Long>();
+				
+				//Lista con nodos adyacentes
+				ArregloDinamico<Long>adj = new ArregloDinamico<Long>(3);
 				
 				boolean cargoArreglo=objeto.get("adj").isJsonArray();
 				//System.out.println(cargoArreglo);
@@ -373,12 +385,12 @@ public class Controller {
 					{
 						JsonObject objetoAdj = (JsonObject)arreglo.get(j);
 						long IDAdj = objetoAdj.getAsLong();
-						adj.add(IDAdj);
+						adj.agregar(IDAdj);
 					}
 				}
 
 				//Agregar vertice al grafo
-				grafoJson.addVertexSecondForm(nuevaInter.getId(), nuevaInter, adj);
+				grafoJson.addVertexWithAdj(nuevaInter.getId(), nuevaInter, adj);
 				numCargados++;
 			}
 		}
@@ -558,12 +570,13 @@ public class Controller {
 	public void loadGraphFromJson(String ruta) 
 	{
 		int numCargados=0;
+		int linea=0;
 		JsonParser parser = new JsonParser();
 		try 
 		{
 			Reader reader = Files.newBufferedReader(Paths.get(ruta));
 			JsonArray arreglo = (JsonArray)parser.parse(new FileReader(ruta));
-
+			
 			for(int i=0; arreglo != null && i < arreglo.size(); i++)
 			{
 				//System.out.println("Entra for");
@@ -638,6 +651,7 @@ public class Controller {
 		}
 		catch (Exception e)
 		{
+			System.out.println("Error en la línea: "+numCargados);
 			System.out.println(e.getStackTrace().toString());
 			System.out.println(e.getMessage());
 		}
