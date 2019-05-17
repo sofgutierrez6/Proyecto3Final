@@ -317,6 +317,13 @@ public class Controller {
 				fin = true;
 				sc.close();
 				break;
+			case 10:
+				grafo = contador.load(args);
+				System.out.println();
+				System.out.println("Carga del grafo con la información del archivo .XML:");
+				System.out.println("Información del grafo:");
+				System.out.println("Número de nodos: " + grafo.V() + ", Número de arcos: " + grafo.E());
+				break;
 			}
 		}
 
@@ -641,32 +648,32 @@ public class Controller {
 					//Pasar Adj a linked List
 					for(int j=0; JAdj != null && j < JAdj.size(); j++)
 					{
-						JsonObject objetoAdj = (JsonObject)arreglo.get(j);
+						JsonObject objetoAdj = (JsonObject)JAdj.get(j);
 						//System.out.println(objetoAdj.toString() + (objetoAdj.isJsonNull())+"1");
 						long IDAdj=0;
-						JsonArray elementoIDAdj = objetoAdj.getAsJsonArray("ADJ");
-						JsonElement elementoIDAdj2 = (elementoIDAdj.get(0)).getAsJsonObject().get("ID_ARC");
+						
+						JsonElement  elementoIDAdj = objetoAdj.get("ID_ARC");
 						//System.out.println(elementoIDAdj2.isJsonNull()+"2");
-						if(elementoIDAdj2!=null && !elementoIDAdj2.isJsonNull())
+						if(elementoIDAdj!=null && !elementoIDAdj.isJsonNull())
 						{
-							IDAdj=elementoIDAdj2.getAsLong();
-							System.out.println("IDAdj: "+ IDAdj);
+							IDAdj=elementoIDAdj.getAsLong();
+							//System.out.println("IDAdj: "+ IDAdj);
 						}
 						
 						Long NODO1=(long) 0.0;
-						JsonElement elementoNODO1 = (elementoIDAdj.get(0)).getAsJsonObject().get("NODO1");
+						JsonElement elementoNODO1 = objetoAdj.get("NODO1");
 						if(elementoNODO1!=null && !elementoNODO1.isJsonNull())
 						{
 							NODO1=elementoNODO1.getAsLong();
-							System.out.println("NODO1: "+NODO1);
+							//System.out.println("NODO1: "+NODO1);
 						}
 						
 						Long NODO2=(long) 0.0;
-						JsonElement elementoNODO2 = (elementoIDAdj.get(0)).getAsJsonObject().get("NODO2");
+						JsonElement elementoNODO2 = objetoAdj.get("NODO2");
 						if(elementoNODO2!=null && !elementoNODO2.isJsonNull())
 						{
 							NODO2=elementoNODO2.getAsLong();
-							System.out.println("NODO2: "+NODO2);
+							//System.out.println("NODO2: "+NODO2);
 						}
 						// se crea un nuevo VOWay
 						VOWay nuevoVOWay = new VOWay(IDAdj,NODO1,NODO2);
