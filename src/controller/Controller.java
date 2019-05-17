@@ -387,8 +387,8 @@ public class Controller {
 						//System.out.println(JAdj.get(j).getAsInt());
 						//JsonElement objetoAdj = (JsonElement)arreglo.get(j);
 						
-						long IDAdj =(long)JAdj.get(j).getAsInt();
-						System.out.println("x");
+						long IDAdj =(long)JAdj.get(j).getAsLong();
+						System.out.println(IDAdj);
 						/*if(!objetoAdj.isJsonNull())
 						{
 							System.out.println("y");
@@ -397,7 +397,7 @@ public class Controller {
 						}*/
 						
 						adj.agregar(IDAdj);
-						System.out.println("y");
+						System.out.println("agrega");
 					}
 				}
 
