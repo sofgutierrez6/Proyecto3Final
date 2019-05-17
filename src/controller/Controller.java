@@ -51,7 +51,7 @@ public class Controller {
 
 	private Grafo grafoJson;
 	
-	private Grafo grafoJson2;
+	private Grafo<Long,VOIntersections,Long> grafoJson2;
 	// Constructor -------------------------------------------------------------------
 
 	/**
@@ -382,7 +382,7 @@ public class Controller {
 					JsonArray JAdj=(JsonArray) objeto.get("adj").getAsJsonArray();
 					System.out.println("El tamanio del arreglo de nodos es "+ JAdj.size());
 					//Pasar Adj a linked List
-					for(int j=0; JAdj != null && i < JAdj.size(); j++)
+					for(int j=0; JAdj != null && j < JAdj.size(); j++)
 					{
 						//System.out.println(JAdj.get(j).getAsInt());
 						//JsonElement objetoAdj = (JsonElement)arreglo.get(j);
@@ -402,7 +402,8 @@ public class Controller {
 				}
 
 				//Agregar vertice al grafo
-				grafoJson.addVertexWithAdj(nuevaInter.getId(), nuevaInter, adj);
+				System.out.println("que mielda");
+				grafoJson2.addVertexWithAdj(nuevaInter.getId(), nuevaInter, adj);
 				System.out.println(numCargados);
 				numCargados++;
 			}
@@ -631,7 +632,7 @@ public class Controller {
 					JsonArray JAdj=(JsonArray) objeto.get("ADJ").getAsJsonArray();
 					System.out.println("convirtio arreglo: "+JAdj.size());
 					//Pasar Adj a linked List
-					for(int j=0; JAdj != null && i < JAdj.size(); j++)
+					for(int j=0; JAdj != null && j < JAdj.size(); j++)
 					{
 						JsonObject objetoAdj = (JsonObject)arreglo.get(j);
 						System.out.println("convirtio object");
