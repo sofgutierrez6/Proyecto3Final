@@ -60,10 +60,14 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 		Vertice nuevoVertice = new Vertice(idVertex, infoVertex, adj);
 		vertices.put(idVertex, nuevoVertice);
 		cantVertices++;
-		
+		//Estoy mirando como hacer los arcos  
+		//crear nodos a medida que se leen y luego si se vuelven a ler se les agrega atributos
 		for(int i=0; i<adj.darTamano();i++)
 		{
-			addEdge(idVertex, adj.darElemento(i), null);
+			K idAdj=adj.darElemento(i);
+			Vertice nuevoAdj = new Vertice(idAdj,null);
+			nuevoVertice.addAdj(idAdj);
+			addEdgeSecondForm(idVertex, idAdj, null);
 		}
 	}
 

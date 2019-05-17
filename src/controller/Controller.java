@@ -402,8 +402,7 @@ public class Controller {
 				}
 
 				//Agregar vertice al grafo
-				System.out.println("que mielda");
-				grafoJson2.addVertexWithAdj(nuevaInter.getId(), nuevaInter, adj);
+				grafoJson2.addVertex(nuevaInter.getId(), nuevaInter);
 				System.out.println(numCargados);
 				numCargados++;
 			}
@@ -411,6 +410,7 @@ public class Controller {
 		catch (Exception e)
 		{
 			System.out.println("Alcanzó a cargar: " + numCargados);
+			System.out.println(e.getStackTrace());
 			System.out.println(e.getStackTrace().toString());
 			System.out.println(e.getMessage());
 		}
