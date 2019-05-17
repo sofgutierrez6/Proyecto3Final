@@ -251,7 +251,7 @@ public class Counter
         			//Cuando lee un way válido (De tipo "highway") entonces procede a agregar los arcos del grafo. 
         			//Recorre el arreglo y va creando los arcos entre los dos nodos consecutivos. 
         			for(int i = 0; i < arregloNodos.size()-1; i++) {
-        				grafo.addEdge(arregloNodos.get(i), arregloNodos.get(i+1),new VOWay(generadorCodigosArcos,arregloNodos.get(i),arregloNodos.get(i+1)));
+        				grafo.addEdge(arregloNodos.get(i), arregloNodos.get(i+1),new VOWay((long)generadorCodigosArcos,arregloNodos.get(i),arregloNodos.get(i+1)));
         				generadorCodigosArcos++;
         			}
         		}

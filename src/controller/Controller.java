@@ -597,60 +597,68 @@ public class Controller {
 				//if(i==0){System.out.println("Entra for");}
 				
 				JsonObject objeto = (JsonObject)arreglo.get(i);
-				System.out.println("convierte  jsonobject");
+			//	System.out.println("convierte  jsonobject");
 				//------------------------------------
 				//------ Lectura de atributos de la interseccion
 				//------------------------------------
-				int ID=0;
+				long ID=0;
 				JsonElement elementoID = objeto.get("ID");
-				System.out.println("convierte  id");
+				//System.out.println("convierte  id");
 				if(elementoID!=null && !elementoID.isJsonNull())
 				{
-					ID=elementoID.getAsInt();
-					System.out.print("a");
+					ID=elementoID.getAsLong();
+					//System.out.print("a");
 				}
+				
 				double LAT=0;
 				JsonElement elementoLAT = objeto.get("LAT");
 				if(elementoLAT!=null && !elementoLAT.isJsonNull())
 				{
 					LAT=elementoLAT.getAsDouble();
-					System.out.print("b");
+					//System.out.print("b");
 				}
+				
 				double LON=0;
 				JsonElement elementoLON = objeto.get("LON");
 				if(elementoLON!=null && !elementoLON.isJsonNull())
 				{
 					LON=elementoLON.getAsDouble();
-					System.out.print("c");
+					//System.out.print("c");
 				}
+				
 				VOIntersections nuevaInter= new VOIntersections(ID, LAT, LON);
+				//Agregar vertice al grafo
+				grafoJson.addVertex(nuevaInter.getId(), nuevaInter);
+				
 				LinkedList<VOWay>adj=new LinkedList<VOWay>();
 				boolean cargoArreglo=objeto.get("ADJ").isJsonArray();
-				System.out.println(cargoArreglo);
+				//System.out.println(cargoArreglo);
 				if(cargoArreglo)
 				{
 					JsonArray JAdj=(JsonArray) objeto.get("ADJ").getAsJsonArray();
-					System.out.println("convirtio arreglo: "+JAdj.size());
+					//System.out.println("convirtio arreglo: "+JAdj.size());
 					//Pasar Adj a linked List
 					for(int j=0; JAdj != null && j < JAdj.size(); j++)
 					{
 						JsonObject objetoAdj = (JsonObject)arreglo.get(j);
-						System.out.println("convirtio object");
-						int IDAdj=0;
+						//System.out.println("convirtio object");
+						long IDAdj=0;
 						JsonElement elementoIDAdj = objetoAdj.get("ID_ARC");
-						System.out.println("convirtio id");
+						//System.out.println("convirtio id");
 						if(elementoIDAdj!=null && !elementoIDAdj.isJsonNull())
 						{
-							IDAdj=elementoIDAdj.getAsInt();
-							System.out.print("aa");
+							IDAdj=elementoIDAdj.getAsLong();
+							//System.out.print("aa");
 						}
+						
 						Long NODO1=(long) 0.0;
 						JsonElement elementoNODO1 = objeto.get("NODO1");
 						if(elementoNODO1!=null && !elementoNODO1.isJsonNull())
 						{
 							NODO1=elementoNODO1.getAsLong();
-							System.out.print("bb");
+							//System.out.print("bb");
 						}
+						
 						Long NODO2=(long) 0.0;
 						JsonElement elementoNODO2 = objeto.get("NODO2");
 						if(elementoNODO2!=null && !elementoNODO2.isJsonNull())
@@ -661,20 +669,22 @@ public class Controller {
 						// se crea un nuevo VOWay
 						VOWay nuevoVOWay = new VOWay(IDAdj,NODO1,NODO2);
 						adj.add(nuevoVOWay);
+						grafoJson.addEdgeSecondForm(NODO1, NODO2, IDAdj);
 					}
 				}
 
-				//Agregar vertice al grafo
-				grafoJson.addVertexSecondForm(nuevaInter.getId(), nuevaInter, adj);
-				System.out.println(numCargados);
+				
+				
+				//System.out.println(numCargados);
 				numCargados++;
 			}
 		}
 		catch (Exception e)
 		{
-			System.out.println("Error en la línea: "+numCargados);
+			System.out.println("Alcanzó a cargar "+numCargados);
 			System.out.println(e.getStackTrace().toString());
 			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 

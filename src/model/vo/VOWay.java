@@ -5,7 +5,7 @@ public class VOWay implements Comparable<VOWay>{
 	// Atributos -------------------------------------------------------
 	
 	/** Un identificador que representa al arco*/
-	private int id;
+	private Long id;
 	
 	/** El identificador del primer nodo que conecta el arco*/
 	private long idNodo1;
@@ -21,7 +21,7 @@ public class VOWay implements Comparable<VOWay>{
 	 * @param pIdNodo1
 	 * @param pIdNodo2
 	 */
-	public VOWay(int pId, long pIdNodo1, long pIdNodo2) {
+	public VOWay(Long pId, long pIdNodo1, long pIdNodo2) {
 		id = pId;
 		idNodo1 = pIdNodo1;
 		idNodo2 = pIdNodo2;
@@ -29,7 +29,7 @@ public class VOWay implements Comparable<VOWay>{
 	
 	// Métodos ---------------------------------------------------------------
 	
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 	
@@ -51,7 +51,7 @@ public class VOWay implements Comparable<VOWay>{
 	
 	@Override
 	public int compareTo(VOWay arg0) {
-		return id - arg0.getId();
+		return (int) (id - arg0.getId());
 	}
 
 }
