@@ -592,6 +592,7 @@ public class Controller {
 			Reader reader = Files.newBufferedReader(Paths.get(ruta));
 			JsonArray arreglo = (JsonArray)parser.parse(new FileReader(ruta));
 			System.out.println("El numero de vertices es: "+ arreglo.size());
+			String var ="";
 			for(int i=0; arreglo != null && i < arreglo.size(); i++)
 			{
 				//if(i==0){System.out.println("Entra for");}
@@ -607,7 +608,7 @@ public class Controller {
 				if(elementoID!=null && !elementoID.isJsonNull())
 				{
 					ID=elementoID.getAsLong();
-					//System.out.print("a");
+					System.out.println("ID: " +ID);
 				}
 				
 				double LAT=0;
@@ -615,7 +616,7 @@ public class Controller {
 				if(elementoLAT!=null && !elementoLAT.isJsonNull())
 				{
 					LAT=elementoLAT.getAsDouble();
-					//System.out.print("b");
+					System.out.println("LAT: "+LAT);
 				}
 				
 				double LON=0;
@@ -623,7 +624,7 @@ public class Controller {
 				if(elementoLON!=null && !elementoLON.isJsonNull())
 				{
 					LON=elementoLON.getAsDouble();
-					//System.out.print("c");
+					System.out.println("LON: "+LON);
 				}
 				
 				VOIntersections nuevaInter= new VOIntersections(ID, LAT, LON);
@@ -641,34 +642,37 @@ public class Controller {
 					for(int j=0; JAdj != null && j < JAdj.size(); j++)
 					{
 						JsonObject objetoAdj = (JsonObject)arreglo.get(j);
-						//System.out.println("convirtio object");
+						//System.out.println(objetoAdj.toString() + (objetoAdj.isJsonNull())+"1");
 						long IDAdj=0;
-						JsonElement elementoIDAdj = objetoAdj.get("ID_ARC");
-						//System.out.println("convirtio id");
-						if(elementoIDAdj!=null && !elementoIDAdj.isJsonNull())
+						JsonArray elementoIDAdj = objetoAdj.getAsJsonArray("ADJ");
+						JsonElement elementoIDAdj2 = (elementoIDAdj.get(0)).getAsJsonObject().get("ID_ARC");
+						//System.out.println(elementoIDAdj2.isJsonNull()+"2");
+						if(elementoIDAdj2!=null && !elementoIDAdj2.isJsonNull())
 						{
-							IDAdj=elementoIDAdj.getAsLong();
-							//System.out.print("aa");
+							IDAdj=elementoIDAdj2.getAsLong();
+							System.out.println("IDAdj: "+ IDAdj);
 						}
 						
 						Long NODO1=(long) 0.0;
-						JsonElement elementoNODO1 = objeto.get("NODO1");
+						JsonElement elementoNODO1 = (elementoIDAdj.get(0)).getAsJsonObject().get("NODO1");
 						if(elementoNODO1!=null && !elementoNODO1.isJsonNull())
 						{
 							NODO1=elementoNODO1.getAsLong();
-							//System.out.print("bb");
+							System.out.println("NODO1: "+NODO1);
 						}
 						
 						Long NODO2=(long) 0.0;
-						JsonElement elementoNODO2 = objeto.get("NODO2");
+						JsonElement elementoNODO2 = (elementoIDAdj.get(0)).getAsJsonObject().get("NODO2");
 						if(elementoNODO2!=null && !elementoNODO2.isJsonNull())
 						{
 							NODO2=elementoNODO2.getAsLong();
-							System.out.print("cc");
+							System.out.println("NODO2: "+NODO2);
 						}
 						// se crea un nuevo VOWay
 						VOWay nuevoVOWay = new VOWay(IDAdj,NODO1,NODO2);
 						adj.add(nuevoVOWay);
+						//verificar que nodo1 y/o nodo 2 existen dentro del grafo, despues si agregar el vertice.
+						//if(!grafoJson.contieneNodo(NODO1)){ grafoJson.agregarNodo(new Nodo (NODO1))}, same para el 2;
 						grafoJson.addEdgeSecondForm(NODO1, NODO2, IDAdj);
 					}
 				}
