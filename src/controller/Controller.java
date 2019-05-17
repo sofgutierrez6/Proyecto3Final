@@ -348,26 +348,26 @@ public class Controller {
 				//------------------------------------
 				//------ Lectura de atributos de la interseccion
 				//------------------------------------
-				int ID=0;
+				long ID=0;
 				JsonElement elementoID = objeto.get("id");
 				if(elementoID!=null && !elementoID.isJsonNull())
 				{
-					ID=elementoID.getAsInt();
-					System.out.print("a");
+					ID=elementoID.getAsLong();
+					//System.out.print("a");
 				}
 				double LAT=0;
 				JsonElement elementoLAT = objeto.get("lat");
 				if(elementoLAT!=null && !elementoLAT.isJsonNull())
 				{
 					LAT=elementoLAT.getAsDouble();
-					System.out.print("b");
+					//System.out.print("b");
 				}
 				double LON=0;
 				JsonElement elementoLON = objeto.get("lon");
 				if(elementoLON!=null && !elementoLON.isJsonNull())
 				{
 					LON=elementoLON.getAsDouble();
-					System.out.print("c");
+					//System.out.print("c");
 				}
 				
 				VOIntersections nuevaInter= new VOIntersections(ID, LAT, LON);
@@ -376,11 +376,11 @@ public class Controller {
 				ArregloDinamico<Long>adj = new ArregloDinamico<Long>(3);
 				
 				boolean cargoArreglo=objeto.get("adj").isJsonArray();
-				System.out.println(cargoArreglo);
+				//System.out.println(cargoArreglo);
 				if(cargoArreglo)
 				{
 					JsonArray JAdj=(JsonArray) objeto.get("adj").getAsJsonArray();
-					System.out.println("El tamanio del arreglo de nodos es "+ JAdj.size());
+					//System.out.println("El tamanio del arreglo de nodos es "+ JAdj.size());
 					//Pasar Adj a linked List
 					for(int j=0; JAdj != null && j < JAdj.size(); j++)
 					{
@@ -388,7 +388,7 @@ public class Controller {
 						//JsonElement objetoAdj = (JsonElement)arreglo.get(j);
 						
 						long IDAdj =(long)JAdj.get(j).getAsLong();
-						System.out.println(IDAdj);
+						//System.out.println(IDAdj);
 						/*if(!objetoAdj.isJsonNull())
 						{
 							System.out.println("y");
@@ -397,7 +397,7 @@ public class Controller {
 						}*/
 						
 						adj.agregar(IDAdj);
-						System.out.println("agrega");
+						//System.out.println("agrega");
 					}
 				}
 
@@ -410,7 +410,7 @@ public class Controller {
 		catch (Exception e)
 		{
 			System.out.println("Alcanzó a cargar: " + numCargados);
-			System.out.println(e.getStackTrace());
+			e.printStackTrace();
 			System.out.println(e.getStackTrace().toString());
 			System.out.println(e.getMessage());
 		}
