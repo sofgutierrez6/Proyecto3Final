@@ -54,6 +54,8 @@ public class Controller {
 	
 	/** Grafo from JSON donde se almacena toda la red vial de Washington con arcos de tipo highway */
 	private static Grafo<Long,VOIntersections,Long> grafoJson2;
+	
+	private LinkedList<Long> idsNodos;
 	// Constructor -------------------------------------------------------------------
 
 	/**
@@ -71,6 +73,8 @@ public class Controller {
 		
 		//Para la ciudad completa cargando el grafo dado
 		grafoJson2 = new Grafo<Long,VOIntersections,Long>();
+		
+		idsNodos= new LinkedList<Long>();
 	}
 
 	// Métodos -----------------------------------------------------------------------------
@@ -476,6 +480,7 @@ public class Controller {
 				if(elementoID!=null && !elementoID.isJsonNull())
 				{
 					ID=elementoID.getAsLong();
+					idsNodos.add(ID);
 					//System.out.print("id"+ ID);
 				}
 				double LAT=0;
