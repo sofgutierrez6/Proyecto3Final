@@ -129,7 +129,7 @@ public class Controller {
 					controller.loadGraphFromJson(RutaArchivo);
 					endTime = System.currentTimeMillis();
 					System.out.println("InformaciÃ³n del grafo:");
-					System.out.println("NÃºmero de nodos: " + grafoJson.V() + ", NÃºmero de arcos: " + grafoJson2.E());
+					System.out.println("NÃºmero de nodos: " + grafoJson.V() + ", NÃºmero de arcos: " + grafoJson.E());
 				}
 
 				else if(ruta == 2)
@@ -339,11 +339,120 @@ public class Controller {
 	// TODO El tipo de retorno de los métodos puede ajustarse según la conveniencia
 
 
+	public void loadGraphFromJson(String ruta) 
+	{
+		int numCargados=0;
+		int linea=0;
+		JsonParser parser = new JsonParser();
+		try 
+		{
+			Reader reader = Files.newBufferedReader(Paths.get(ruta));
+			JsonArray arreglo = (JsonArray)parser.parse(new FileReader(ruta));
+			System.out.println("El numero de vertices es: "+ arreglo.size());
+			String var ="";
+			for(int i=0; arreglo != null && i < arreglo.size(); i++)
+			{
+				//if(i==0){System.out.println("Entra for");}
+				
+				JsonObject objeto = (JsonObject)arreglo.get(i);
+			//	System.out.println("convierte  jsonobject");
+				//------------------------------------
+				//------ Lectura de atributos de la interseccion
+				//------------------------------------
+				long ID=0;
+				JsonElement elementoID = objeto.get("ID");
+				//System.out.println("convierte  id");
+				if(elementoID!=null && !elementoID.isJsonNull())
+				{
+					ID=elementoID.getAsLong();
+					//System.out.println("ID: " +ID);
+				}
+				
+				double LAT=0;
+				JsonElement elementoLAT = objeto.get("LAT");
+				if(elementoLAT!=null && !elementoLAT.isJsonNull())
+				{
+					LAT=elementoLAT.getAsDouble();
+					//System.out.println("LAT: "+LAT);
+				}
+				
+				double LON=0;
+				JsonElement elementoLON = objeto.get("LON");
+				if(elementoLON!=null && !elementoLON.isJsonNull())
+				{
+					LON=elementoLON.getAsDouble();
+					//System.out.println("LON: "+LON);
+				}
+				
+				VOIntersections nuevaInter= new VOIntersections(ID, LAT, LON);
+				//Agregar vertice al grafo
+				grafoJson.addVertex(nuevaInter.getId(), nuevaInter);
+				
+				LinkedList<VOWay>adj=new LinkedList<VOWay>();
+				boolean cargoArreglo=objeto.get("ADJ").isJsonArray();
+				//System.out.println(cargoArreglo);
+				if(cargoArreglo)
+				{
+					JsonArray JAdj=(JsonArray) objeto.get("ADJ").getAsJsonArray();
+					//System.out.println("convirtio arreglo: "+JAdj.size());
+					//Pasar Adj a linked List
+					for(int j=0; JAdj != null && j < JAdj.size(); j++)
+					{
+						JsonObject objetoAdj = (JsonObject)JAdj.get(j);
+						//System.out.println(objetoAdj.toString() + (objetoAdj.isJsonNull())+"1");
+						long IDAdj=0;
+						
+						JsonElement  elementoIDAdj = objetoAdj.get("ID_ARC");
+						//System.out.println(elementoIDAdj2.isJsonNull()+"2");
+						if(elementoIDAdj!=null && !elementoIDAdj.isJsonNull())
+						{
+							IDAdj=elementoIDAdj.getAsLong();
+							//System.out.println("IDAdj: "+ IDAdj);
+						}
+						
+						Long NODO1=(long) 0.0;
+						JsonElement elementoNODO1 = objetoAdj.get("NODO1");
+						if(elementoNODO1!=null && !elementoNODO1.isJsonNull())
+						{
+							NODO1=elementoNODO1.getAsLong();
+							//System.out.println("NODO1: "+NODO1);
+						}
+						
+						Long NODO2=(long) 0.0;
+						JsonElement elementoNODO2 = objetoAdj.get("NODO2");
+						if(elementoNODO2!=null && !elementoNODO2.isJsonNull())
+						{
+							NODO2=elementoNODO2.getAsLong();
+							//System.out.println("NODO2: "+NODO2);
+						}
+						// se crea un nuevo VOWay
+						VOWay nuevoVOWay = new VOWay(IDAdj,NODO1,NODO2);
+						adj.add(nuevoVOWay);
+						//verificar que nodo1 y/o nodo 2 existen dentro del grafo, despues si agregar el vertice.
+						//if(!grafoJson.contieneNodo(NODO1)){ grafoJson.agregarNodo(new Nodo (NODO1))}, same para el 2;
+						grafoJson.addEdgeSecondForm(NODO1, NODO2, IDAdj);
+					}
+				}
+
+				
+				
+				//System.out.println(numCargados);
+				numCargados++;
+			}
+		}
+		catch (Exception e)
+		{
+			System.out.println("Alcanzó a cargar "+numCargados);
+			System.out.println(e.getStackTrace().toString());
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * Cargar el Grafo No Dirigido de la malla vial: Downtown o Ciudad Completa
 	 * @param rutaArchivo 
 	 */
-
 	public void loadJSON(String rutaArchivo) 
 	{
 		int numCargados=0;
@@ -384,8 +493,7 @@ public class Controller {
 				}
 				
 				VOIntersections nuevaInter= new VOIntersections(ID, LAT, LON);
-				//Agregar vertice al grafo
-				grafoJson2.addVertex(nuevaInter.getId(), nuevaInter);
+				
 				
 				
 				//Lista con nodos adyacentes
@@ -399,27 +507,18 @@ public class Controller {
 					//System.out.println("El tamanio del arreglo de nodos es "+ JAdj.size());
 					//Pasar Adj a linked List
 					for(int j=0; JAdj != null && j < JAdj.size(); j++)
-					{
-						//System.out.println(JAdj.get(j).getAsInt());
-						//JsonElement objetoAdj = (JsonElement)arreglo.get(j);
-						
+					{						
 						long IDAdj =(long)JAdj.get(j).getAsLong();
 						//VOIntersections nuevaAdj= new VOIntersections(IDAdj, null, LON);
 						//System.out.println(IDAdj);
-						/*if(!objetoAdj.isJsonNull())
-						{
-							System.out.println("y");
-							IDAdj = objetoAdj.getAsInt();
-							System.out.println("z");
-						}*/
 						
 						adj.agregar(IDAdj);
-						//Se agrega el vertice pero sin información
-						//grafoJson2.addVertex(IDAdj, null);
 						//System.out.println("agrega");
 					}
 				}
-
+				
+				//Agregar vertice al grafo
+				grafoJson2.addVertexWithAdj(nuevaInter.getId(), nuevaInter, adj);
 				
 				//System.out.println(numCargados);
 				numCargados++;
@@ -600,115 +699,7 @@ public class Controller {
 	}
 
 
-	public void loadGraphFromJson(String ruta) 
-	{
-		int numCargados=0;
-		int linea=0;
-		JsonParser parser = new JsonParser();
-		try 
-		{
-			Reader reader = Files.newBufferedReader(Paths.get(ruta));
-			JsonArray arreglo = (JsonArray)parser.parse(new FileReader(ruta));
-			System.out.println("El numero de vertices es: "+ arreglo.size());
-			String var ="";
-			for(int i=0; arreglo != null && i < arreglo.size(); i++)
-			{
-				//if(i==0){System.out.println("Entra for");}
-				
-				JsonObject objeto = (JsonObject)arreglo.get(i);
-			//	System.out.println("convierte  jsonobject");
-				//------------------------------------
-				//------ Lectura de atributos de la interseccion
-				//------------------------------------
-				long ID=0;
-				JsonElement elementoID = objeto.get("ID");
-				//System.out.println("convierte  id");
-				if(elementoID!=null && !elementoID.isJsonNull())
-				{
-					ID=elementoID.getAsLong();
-					//System.out.println("ID: " +ID);
-				}
-				
-				double LAT=0;
-				JsonElement elementoLAT = objeto.get("LAT");
-				if(elementoLAT!=null && !elementoLAT.isJsonNull())
-				{
-					LAT=elementoLAT.getAsDouble();
-					//System.out.println("LAT: "+LAT);
-				}
-				
-				double LON=0;
-				JsonElement elementoLON = objeto.get("LON");
-				if(elementoLON!=null && !elementoLON.isJsonNull())
-				{
-					LON=elementoLON.getAsDouble();
-					//System.out.println("LON: "+LON);
-				}
-				
-				VOIntersections nuevaInter= new VOIntersections(ID, LAT, LON);
-				//Agregar vertice al grafo
-				grafoJson.addVertex(nuevaInter.getId(), nuevaInter);
-				
-				LinkedList<VOWay>adj=new LinkedList<VOWay>();
-				boolean cargoArreglo=objeto.get("ADJ").isJsonArray();
-				//System.out.println(cargoArreglo);
-				if(cargoArreglo)
-				{
-					JsonArray JAdj=(JsonArray) objeto.get("ADJ").getAsJsonArray();
-					//System.out.println("convirtio arreglo: "+JAdj.size());
-					//Pasar Adj a linked List
-					for(int j=0; JAdj != null && j < JAdj.size(); j++)
-					{
-						JsonObject objetoAdj = (JsonObject)JAdj.get(j);
-						//System.out.println(objetoAdj.toString() + (objetoAdj.isJsonNull())+"1");
-						long IDAdj=0;
-						
-						JsonElement  elementoIDAdj = objetoAdj.get("ID_ARC");
-						//System.out.println(elementoIDAdj2.isJsonNull()+"2");
-						if(elementoIDAdj!=null && !elementoIDAdj.isJsonNull())
-						{
-							IDAdj=elementoIDAdj.getAsLong();
-							//System.out.println("IDAdj: "+ IDAdj);
-						}
-						
-						Long NODO1=(long) 0.0;
-						JsonElement elementoNODO1 = objetoAdj.get("NODO1");
-						if(elementoNODO1!=null && !elementoNODO1.isJsonNull())
-						{
-							NODO1=elementoNODO1.getAsLong();
-							//System.out.println("NODO1: "+NODO1);
-						}
-						
-						Long NODO2=(long) 0.0;
-						JsonElement elementoNODO2 = objetoAdj.get("NODO2");
-						if(elementoNODO2!=null && !elementoNODO2.isJsonNull())
-						{
-							NODO2=elementoNODO2.getAsLong();
-							//System.out.println("NODO2: "+NODO2);
-						}
-						// se crea un nuevo VOWay
-						VOWay nuevoVOWay = new VOWay(IDAdj,NODO1,NODO2);
-						adj.add(nuevoVOWay);
-						//verificar que nodo1 y/o nodo 2 existen dentro del grafo, despues si agregar el vertice.
-						//if(!grafoJson.contieneNodo(NODO1)){ grafoJson.agregarNodo(new Nodo (NODO1))}, same para el 2;
-						grafoJson.addEdgeSecondForm(NODO1, NODO2, IDAdj);
-					}
-				}
-
-				
-				
-				//System.out.println(numCargados);
-				numCargados++;
-			}
-		}
-		catch (Exception e)
-		{
-			System.out.println("Alcanzó a cargar "+numCargados);
-			System.out.println(e.getStackTrace().toString());
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		}
-	}
+	
 
 
 	private void toJson()

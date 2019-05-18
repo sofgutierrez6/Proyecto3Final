@@ -267,6 +267,7 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 			key = pKey;
 			info = pInfo;
 			aList = pAdj;
+			arcos = new LinkedList<Arco>();
 			marcado = false;
 		}
 
@@ -275,6 +276,7 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 			key = pKey;
 			info = pInfo;
 			adjNodes = pAdjNodes;
+			arcos = new LinkedList<Arco>();
 			marcado = false;
 		}
 
