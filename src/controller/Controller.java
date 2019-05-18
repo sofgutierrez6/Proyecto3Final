@@ -46,12 +46,14 @@ public class Controller {
 	/** Vista del controlador */
 	private MovingViolationsManagerView view;
 
-	/** Grafo donde se almacena toda la red vial de Washington con arcos de tipo highway */
+	/** Grafo from XLM donde se almacena toda la red vial de Washington con arcos de tipo highway */
 	private static Grafo grafo;
-
-	private Grafo grafoJson;
 	
-	private Grafo<Long,VOIntersections,Long> grafoJson2;
+	/** Grafo from JSON donde se almacena la red vial del downtown de Washington con arcos de tipo highway */
+	private static Grafo grafoJson;
+	
+	/** Grafo from JSON donde se almacena toda la red vial de Washington con arcos de tipo highway */
+	private static Grafo<Long,VOIntersections,Long> grafoJson2;
 	// Constructor -------------------------------------------------------------------
 
 	/**
@@ -126,6 +128,8 @@ public class Controller {
 					startTime = System.currentTimeMillis();
 					controller.loadGraphFromJson(RutaArchivo);
 					endTime = System.currentTimeMillis();
+					System.out.println("Información del grafo:");
+					System.out.println("Número de nodos: " + grafoJson.V() + ", Número de arcos: " + grafoJson2.E());
 				}
 
 				else if(ruta == 2)
@@ -135,6 +139,8 @@ public class Controller {
 					startTime = System.currentTimeMillis();
 					controller.loadJSON(RutaArchivo);
 					endTime = System.currentTimeMillis();
+					System.out.println("Información del grafo:");
+					System.out.println("Número de nodos: " + grafoJson2.V() + ", Número de arcos: " + grafoJson2.E());
 				}
 				else
 				{
@@ -410,7 +416,7 @@ public class Controller {
 
 				//Agregar vertice al grafo
 				grafoJson2.addVertex(nuevaInter.getId(), nuevaInter);
-				System.out.println(numCargados);
+				//System.out.println(numCargados);
 				numCargados++;
 			}
 		}
@@ -615,7 +621,7 @@ public class Controller {
 				if(elementoID!=null && !elementoID.isJsonNull())
 				{
 					ID=elementoID.getAsLong();
-					System.out.println("ID: " +ID);
+					//System.out.println("ID: " +ID);
 				}
 				
 				double LAT=0;
@@ -623,7 +629,7 @@ public class Controller {
 				if(elementoLAT!=null && !elementoLAT.isJsonNull())
 				{
 					LAT=elementoLAT.getAsDouble();
-					System.out.println("LAT: "+LAT);
+					//System.out.println("LAT: "+LAT);
 				}
 				
 				double LON=0;
@@ -631,7 +637,7 @@ public class Controller {
 				if(elementoLON!=null && !elementoLON.isJsonNull())
 				{
 					LON=elementoLON.getAsDouble();
-					System.out.println("LON: "+LON);
+					//System.out.println("LON: "+LON);
 				}
 				
 				VOIntersections nuevaInter= new VOIntersections(ID, LAT, LON);

@@ -52,7 +52,7 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 	{
 		Vertice nuevoVertice = new Vertice(idVertex, infoVertex);
 		vertices.put(idVertex, nuevoVertice);
-		System.out.println(getVertice(idVertex)==null);System.out.print(" leyo");
+		//System.out.println(getVertice(idVertex)==null);System.out.print(" leyo");
 		cantVertices++;
 	}
 
@@ -107,7 +107,7 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 	public void addEdgeSecondForm(K idVertexInit, K idVertexFin, A infoArc) 
 	{
 		Vertice verticeInicio = getVertice(idVertexInit);
-		System.out.println(verticeInicio == null);
+		//System.out.println(verticeInicio == null);
 		Vertice verticeFin = getVertice(idVertexFin);
 		if(verticeFin==null)
 		{
