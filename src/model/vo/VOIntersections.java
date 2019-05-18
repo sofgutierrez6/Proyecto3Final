@@ -1,5 +1,7 @@
 package model.vo;
 
+import model.data_structures.ArregloDinamico;
+
 public class VOIntersections implements Comparable<VOIntersections> {
 	
 	// Atributos ------------------------------------------------------------------------------------
@@ -16,6 +18,9 @@ public class VOIntersections implements Comparable<VOIntersections> {
 	/** Cantidad de infracciones que se cometieron en esta intersección.*/
 	private int cantidad;
 	
+	/**Arreglo dinamico con id de infracciones */
+	private ArregloDinamico<Long> infracciones;
+	
 	// Constructor ------------------------------------------------------------------------------------
 	
 	/**
@@ -24,12 +29,13 @@ public class VOIntersections implements Comparable<VOIntersections> {
 	 * @param pLat
 	 * @param pLon
 	 */
-	public VOIntersections(long pId,double pLat, double pLon) 
+	public VOIntersections(long pId,double pLat, double pLon, ArregloDinamico<Long> pInfracciones) 
 	{
 		id = pId;
 		lat = pLat;
 		lon = pLon;
 		cantidad = 0;
+		infracciones=pInfracciones;
 	}
 	
 	// Métodos ------------------------------------------------------------------------------------

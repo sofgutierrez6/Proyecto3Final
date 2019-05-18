@@ -384,8 +384,8 @@ public class Controller {
 					LON=elementoLON.getAsDouble();
 					//System.out.println("LON: "+LON);
 				}
-				
-				VOIntersections nuevaInter= new VOIntersections(ID, LAT, LON);
+				//TODO agregar infracciones
+				VOIntersections nuevaInter= new VOIntersections(ID, LAT, LON, null);
 				//Agregar vertice al grafo
 				grafoJson.addVertex(nuevaInter.getId(), nuevaInter);
 				
@@ -493,8 +493,21 @@ public class Controller {
 					//System.out.print("lon"+LON);
 				}
 				
-				//Se crea la insterssión cpon la información leida
-				VOIntersections nuevaInter= new VOIntersections(ID, LAT, LON);
+				ArregloDinamico<Long> infracciones=new ArregloDinamico<Long>(4);
+				boolean esArreglo=objeto.get("infractions").isJsonArray();
+				//System.out.println(cargoArreglo);
+				if(esArreglo)
+				{
+					JsonArray jInf=(JsonArray) objeto.get("infractions").getAsJsonArray();
+					for(int l=0; l<jInf.size(); l++)
+					{
+						long IDInf =(long)jInf.get(l).getAsLong();
+						infracciones.agregar(IDInf);
+					}
+				}
+				
+				//Se crea la instersección con la información leida
+				VOIntersections nuevaInter= new VOIntersections(ID, LAT, LON, infracciones);
 							
 				//Lista con nodos adyacentes
 				ArregloDinamico<Long>adj = new ArregloDinamico<Long>(3);

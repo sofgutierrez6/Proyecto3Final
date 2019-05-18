@@ -237,7 +237,8 @@ public class Counter
         	lat = Double.parseDouble(attrs.getValue(1).trim()); 
         	lon = Double.parseDouble(attrs.getValue(2).trim());
         	// Crea el nuevo nodo y lo agrega directamente al grafo. 
-        	VOIntersections nuevoNodo = new VOIntersections(idNodo, lat, lon);
+        	//TODO agregar infracciones
+        	VOIntersections nuevoNodo = new VOIntersections(idNodo, lat, lon, null);
         	grafo.addVertex(idNodo, nuevoNodo);
         	//System.out.println("Leyo Nodo: "+ idNodo);
         }
