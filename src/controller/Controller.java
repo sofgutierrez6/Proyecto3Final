@@ -719,6 +719,10 @@ public class Controller {
 	}
 
 
+	private void pintarMapa()
+	{
+		
+	}
 	
 
 
