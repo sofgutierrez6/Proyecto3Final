@@ -17,6 +17,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonWriter;
+
+import Mapa.Mapa;
 import model.data_structures.ArregloDinamico;
 import model.data_structures.BST;
 import model.data_structures.Grafo;
@@ -56,6 +58,8 @@ public class Controller {
 	private static Grafo<Long,VOIntersections,Long> grafoJson2;
 	
 	private LinkedList<Long> idsNodos;
+	
+	private Mapa mapa;
 	// Constructor -------------------------------------------------------------------
 
 	/**
@@ -75,6 +79,8 @@ public class Controller {
 		grafoJson2 = new Grafo<Long,VOIntersections,Long>();
 		
 		idsNodos= new LinkedList<Long>();
+		
+		mapa=new Mapa("Información Washington D.C");
 	}
 
 	// Métodos -----------------------------------------------------------------------------
@@ -719,9 +725,9 @@ public class Controller {
 	}
 
 
-	private void pintarMapa()
+	public void pintarMapa()
 	{
-		
+		mapa.pintarMapa();
 	}
 	
 

@@ -57,7 +57,8 @@ public class VOIntersections implements Comparable<VOIntersections> {
 	/**
 	 * Agrega una instancia a la cantidad de infracciones que se cometieron. 
 	 */
-	public void agregarInfraccion() {
+	public void agregarInfraccion(Long id) {
+		infracciones.agregar(id);
 		cantidad ++;
 	}
 	/**

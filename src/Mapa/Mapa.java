@@ -14,6 +14,7 @@ public class Mapa extends MapView{
 	
 	private Map map;
 	
+	private String nombre="";
 	// Constructor ---------------------------------------------------------------
 	
 	/**
@@ -21,7 +22,7 @@ public class Mapa extends MapView{
 	 * @param pNombre - El nombre del mapa
 	 */
 	public Mapa(String pNombre) {
-		JFrame frame = new JFrame(pNombre);
+		nombre=pNombre;
 		setOnMapReadyHandler(new MapReadyHandler() {
 			@Override
 			public void onMapReady(MapStatus status) {
@@ -37,13 +38,25 @@ public class Mapa extends MapView{
 				}
 			}
 		});
-		frame.add(this,BorderLayout.CENTER);
-		frame.setSize(700, 500);
-		frame.setVisible(true);
+	
 	}
 	
 	
 	public void ponerZoom(double pZoom) {
 		map.setZoom(pZoom);
+	}
+	
+	public void pintarMapa()
+	{
+		JFrame frame = new JFrame(nombre);
+		frame.add(this,BorderLayout.CENTER);
+		frame.setSize(700, 500);
+		frame.setVisible(true);
+	}
+	
+	public void ponerMarcador(double lat, double lon)
+	{
+		Marker mark= new Marker(map);
+		mark.setPosition(new LatLng(lat,lon));
 	}
 }
