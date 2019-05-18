@@ -66,9 +66,24 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 		for(int i=0; i<adj.darTamano();i++)
 		{
 			K idAdj=adj.darElemento(i);
-			Vertice nuevoAdj = new Vertice(idAdj,null);
+			//Se busca si el vertice ya fue creado anteriormente
+			Vertice nuevoAdj=getVertice(idAdj);
+			//Si no se crea uno con información vacía
+			if(nuevoAdj==null)
+			{
+			 nuevoAdj = new Vertice(idAdj,null);
+			}
+			vertices.put(idAdj, nuevoAdj);
+			
+			//Se agrega a la lista de nodos adyacentes
 			nuevoVertice.addAdj(idAdj);
-			addEdgeSecondForm(idVertex, idAdj, null);
+			
+			//Se crea el arco
+			Arco arc=new Arco(null, nuevoVertice, nuevoAdj);//Como identificar el arco con el grafo creado por ellos??
+			//Se agrega a la lista de arcos del nodo
+			nuevoVertice.getArcos().add(arc);
+			//Se agrega a la lista de arcos del grafo
+			arcos.add(arc);
 		}
 	}
 

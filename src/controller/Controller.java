@@ -384,6 +384,9 @@ public class Controller {
 				}
 				
 				VOIntersections nuevaInter= new VOIntersections(ID, LAT, LON);
+				//Agregar vertice al grafo
+				grafoJson2.addVertex(nuevaInter.getId(), nuevaInter);
+				
 				
 				//Lista con nodos adyacentes
 				ArregloDinamico<Long>adj = new ArregloDinamico<Long>(3);
@@ -401,6 +404,7 @@ public class Controller {
 						//JsonElement objetoAdj = (JsonElement)arreglo.get(j);
 						
 						long IDAdj =(long)JAdj.get(j).getAsLong();
+						//VOIntersections nuevaAdj= new VOIntersections(IDAdj, null, LON);
 						//System.out.println(IDAdj);
 						/*if(!objetoAdj.isJsonNull())
 						{
@@ -410,12 +414,13 @@ public class Controller {
 						}*/
 						
 						adj.agregar(IDAdj);
+						//Se agrega el vertice pero sin información
+						//grafoJson2.addVertex(IDAdj, null);
 						//System.out.println("agrega");
 					}
 				}
 
-				//Agregar vertice al grafo
-				grafoJson2.addVertex(nuevaInter.getId(), nuevaInter);
+				
 				//System.out.println(numCargados);
 				numCargados++;
 			}
