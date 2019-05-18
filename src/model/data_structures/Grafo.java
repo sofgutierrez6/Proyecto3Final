@@ -61,7 +61,7 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 		Vertice nuevoVertice = new Vertice(idVertex, infoVertex, adj);
 		vertices.put(idVertex, nuevoVertice);
 		cantVertices++;
-		//Estoy mirando como hacer los arcos  
+	
 		//crear nodos a medida que se leen y luego si se vuelven a leer se les agrega atributos
 		for(int i=0; i<adj.darTamano();i++)
 		{
@@ -76,7 +76,7 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 			vertices.put(idAdj, nuevoAdj);
 			
 			//Se agrega a la lista de nodos adyacentes
-			nuevoVertice.addAdj(idAdj);
+			//nuevoVertice.addAdj(idAdj); //correccion ya se había agregado al inicializar el nodo
 			
 			//Se crea el arco
 			Arco arc=new Arco(null, nuevoVertice, nuevoAdj);//Como identificar el arco con el grafo creado por ellos??
@@ -84,6 +84,7 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 			nuevoVertice.getArcos().add(arc);
 			//Se agrega a la lista de arcos del grafo
 			arcos.add(arc);
+			cantEnlaces++;
 		}
 	}
 

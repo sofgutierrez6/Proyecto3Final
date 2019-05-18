@@ -142,6 +142,7 @@ public class Controller {
 					System.out.println("Informaci√≥n del grafo:");
 					System.out.println("N√∫mero de nodos: " + grafoJson2.V() + ", N√∫mero de arcos: " + grafoJson2.E());
 				}
+				
 				else
 				{
 					startTime = System.currentTimeMillis();
@@ -461,8 +462,8 @@ public class Controller {
 		{
 			Reader reader = Files.newBufferedReader(Paths.get(rutaArchivo));
 			JsonArray arreglo = (JsonArray)parser.parse(new FileReader(rutaArchivo));
-			System.out.println("El numero de vertices es: "+ arreglo.size());
-			
+			System.out.println("El numero de vertices del json es: "+ arreglo.size());
+			int numeroArcos=0;
 			for(int i=0; arreglo != null && i < arreglo.size(); i++)
 			{
 				//System.out.println("Entra for");
@@ -475,27 +476,26 @@ public class Controller {
 				if(elementoID!=null && !elementoID.isJsonNull())
 				{
 					ID=elementoID.getAsLong();
-					//System.out.print("a");
+					//System.out.print("id"+ ID);
 				}
 				double LAT=0;
 				JsonElement elementoLAT = objeto.get("lat");
 				if(elementoLAT!=null && !elementoLAT.isJsonNull())
 				{
 					LAT=elementoLAT.getAsDouble();
-					//System.out.print("b");
+					//System.out.print("lat"+LAT);
 				}
 				double LON=0;
 				JsonElement elementoLON = objeto.get("lon");
 				if(elementoLON!=null && !elementoLON.isJsonNull())
 				{
 					LON=elementoLON.getAsDouble();
-					//System.out.print("c");
+					//System.out.print("lon"+LON);
 				}
 				
+				//Se crea la insterssiÛn cpon la informaciÛn leida
 				VOIntersections nuevaInter= new VOIntersections(ID, LAT, LON);
-				
-				
-				
+							
 				//Lista con nodos adyacentes
 				ArregloDinamico<Long>adj = new ArregloDinamico<Long>(3);
 				
@@ -504,6 +504,7 @@ public class Controller {
 				if(cargoArreglo)
 				{
 					JsonArray JAdj=(JsonArray) objeto.get("adj").getAsJsonArray();
+					numeroArcos+=JAdj.size();
 					//System.out.println("El tamanio del arreglo de nodos es "+ JAdj.size());
 					//Pasar Adj a linked List
 					for(int j=0; JAdj != null && j < JAdj.size(); j++)
@@ -523,6 +524,7 @@ public class Controller {
 				//System.out.println(numCargados);
 				numCargados++;
 			}
+			System.out.println("El n˙mero de arcos teoricos: "+ numeroArcos);
 		}
 		catch (Exception e)
 		{
