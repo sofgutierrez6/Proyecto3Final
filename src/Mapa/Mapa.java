@@ -2,6 +2,8 @@ package Mapa;
 
 import com.teamdev.jxmaps.swing.MapView;
 
+import model.vo.VOIntersections;
+
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
@@ -52,11 +54,25 @@ public class Mapa extends MapView{
 		frame.add(this,BorderLayout.CENTER);
 		frame.setSize(700, 500);
 		frame.setVisible(true);
+		//ponerMarcador(38.89894777000,-76.94837018300);
 	}
 	
 	public void ponerMarcador(double lat, double lon)
 	{
 		Marker mark= new Marker(map);
 		mark.setPosition(new LatLng(lat,lon));
+		System.out.println("Intenta pintar");
+	}
+	public void ponerMarcadores(VOIntersections[] list)
+	{
+		double lat, lon;
+		for(int i=0; i<list.length; i++)
+		{
+			lat=list[i].getLat();
+			lon=list[i].getLon();
+			Marker mark= new Marker(map);
+			mark.setPosition(new LatLng(lat,lon));
+			System.out.println("Intenta pintar");
+		}
 	}
 }

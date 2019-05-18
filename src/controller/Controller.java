@@ -151,6 +151,7 @@ public class Controller {
 					endTime = System.currentTimeMillis();
 					System.out.println("InformaciÃ³n del grafo:");
 					System.out.println("NÃºmero de nodos: " + grafoJson2.V() + ", NÃºmero de arcos: " + grafoJson2.E());
+					pintarMapa();
 				}
 				
 				else
@@ -474,6 +475,7 @@ public class Controller {
 			JsonArray arreglo = (JsonArray)parser.parse(new FileReader(rutaArchivo));
 			System.out.println("El numero de vertices del json es: "+ arreglo.size());
 			int numeroArcos=0;
+			VOIntersections[] list= new VOIntersections[10];
 			for(int i=0; arreglo != null && i < arreglo.size(); i++)
 			{
 				//System.out.println("Entra for");
@@ -487,22 +489,31 @@ public class Controller {
 				{
 					ID=elementoID.getAsLong();
 					idsNodos.add(ID);
-					//System.out.print("id"+ ID);
+					//System.out.println("id"+ ID);
 				}
 				double LAT=0;
 				JsonElement elementoLAT = objeto.get("lat");
 				if(elementoLAT!=null && !elementoLAT.isJsonNull())
 				{
 					LAT=elementoLAT.getAsDouble();
-					//System.out.print("lat"+LAT);
+					//System.out.println("lat"+LAT);
 				}
 				double LON=0;
 				JsonElement elementoLON = objeto.get("lon");
 				if(elementoLON!=null && !elementoLON.isJsonNull())
 				{
 					LON=elementoLON.getAsDouble();
-					//System.out.print("lon"+LON);
+					//System.out.println("lon"+LON);
 				}
+				
+				if(i<10)
+				{
+					System.out.println("lat"+LAT);
+					System.out.println("lon"+LON);
+					mapa.ponerMarcador(LAT, LON);
+				}
+				
+				
 				
 				ArregloDinamico<Long> infracciones=new ArregloDinamico<Long>(4);
 				boolean esArreglo=objeto.get("infractions").isJsonArray();
@@ -519,7 +530,11 @@ public class Controller {
 				
 				//Se crea la instersección con la información leida
 				VOIntersections nuevaInter= new VOIntersections(ID, LAT, LON, infracciones);
-							
+			
+				if(i<10)
+				{
+					list[i]=nuevaInter;
+				}			
 				//Lista con nodos adyacentes
 				ArregloDinamico<Long>adj = new ArregloDinamico<Long>(3);
 				
@@ -548,6 +563,7 @@ public class Controller {
 				//System.out.println(numCargados);
 				numCargados++;
 			}
+			mapa.ponerMarcadores(list);
 			System.out.println("El número de arcos teoricos: "+ numeroArcos);
 		}
 		catch (Exception e)
