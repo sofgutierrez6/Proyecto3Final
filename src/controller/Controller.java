@@ -151,7 +151,6 @@ public class Controller {
 					endTime = System.currentTimeMillis();
 					System.out.println("Información del grafo:");
 					System.out.println("Número de nodos: " + grafoJson2.V() + ", Número de arcos: " + grafoJson2.E());
-					pintarMapa();
 				}
 				
 				else
@@ -504,15 +503,7 @@ public class Controller {
 				{
 					LON=elementoLON.getAsDouble();
 					//System.out.println("lon"+LON);
-				}
-				
-				if(i<10)
-				{
-					System.out.println("lat"+LAT);
-					System.out.println("lon"+LON);
-					mapa.ponerMarcador(LAT, LON);
-				}
-				
+				}	
 				
 				
 				ArregloDinamico<Long> infracciones=new ArregloDinamico<Long>(4);
@@ -563,7 +554,8 @@ public class Controller {
 				//System.out.println(numCargados);
 				numCargados++;
 			}
-			mapa.ponerMarcadores(list);
+			//pinta nodos
+			mapa.pintarMapa(list);
 			System.out.println("El n�mero de arcos teoricos: "+ numeroArcos);
 		}
 		catch (Exception e)
@@ -739,13 +731,6 @@ public class Controller {
 		}
 		return contador;
 	}
-
-
-	public void pintarMapa()
-	{
-		mapa.pintarMapa();
-	}
-	
 
 
 	private void toJson()
