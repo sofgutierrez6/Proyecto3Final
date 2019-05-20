@@ -92,7 +92,7 @@ public class Controller {
 		
 		idsNodos= new LinkedList<Long>();
 		
-		//mapa = new Mapa("Información Washington D.C");
+		mapa = new Mapa("Información Washington D.C");
 	}
 
 	// Métodos -----------------------------------------------------------------------------
@@ -579,7 +579,7 @@ public class Controller {
 				numCargados++;
 			}
 			//pinta nodos
-			//mapa.pintarMapa(list);
+			mapa.pintarMapa(list);
 			System.out.println("El n�mero de arcos teoricos: "+ numeroArcos);
 		}
 		catch (Exception e)
