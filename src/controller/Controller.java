@@ -89,7 +89,7 @@ public class Controller {
 		
 		idsNodos= new LinkedList<Long>();
 		
-		mapa = new Mapa("Información Washington D.C");
+		//mapa = new Mapa("Información Washington D.C");
 	}
 
 	// Métodos -----------------------------------------------------------------------------
@@ -122,20 +122,7 @@ public class Controller {
 			//Recorre las posibles opciones que ingresa el usuario al ejecutar el programa.
 			switch(option){
 			case 0:
-				/*grafo = contador.load(args);
-				System.out.println();
-				System.out.println("Carga del grafo con la información del archivo .XML:");
-				System.out.println("Información del grafo:");
-				System.out.println("Número de nodos: " + grafo.V() + ", Número de arcos: " + grafo.E());
-				try {
-					System.out.println("Lectura de documento con las infracciones de los archivos. CSV:");
-					System.out.println("Información de la carga:");
-					cargarInfracciones();
-					System.out.println();
-				}
-				catch(Exception e) {
-					System.out.println(e.getMessage());
-				}*/
+				
 				String RutaArchivo = "";
 				view.printMessage("Escoger el grafo a cargar: (1) Downtown  o (2)Ciudad Completa.");
 
@@ -158,9 +145,11 @@ public class Controller {
 					startTime = System.currentTimeMillis();
 					controller.loadJSON(RutaArchivo);
 					endTime = System.currentTimeMillis();
-					System.out.println(grafoJson2.getVertices().size());
+					//System.out.println(grafoJson2.getVertices().size());
 					System.out.println("Información del grafo:");
-					System.out.println("Número de nodos: " + grafoJson2.V() + ", Número de arcos: " + grafoJson2.E());
+					//System.out.println("Número de nodos: " + grafoJson2.V() + ", Número de arcos: " + grafoJson2.E());
+					System.out.println("Número de nodos: " + grafoPrueba.V() + ", Número de arcos: " + grafoPrueba.E());
+					
 				}
 				
 				else
@@ -345,6 +334,21 @@ public class Controller {
 				sc.close();
 				break;
 			case 10:
+				/*grafo = contador.load(args);
+				System.out.println();
+				System.out.println("Carga del grafo con la información del archivo .XML:");
+				System.out.println("Información del grafo:");
+				System.out.println("Número de nodos: " + grafo.V() + ", Número de arcos: " + grafo.E());
+				try {
+					System.out.println("Lectura de documento con las infracciones de los archivos. CSV:");
+					System.out.println("Información de la carga:");
+					cargarInfracciones();
+					System.out.println();
+				}
+				catch(Exception e) {
+					System.out.println(e.getMessage());
+				}*/
+				//Lectura XML
 				grafo = contador.load(args);
 				System.out.println();
 				System.out.println("Carga del grafo con la informaci�n del archivo .XML:");
@@ -565,7 +569,7 @@ public class Controller {
 				numCargados++;
 			}
 			//pinta nodos
-			mapa.pintarMapa(list);
+			//mapa.pintarMapa(list);
 			System.out.println("El n�mero de arcos teoricos: "+ numeroArcos);
 		}
 		catch (Exception e)
@@ -585,7 +589,17 @@ public class Controller {
 	 * @param idVertice1 
 	 */
 	public void caminoCostoMinimoA1(int idVertice1, int idVertice2) {
+		Iterator it= grafoPrueba.iteratorVertices();
+		Vertex v=(Vertex) it.next();
+		int i=0;
+		while(it.hasNext())
+		{
+			v=(Vertex) it.next();
+			i++;
+		}
+		System.out.println(i);
 		
+		System.out.println(grafoPrueba.getVertices().keysQueue().size());
 	}
 
 	// TODO El tipo de retorno de los m�todos puede ajustarse seg�n la conveniencia

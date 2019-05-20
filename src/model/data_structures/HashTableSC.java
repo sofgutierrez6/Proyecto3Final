@@ -182,23 +182,28 @@ public class HashTableSC <Key, Value>{
 	    public class IteratorTablaHashSCValues implements Iterator<Value>
 		{
 	    	Value next;
-	    	
+	    	private Queue<Key> q;
 	    	public IteratorTablaHashSCValues() 
 			{
-	    		
+	    		q=keysQueue();	
 			}
 			@Override
 			public boolean hasNext() {
 				// TODO Auto-generated method stub
-				return !keysQueue().isEmpty();
+				return !q.isEmpty();
 			}
 
 			@Override
 			public Value next() {
 				// TODO Auto-generated method stub
-				Key key=keysQueue().dequeue();
-				int i = hash(key);
-	    		next=st[i].get(key);			
+				
+				if(!q.isEmpty())
+				{
+					Key key=(Key) q.dequeue();
+					int i = hash(key);
+		    		next=st[i].get(key);
+				}	
+							
 		        return next;
 				
 			}
