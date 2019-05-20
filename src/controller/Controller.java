@@ -161,7 +161,11 @@ public class Controller {
 					mapa = new Mapa("Mapa de Washington D.C");
 					//System.out.println("Número de nodos: " + grafoPrueba.V() + ", Número de arcos: " + grafoPrueba.E());
 					//System.out.println("Tama�o hash: "+grafoPrueba.getVertices().getList().size());
+<<<<<<< HEAD
+					Iterator iterador = grafo.getVertices().keys();
+=======
 
+>>>>>>> dec3ceff5463f49be023a5a4dc15c5fb3334ea3b
 				}
 
 				else
