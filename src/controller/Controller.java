@@ -80,7 +80,7 @@ public class Controller {
 		
 		idsNodos= new LinkedList<Long>();
 		
-		mapa=new Mapa("InformaciÃ³n Washington D.C");
+		mapa = new Mapa("InformaciÃ³n Washington D.C");
 	}
 
 	// MÃ©todos -----------------------------------------------------------------------------
@@ -337,9 +337,9 @@ public class Controller {
 			case 10:
 				grafo = contador.load(args);
 				System.out.println();
-				System.out.println("Carga del grafo con la información del archivo .XML:");
-				System.out.println("Información del grafo:");
-				System.out.println("Número de nodos: " + grafo.V() + ", Número de arcos: " + grafo.E());
+				System.out.println("Carga del grafo con la informaciï¿½n del archivo .XML:");
+				System.out.println("Informaciï¿½n del grafo:");
+				System.out.println("Nï¿½mero de nodos: " + grafo.V() + ", Nï¿½mero de arcos: " + grafo.E());
 				break;
 			}
 		}
@@ -347,7 +347,7 @@ public class Controller {
 	}
 
 
-	// TODO El tipo de retorno de los métodos puede ajustarse según la conveniencia
+	// TODO El tipo de retorno de los mï¿½todos puede ajustarse segï¿½n la conveniencia
 
 
 	public void loadGraphFromJson(String ruta) 
@@ -453,7 +453,7 @@ public class Controller {
 		}
 		catch (Exception e)
 		{
-			System.out.println("Alcanzó a cargar "+numCargados);
+			System.out.println("Alcanzï¿½ a cargar "+numCargados);
 			System.out.println(e.getStackTrace().toString());
 			System.out.println(e.getMessage());
 			e.printStackTrace();
@@ -519,7 +519,7 @@ public class Controller {
 					}
 				}
 				
-				//Se crea la instersección con la información leida
+				//Se crea la instersecciï¿½n con la informaciï¿½n leida
 				VOIntersections nuevaInter= new VOIntersections(ID, LAT, LON, infracciones);
 			
 				if(i<10)
@@ -556,11 +556,11 @@ public class Controller {
 			}
 			//pinta nodos
 			mapa.pintarMapa(list);
-			System.out.println("El número de arcos teoricos: "+ numeroArcos);
+			System.out.println("El nï¿½mero de arcos teoricos: "+ numeroArcos);
 		}
 		catch (Exception e)
 		{
-			System.out.println("Alcanzó a cargar: " + numCargados);
+			System.out.println("Alcanzï¿½ a cargar: " + numCargados);
 			e.printStackTrace();
 			System.out.println(e.getStackTrace().toString());
 			System.out.println(e.getMessage());
@@ -568,7 +568,7 @@ public class Controller {
 	}
 
 
-	// TODO El tipo de retorno de los métodos puede ajustarse según la conveniencia
+	// TODO El tipo de retorno de los mï¿½todos puede ajustarse segï¿½n la conveniencia
 	/**
 	 * Requerimiento 1A: Encontrar el camino de costo mï¿½nimo para un viaje entre dos ubicaciones geogrï¿½ficas.
 	 * @param idVertice2 
@@ -578,7 +578,7 @@ public class Controller {
 		// TODO Auto-generated method stub
 	}
 
-	// TODO El tipo de retorno de los métodos puede ajustarse según la conveniencia
+	// TODO El tipo de retorno de los mï¿½todos puede ajustarse segï¿½n la conveniencia
 	/**
 	 * Requerimiento 2A: Determinar los n vï¿½rtices con mayor nï¿½mero de infracciones. Adicionalmente identificar las
 	 * componentes conectadas (subgrafos) que se definan ï¿½nicamente entre estos n vï¿½rtices
@@ -589,7 +589,7 @@ public class Controller {
 
 	}
 
-	// TODO El tipo de retorno de los métodos puede ajustarse según la conveniencia
+	// TODO El tipo de retorno de los mï¿½todos puede ajustarse segï¿½n la conveniencia
 	/**
 	 * Requerimiento 1B: Encontrar el camino mï¿½s corto para un viaje entre dos ubicaciones geogrï¿½ficas 
 	 * @param idVertice2 
@@ -600,7 +600,7 @@ public class Controller {
 
 	}
 
-	// TODO El tipo de retorno de los métodos puede ajustarse según la conveniencia
+	// TODO El tipo de retorno de los mï¿½todos puede ajustarse segï¿½n la conveniencia
 	/**
 	 * Requerimiento 2B:  Definir una cuadricula regular de N columnas por M filas. que incluya las longitudes y latitudes dadas
 	 * @param  lonMin: Longitud minima presente dentro de la cuadricula
@@ -615,7 +615,7 @@ public class Controller {
 		// TODO Auto-generated method stub
 	}
 
-	// TODO El tipo de retorno de los métodos puede ajustarse según la conveniencia
+	// TODO El tipo de retorno de los mï¿½todos puede ajustarse segï¿½n la conveniencia
 	/**
 	 * Requerimiento 1C:  Calcular un ï¿½rbol de expansiï¿½n mï¿½nima (MST) con criterio distancia, utilizando el algoritmo de Kruskal.
 	 */
@@ -624,7 +624,7 @@ public class Controller {
 
 	}
 
-	// TODO El tipo de retorno de los métodos puede ajustarse según la conveniencia
+	// TODO El tipo de retorno de los mï¿½todos puede ajustarse segï¿½n la conveniencia
 	/**
 	 * Requerimiento 2C: Calcular un ï¿½rbol de expansiï¿½n mï¿½nima (MST) con criterio distancia, utilizando el algoritmo de Prim. (REQ 2C)
 	 */
@@ -633,7 +633,7 @@ public class Controller {
 
 	}
 
-	// TODO El tipo de retorno de los métodos puede ajustarse según la conveniencia
+	// TODO El tipo de retorno de los mï¿½todos puede ajustarse segï¿½n la conveniencia
 	/**
 	 * Requerimiento 3C: Calcular los caminos de costo mï¿½nimo con criterio distancia que conecten los vï¿½rtices resultado
 	 * de la aproximaciï¿½n de las ubicaciones de la cuadricula N x M encontrados en el punto 5.
@@ -643,7 +643,7 @@ public class Controller {
 
 	}
 	
-	// TODO El tipo de retorno de los métodos puede ajustarse según la conveniencia
+	// TODO El tipo de retorno de los mï¿½todos puede ajustarse segï¿½n la conveniencia
 	/**
 	 * Requerimiento 4C:Encontrar el camino mï¿½s corto para un viaje entre dos ubicaciones geogrï¿½ficas escogidas aleatoriamente al interior del grafo.
 	 * @param idVertice2 
@@ -725,13 +725,45 @@ public class Controller {
 			// Separa los valores por ";" y lee la longitud y latitud de infracciÃ³n
 			contador ++; 
 			String arreglo[] = linea.split(";");
+			int id = Integer.parseInt(arreglo[1]);
 			double latitud = Double.parseDouble(arreglo[latcol].replaceAll(",", "."));
 			double longitud = Double.parseDouble(arreglo[loncol].replaceAll(",", "."));
 			linea = br.readLine();
+			// En este punto se revisa cuÃ¡l de todos los nodos es el mÃ¡s cercano a la ubicaciÃ³n de la infracciÃ³n y lo mete. 
+			// Cuidado: Puede ser muy demorado. 
+			asignarInfraccionANodo(id, latitud, longitud);
 		}
 		return contador;
 	}
 
+	/**
+	 * MÃ©todo que recorre todos los nodos del grafo y compara a cual de los nodos estÃ¡ mÃ¡s cercano. 
+	 * @param pLatitud - la latitud de la infracciÃ³n
+	 * @param pLongitud - la longitud de la infracciÃ³n
+	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void asignarInfraccionANodo(long id, double pLatitud, double pLongitud) {
+		//Se inicia el iterador que va a recorrer los vertices en el grafo y las variables auxiliares
+		Iterator<Vertice> iterador = grafo.getVertices().keys();
+		Vertice masCercano = null;
+		double distanciaActual = 9999999.9999;
+		// Se recorre cada uno de los vÃ©rtices y se va guardando la informaciÃ³n del mÃ¡s cercano hasta el momento
+		while(iterador.hasNext()) {
+			Vertice v = (Vertice) iterador.next();
+			VOIntersections actual = (VOIntersections) v.getInfo();
+			double vLat = actual.getLat();
+			double vLon = actual.getLon();
+			double dist = distance(vLat,vLon,pLatitud,pLongitud);
+			// Si el actual es mÃ¡s cercano que el Ãºltimo mÃ¡s cercano, entonces lo reemplaza
+			if(dist < distanciaActual) {
+				masCercano = v;
+				distanciaActual = dist;
+			}
+		}
+		// Al final agrega a ese vÃ©rtice especÃ­fico la informaciÃ³n de la infracicÃ³n para que este lo almacene. 
+		VOIntersections aAgregar = (VOIntersections) grafo.getVertice(masCercano.getKey()).getInfo();
+		aAgregar.agregarInfraccion(id);
+	}
 
 	private void toJson()
 	{

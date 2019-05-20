@@ -2,7 +2,7 @@ package main;
 
 import controller.Controller;
 
-public class MVCT8 {
+public class MVCP3 {
 
 	public static void main(String args[]) {
 		Controller controler = new Controller();
