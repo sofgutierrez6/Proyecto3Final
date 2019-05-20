@@ -18,6 +18,7 @@ public class VOIntersections implements Comparable<VOIntersections> {
 	/** Cantidad de infracciones que se cometieron en esta intersección.*/
 	private int cantidad;
 	
+	
 	/**Arreglo dinamico con id de infracciones */
 	private ArregloDinamico<Long> infracciones;
 	
