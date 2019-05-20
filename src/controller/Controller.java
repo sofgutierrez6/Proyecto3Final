@@ -35,6 +35,7 @@ import model.data_structures.MaxColaPrioridad;
 import model.data_structures.MinPQ;
 import model.data_structures.NodeList;
 import model.data_structures.RedBlackBST;
+import model.data_structures.SequentialSearchSt;
 import model.data_structures.TablaHash;
 import model.data_structures.TablaHash.NodoTablaHash;
 import model.vo.Counter;
@@ -175,6 +176,7 @@ public class Controller {
 				break;
 
 			case 1:
+				System.out.println("Cola: "+grafoPrueba.getVertices().keysQueue().size());
 				view.printMessage("Ingrese El id del primer vertice (Ej. 901839): ");
 				id1 = sc.next();
 				view.printMessage("Ingrese El id del segundo vertice (Ej. 901839): ");
@@ -839,15 +841,16 @@ public class Controller {
 		Long actual=inicio;
 		Vertice verInicio=grafoJson2.getVertice(inicio);
 		Vertice verActual=verInicio;
-
-		while(actual.compareTo(goal)==0)
+		Double[] dist=new Double[grafoJson2.V()];
+		//Se recorren todos los nodos hasta que se llega al vertice indicado
+		for(int i=0; i<grafoJson2.V() && actual.compareTo(goal)!=0;i++)
 		{
 			//Se recorren los adyacentes
-			for(int i=0; i<verActual.getAdjNodes().darTamano(); i++)
+			for(int j=0; j<verActual.getAdjNodes().darTamano(); j++)
 			{
-				actual=(Long) verActual.getAdjNodes().darElemento(i);
+				actual=(Long) verActual.getAdjNodes().darElemento(j);
 				verActual=grafoJson2.getVertice(actual);
-				if(true)
+				if(dist[i]<dist[i]+((VOIntersections) verActual.getInfo()).getCantidad())
 				{
 					verActual.setCameFrom(actual);
 				}
