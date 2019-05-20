@@ -125,6 +125,24 @@ public class TablaHash<K extends Comparable<K>, V>
 			return respuesta;
 		}
 		
+		public int getIndex(K key)
+		{
+			
+			int index = hash(key);
+			boolean encontrado = false;
+			int respuesta = index;
+			NodoTablaHash actual = (NodoTablaHash)arreglo[index];
+			while(actual != null && !encontrado)
+			{
+				if(actual.getKey().compareTo(key)==0)
+				{
+					encontrado = true;
+				}
+				actual = actual.getNext();
+				respuesta++;
+			}
+			return respuesta;
+		}
 		public NodoTablaHash get(int i)
 		{
 			if(i<arreglo.length)

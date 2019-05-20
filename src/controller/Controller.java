@@ -32,6 +32,7 @@ import model.data_structures.IQueue;
 import model.data_structures.IStack;
 import model.data_structures.LinkedList;
 import model.data_structures.MaxColaPrioridad;
+import model.data_structures.MinPQ;
 import model.data_structures.NodeList;
 import model.data_structures.RedBlackBST;
 import model.data_structures.TablaHash;
@@ -115,6 +116,9 @@ public class Controller {
 
 			int idVertice1 = 0;
 			int idVertice2 = 0;
+			
+			String id1 = "0";
+			String id2 = "0";
 
 			view.printMenu();
 
@@ -171,14 +175,14 @@ public class Controller {
 				break;
 
 			case 1:
-				/*view.printMessage("Ingrese El id del primer vertice (Ej. 901839): ");
-				idVertice1 = sc.nextInt();
+				view.printMessage("Ingrese El id del primer vertice (Ej. 901839): ");
+				id1 = sc.next();
 				view.printMessage("Ingrese El id del segundo vertice (Ej. 901839): ");
-				idVertice2 = sc.nextInt();*/
+				id2 = sc.next();
 
 				System.out.println("Antes: "+grafoJson2.V());
 				startTime = System.currentTimeMillis();
-				controller.caminoCostoMinimoA1(idVertice1, idVertice2);
+				controller.caminoCostoMinimoA1(id1, id2);
 				endTime = System.currentTimeMillis();
 				duration = endTime - startTime;
 				view.printMessage("Tiempo del requerimiento: " + duration + " milisegundos");
@@ -592,7 +596,7 @@ public class Controller {
 	 * @param idVertice2 
 	 * @param idVertice1 
 	 */
-	public void caminoCostoMinimoA1(int idVertice1, int idVertice2) {
+	public void caminoCostoMinimoA1(String idVertice1, String idVertice2) {
 		/*Iterator it= grafoPrueba.iteratorVertices();
 		Vertex v=(Vertex) it.next();
 		int i=0;
@@ -606,20 +610,22 @@ public class Controller {
 		System.out.println("Cola: "+grafoPrueba.getVertices().keysQueue().size());*/
 		System.out.println("Tamaño grafo: "+grafoJson2.V());
 		TablaHash<Long,Grafo<Long,VOIntersections,Long>.Vertice> ver=grafoJson2.getVertices();
-		int[] distTo= new int[grafoJson2.V()];
+		Double[] distTo= new Double[grafoJson2.V()];
 		Long[] edgeTo= new Long[grafoJson2.V()];
+		MinPQ<Double> menorCosto = new MinPQ<Double>(grafoJson2.V());
 		int c=0;
 		for(int i=0;i<ver.size();i++)
 		{
-			//distTo[i]=Integer.POs
 			NodoTablaHash actual=ver.get(i);
 			if(actual!=null)
 			{
-				
+				distTo[i]=Double.POSITIVE_INFINITY;	
 			}
 			c++;	
 		}
-		System.out.println(c);
+		//menorCosto.
+		int index= ver.getIndex(Long.parseLong(idVertice1));
+		distTo[index]=0.0;
 		
 		
 	}
