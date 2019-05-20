@@ -16,7 +16,8 @@ public class Mapa extends MapView{
 	
 	private Map map;
 	
-	private String nombre="";
+	private String nombre;
+	
 	// Constructor ---------------------------------------------------------------
 	
 	/**
@@ -24,7 +25,7 @@ public class Mapa extends MapView{
 	 * @param pNombre - El nombre del mapa
 	 */
 	public Mapa(String pNombre) {
-		nombre=pNombre;
+		nombre = pNombre;
 		setOnMapReadyHandler(new MapReadyHandler() {
 			@Override
 			public void onMapReady(MapStatus status) {

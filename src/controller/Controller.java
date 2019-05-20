@@ -143,6 +143,7 @@ public class Controller {
 					endTime = System.currentTimeMillis();
 					System.out.println("Información del grafo:");
 					System.out.println("Número de nodos: " + grafoJson.V() + ", Número de arcos: " + grafoJson.E());
+					mapa = new Mapa("Mapa del Downtown de Washington");
 				}
 
 				else if(ruta == 2)
@@ -155,6 +156,7 @@ public class Controller {
 					System.out.println(grafoJson2.getVertices().size());
 					System.out.println("Información del grafo:");
 					System.out.println("Número de nodos: " + grafoJson2.V() + ", Número de arcos: " + grafoJson2.E());
+					mapa = new Mapa("Mapa de Washington D.C");
 					//System.out.println("Número de nodos: " + grafoPrueba.V() + ", Número de arcos: " + grafoPrueba.E());
 					//System.out.println("Tama�o hash: "+grafoPrueba.getVertices().getList().size());
 					
