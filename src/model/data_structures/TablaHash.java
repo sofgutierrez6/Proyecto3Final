@@ -127,8 +127,14 @@ public class TablaHash<K extends Comparable<K>, V>
 		
 		public NodoTablaHash get(int i)
 		{
-			
+			if(i<arreglo.length)
+			{
 			 return ((TablaHash<K, V>.NodoTablaHash) arreglo[i]);
+			}
+			else
+			{
+				return null;
+			}
 		}
 
 		public V getSecondForm(K key)

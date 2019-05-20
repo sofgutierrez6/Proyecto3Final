@@ -35,6 +35,7 @@ import model.data_structures.MaxColaPrioridad;
 import model.data_structures.NodeList;
 import model.data_structures.RedBlackBST;
 import model.data_structures.TablaHash;
+import model.data_structures.TablaHash.NodoTablaHash;
 import model.vo.Counter;
 import model.vo.LocationVO;
 import model.vo.VODaylyStatistic;
@@ -608,10 +609,14 @@ public class Controller {
 		int[] distTo= new int[grafoJson2.V()];
 		Long[] edgeTo= new Long[grafoJson2.V()];
 		int c=0;
-		for(int i=0;i<grafoJson2.V();i++)
+		for(int i=0;i<ver.size();i++)
 		{
 			//distTo[i]=Integer.POs
-			ver.get(i);
+			NodoTablaHash actual=ver.get(i);
+			if(actual!=null)
+			{
+				
+			}
 			c++;	
 		}
 		System.out.println(c);
