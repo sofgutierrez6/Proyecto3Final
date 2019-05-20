@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Scanner;
 import com.google.gson.JsonArray;
@@ -22,6 +23,7 @@ import com.google.gson.stream.JsonWriter;
 import Mapa.Mapa;
 import model.data_structures.ArregloDinamico;
 import model.data_structures.BST;
+import model.data_structures.ComparadorXAccidentes;
 import model.data_structures.Grafo;
 import model.data_structures.Grafo.Arco;
 import model.data_structures.Grafo.Vertice;
@@ -57,17 +59,17 @@ public class Controller {
 
 	/** Grafo from XLM donde se almacena toda la red vial de Washington con arcos de tipo highway */
 	private static Grafo grafo;
-	
+
 	/** Grafo from JSON donde se almacena la red vial del downtown de Washington con arcos de tipo highway */
 	private static Grafo grafoJson;
-	
+
 	/** Grafo from JSON donde se almacena toda la red vial de Washington con arcos de tipo highway */
 	private static Grafo<Long,VOIntersections,Long> grafoJson2;
-	
+
 	private static Graph<Long,VOIntersections,Long> grafoPrueba;
-	
+
 	private LinkedList<Long> idsNodos;
-	
+
 	private Mapa mapa;
 	// Constructor -------------------------------------------------------------------
 
@@ -77,21 +79,21 @@ public class Controller {
 	public Controller() 
 	{
 		view = new MovingViolationsManagerView();
-		
+
 		//Grafo generado leyendo XML
 		//grafo= new Grafo<Long,VOIntersections,VOWay>();
-		
+
 		//Para el centro de la ciudad cargando el grafo generado 
 		grafoJson = new Grafo<Long,VOIntersections,VOWay>();
-		
+
 		//Para la ciudad completa cargando el grafo dado
 		grafoJson2 = new Grafo<Long,VOIntersections,Long>();
-		
+
 		//
 		grafoPrueba = new Graph<Long,VOIntersections,Long>();
-		
+
 		idsNodos= new LinkedList<Long>();
-		
+
 		mapa = new Mapa("Información Washington D.C");
 	}
 
@@ -112,12 +114,12 @@ public class Controller {
 		Counter contador = new Counter();
 		// Mantiene el programa corriendo hasta que el usuario decida temrinarlo. 
 		Controller controller = new Controller();
-		
+
 		while(!fin) {
 
 			int idVertice1 = 0;
 			int idVertice2 = 0;
-			
+
 			String id1 = "0";
 			String id2 = "0";
 
@@ -125,12 +127,12 @@ public class Controller {
 
 			int option = sc.nextInt();
 
-			
-			
+
+
 			//Recorre las posibles opciones que ingresa el usuario al ejecutar el programa.
 			switch(option){
 			case 0:
-				
+
 				String RutaArchivo = "";
 				view.printMessage("Escoger el grafo a cargar: (1) Downtown  o (2)Ciudad Completa.");
 
@@ -150,19 +152,22 @@ public class Controller {
 				else if(ruta == 2)
 				{
 					RutaArchivo = "./data//finalGraph.json"; //ruta del archivo de la ciudad completa
-
 					startTime = System.currentTimeMillis();
 					controller.loadJSON(RutaArchivo);
 					endTime = System.currentTimeMillis();
-					System.out.println(grafoJson2.getVertices().size());
+					System.out.println(grafoJson2.getVertices().arreglo().length);
 					System.out.println("Información del grafo:");
 					System.out.println("Número de nodos: " + grafoJson2.V() + ", Número de arcos: " + grafoJson2.E());
 					mapa = new Mapa("Mapa de Washington D.C");
 					//System.out.println("Número de nodos: " + grafoPrueba.V() + ", Número de arcos: " + grafoPrueba.E());
 					//System.out.println("Tama�o hash: "+grafoPrueba.getVertices().getList().size());
+<<<<<<< HEAD
 					Iterator iterador = grafo.getVertices().keys();
+=======
+
+>>>>>>> dec3ceff5463f49be023a5a4dc15c5fb3334ea3b
 				}
-				
+
 				else
 				{
 					startTime = System.currentTimeMillis();
@@ -390,9 +395,9 @@ public class Controller {
 			for(int i=0; arreglo != null && i < arreglo.size(); i++)
 			{
 				//if(i==0){System.out.println("Entra for");}
-				
+
 				JsonObject objeto = (JsonObject)arreglo.get(i);
-			//	System.out.println("convierte  jsonobject");
+				//	System.out.println("convierte  jsonobject");
 				//------------------------------------
 				//------ Lectura de atributos de la interseccion
 				//------------------------------------
@@ -404,7 +409,7 @@ public class Controller {
 					ID=elementoID.getAsLong();
 					//System.out.println("ID: " +ID);
 				}
-				
+
 				double LAT=0;
 				JsonElement elementoLAT = objeto.get("LAT");
 				if(elementoLAT!=null && !elementoLAT.isJsonNull())
@@ -412,7 +417,7 @@ public class Controller {
 					LAT=elementoLAT.getAsDouble();
 					//System.out.println("LAT: "+LAT);
 				}
-				
+
 				double LON=0;
 				JsonElement elementoLON = objeto.get("LON");
 				if(elementoLON!=null && !elementoLON.isJsonNull())
@@ -424,7 +429,7 @@ public class Controller {
 				VOIntersections nuevaInter= new VOIntersections(ID, LAT, LON, null);
 				//Agregar vertice al grafo
 				grafoJson.addVertex(nuevaInter.getId(), nuevaInter);
-				
+
 				LinkedList<VOWay>adj=new LinkedList<VOWay>();
 				boolean cargoArreglo=objeto.get("ADJ").isJsonArray();
 				//System.out.println(cargoArreglo);
@@ -438,7 +443,7 @@ public class Controller {
 						JsonObject objetoAdj = (JsonObject)JAdj.get(j);
 						//System.out.println(objetoAdj.toString() + (objetoAdj.isJsonNull())+"1");
 						long IDAdj=0;
-						
+
 						JsonElement  elementoIDAdj = objetoAdj.get("ID_ARC");
 						//System.out.println(elementoIDAdj2.isJsonNull()+"2");
 						if(elementoIDAdj!=null && !elementoIDAdj.isJsonNull())
@@ -446,7 +451,7 @@ public class Controller {
 							IDAdj=elementoIDAdj.getAsLong();
 							//System.out.println("IDAdj: "+ IDAdj);
 						}
-						
+
 						Long NODO1=(long) 0.0;
 						JsonElement elementoNODO1 = objetoAdj.get("NODO1");
 						if(elementoNODO1!=null && !elementoNODO1.isJsonNull())
@@ -454,7 +459,7 @@ public class Controller {
 							NODO1=elementoNODO1.getAsLong();
 							//System.out.println("NODO1: "+NODO1);
 						}
-						
+
 						Long NODO2=(long) 0.0;
 						JsonElement elementoNODO2 = objetoAdj.get("NODO2");
 						if(elementoNODO2!=null && !elementoNODO2.isJsonNull())
@@ -471,8 +476,8 @@ public class Controller {
 					}
 				}
 
-				
-				
+
+
 				//System.out.println(numCargados);
 				numCargados++;
 			}
@@ -485,7 +490,7 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Cargar el Grafo No Dirigido de la malla vial: Downtown o Ciudad Completa
 	 * @param rutaArchivo 
@@ -530,8 +535,8 @@ public class Controller {
 					LON=elementoLON.getAsDouble();
 					//System.out.println("lon"+LON);
 				}	
-				
-				
+
+
 				ArregloDinamico<Long> infracciones=new ArregloDinamico<Long>(4);
 				boolean esArreglo=objeto.get("infractions").isJsonArray();
 				//System.out.println(cargoArreglo);
@@ -544,17 +549,17 @@ public class Controller {
 						infracciones.agregar(IDInf);
 					}
 				}
-				
+
 				//Se crea la instersecci�n con la informaci�n leida
 				VOIntersections nuevaInter= new VOIntersections(ID, LAT, LON, infracciones);
-			
+
 				if(i<10)
 				{
 					list[i]=nuevaInter;
 				}			
 				//Lista con nodos adyacentes
 				ArregloDinamico<Long>adj = new ArregloDinamico<Long>(3);
-				
+
 				boolean cargoArreglo=objeto.get("adj").isJsonArray();
 				//System.out.println(cargoArreglo);
 				if(cargoArreglo)
@@ -568,12 +573,12 @@ public class Controller {
 						long IDAdj =(long)JAdj.get(j).getAsLong();
 						//VOIntersections nuevaAdj= new VOIntersections(IDAdj, null, LON);
 						//System.out.println(IDAdj);
-						
+
 						adj.agregar(IDAdj);
 						//System.out.println("agrega");
 					}
 				}
-				
+
 				//Agregar vertice al grafo
 				grafoJson2.addVertexWithAdj(nuevaInter.getId(), nuevaInter, adj);
 				grafoPrueba.addVertexWithAdj(nuevaInter.getId(), nuevaInter, adj);
@@ -610,19 +615,19 @@ public class Controller {
 			i++;
 		}
 		System.out.println("Iterador "+i);
-		
+
 		System.out.println("Cola: "+grafoPrueba.getVertices().keysQueue().size());*/
 		System.out.println("Tama�o grafo: "+grafoJson2.V());
 		TablaHash<Long,Grafo<Long,VOIntersections,Long>.Vertice> ver=grafoJson2.getVertices();
 		Double[] distTo= new Double[grafoJson2.V()];
 		Long[] edgeTo= new Long[grafoJson2.V()];
-		MinPQ<Double> menorCosto = new MinPQ<Double>(grafoJson2.V());
+		//MinPQ<Double> menorCosto = new MinPQ<Double>(grafoJson2.V());
 		int c=0;
-		
+
 		for(int i=0;i<ver.size();i++)
 		{
 			NodoTablaHash actual=ver.get(i);
-			
+
 			if(actual!=null)
 			{
 				distTo[i]=Double.POSITIVE_INFINITY;	
@@ -633,7 +638,7 @@ public class Controller {
 		int index= ver.getIndex(idVertIni);
 		distTo[index]=0.0;
 		Vertice vertIni= grafoJson2.getVertice(idVertIni);
-		
+
 		//Se recorren lo adyacentes 
 		ArregloDinamico<Long> adj = vertIni.getAdjNodes();
 		for(int j=0; j<adj.darTamano();j++)
@@ -642,13 +647,13 @@ public class Controller {
 			int k=ver.getIndex(actual);
 			distTo[k]=(double) grafoJson2.getVertice(actual).getInfo().getCantidad();
 		}
-		
-		
-		
-		
+
+
+
+
 	}
-	
-	
+
+
 
 	// TODO El tipo de retorno de los m�todos puede ajustarse seg�n la conveniencia
 	/**
@@ -714,7 +719,7 @@ public class Controller {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	// TODO El tipo de retorno de los m�todos puede ajustarse seg�n la conveniencia
 	/**
 	 * Requerimiento 4C:Encontrar el camino m�s corto para un viaje entre dos ubicaciones geogr�ficas escogidas aleatoriamente al interior del grafo.
@@ -837,26 +842,60 @@ public class Controller {
 		aAgregar.agregarInfraccion(id);
 	}
 
-	
+
 	public void dijkstra(Long inicio, Long goal)
 	{
 		Long actual=inicio;
 		Vertice verInicio=grafoJson2.getVertice(inicio);
 		Vertice verActual=verInicio;
 		Double[] dist=new Double[grafoJson2.V()];
+		ComparadorXAccidentes comparador= new ComparadorXAccidentes();
+		MinPQ<VOIntersections> pq= new MinPQ<VOIntersections>(grafoJson2.V(), comparador);
+		TablaHash<Long,Grafo<Long,VOIntersections,Long>.Vertice> ver=grafoJson2.getVertices();
 		//Se recorren todos los nodos hasta que se llega al vertice indicado
 		for(int i=0; i<grafoJson2.V() && actual.compareTo(goal)!=0;i++)
 		{
-			//Se recorren los adyacentes
-			for(int j=0; j<verActual.getAdjNodes().darTamano(); j++)
+			//Se inicializan todas las distancias menos las de los nodos adyacentes en infinito
+			for(int k=0;k<grafoJson2.V();k++)
 			{
-				actual=(Long) verActual.getAdjNodes().darElemento(j);
-				verActual=grafoJson2.getVertice(actual);
-				if(dist[i]<dist[i]+((VOIntersections) verActual.getInfo()).getCantidad())
+				/*Long adjActual=null;
+				ArregloDinamico<Long> adj = verInicio.getAdjNodes();
+				if(k<adj.darTamano())
 				{
-					verActual.setCameFrom(actual);
+					adjActual=adj.darElemento(k);
 				}
-				
+				if( adjActual!=null && k==ver.getIndex(adjActual))
+				{
+					dist[k]=(double) grafoJson2.getVertice(actual).getInfo().getCantidad();
+				}
+				else
+				{*/
+					dist[k]=Double.POSITIVE_INFINITY;
+				//}
+			}
+
+			pq.agregar((VOIntersections) verInicio.getInfo());
+			while(!pq.esVacia())
+			{
+				long idActual=pq.delMax().getId();
+				verActual=grafoJson2.getVertice(idActual);
+				int iActual=grafoJson2.getVertices().getIndex(idActual);
+				//Se recorren los adyacentes
+				for(int j=0; j<verActual.getAdjNodes().darTamano(); j++)
+				{
+					Long adjActual=(Long) verActual.getAdjNodes().darElemento(j);
+					Vertice verAdjActual=grafoJson2.getVertice(actual);			
+					int  iAdj=grafoJson2.getVertices().getIndex(adjActual);
+					if(dist[iAdj]>dist[iActual]+((VOIntersections) verAdjActual.getInfo()).getCantidad())
+					{
+						verAdjActual.setCameFrom(actual);
+						dist[iAdj] = dist[iActual]+((VOIntersections) verAdjActual.getInfo()).getCantidad();
+						((VOIntersections) verAdjActual.getInfo()).setAcomulado(dist[iAdj]);
+						pq.agregar((VOIntersections) verAdjActual.getInfo());
+
+					}
+
+				}
 			}
 		}
 	}
