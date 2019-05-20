@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.BufferedReader;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -24,6 +25,9 @@ import model.data_structures.BST;
 import model.data_structures.Grafo;
 import model.data_structures.Grafo.Arco;
 import model.data_structures.Grafo.Vertice;
+import model.data_structures.Graph;
+import model.data_structures.Graph.Arc;
+import model.data_structures.Graph.Vertex;
 import model.data_structures.IQueue;
 import model.data_structures.IStack;
 import model.data_structures.LinkedList;
@@ -57,6 +61,8 @@ public class Controller {
 	/** Grafo from JSON donde se almacena toda la red vial de Washington con arcos de tipo highway */
 	private static Grafo<Long,VOIntersections,Long> grafoJson2;
 	
+	private static Graph<Long,VOIntersections,Long> grafoPrueba;
+	
 	private LinkedList<Long> idsNodos;
 	
 	private Mapa mapa;
@@ -77,6 +83,9 @@ public class Controller {
 		
 		//Para la ciudad completa cargando el grafo dado
 		grafoJson2 = new Grafo<Long,VOIntersections,Long>();
+		
+		//
+		grafoPrueba = new Graph<Long,VOIntersections,Long>();
 		
 		idsNodos= new LinkedList<Long>();
 		
@@ -149,6 +158,7 @@ public class Controller {
 					startTime = System.currentTimeMillis();
 					controller.loadJSON(RutaArchivo);
 					endTime = System.currentTimeMillis();
+					System.out.println(grafoJson2.getVertices().size());
 					System.out.println("Información del grafo:");
 					System.out.println("Número de nodos: " + grafoJson2.V() + ", Número de arcos: " + grafoJson2.E());
 				}
@@ -550,7 +560,7 @@ public class Controller {
 				
 				//Agregar vertice al grafo
 				grafoJson2.addVertexWithAdj(nuevaInter.getId(), nuevaInter, adj);
-				
+				grafoPrueba.addVertexWithAdj(nuevaInter.getId(), nuevaInter, adj);
 				//System.out.println(numCargados);
 				numCargados++;
 			}

@@ -10,9 +10,9 @@ public class Graph<K extends Comparable<K>, V, A extends Comparable<A>> implemen
 	// Atributos
 	// -----------------------------------------------------------------
 
-	private HashTableSC<K, Vertice> vertices;
+	private HashTableSC<K, Vertex> vertices;
 
-	private LinkedList<Arco> arcos;
+	private LinkedList<Arc> arcos;
 
 	private int cantVertices;
 
@@ -23,8 +23,8 @@ public class Graph<K extends Comparable<K>, V, A extends Comparable<A>> implemen
 	// -----------------------------------------------------------------
 	public Graph()
 	{
-		vertices = new HashTableSC<K, Vertice>();
-		arcos = new LinkedList<Arco>();
+		vertices = new HashTableSC<K, Vertex>();
+		arcos = new LinkedList<Arc>();
 		cantVertices = 0;
 		cantEnlaces = 0;
 	}
@@ -48,7 +48,7 @@ public class Graph<K extends Comparable<K>, V, A extends Comparable<A>> implemen
 
 	public void addVertex(K idVertex, V infoVertex) 
 	{
-		Vertice nuevoVertice = new Vertice(idVertex, infoVertex);
+		Vertex nuevoVertice = new Vertex(idVertex, infoVertex);
 		vertices.put(idVertex, nuevoVertice);
 		//System.out.println(getVertice(idVertex)==null);System.out.print(" leyo");
 		cantVertices++;
@@ -56,7 +56,7 @@ public class Graph<K extends Comparable<K>, V, A extends Comparable<A>> implemen
 
 	public void addVertexWithAdj(K idVertex, V infoVertex, ArregloDinamico<K> adj) 
 	{
-		Vertice nuevoVertice = new Vertice(idVertex, infoVertex, adj);
+		Vertex nuevoVertice = new Vertex(idVertex, infoVertex, adj);
 		vertices.put(idVertex, nuevoVertice);
 		cantVertices++;
 	
@@ -65,11 +65,11 @@ public class Graph<K extends Comparable<K>, V, A extends Comparable<A>> implemen
 		{
 			K idAdj=adj.darElemento(i);
 			//Se busca si el vertice ya fue creado anteriormente
-			Vertice nuevoAdj=getVertice(idAdj);
+			Vertex nuevoAdj=getVertice(idAdj);
 			//Si no se crea uno con información vacía
 			if(nuevoAdj==null)
 			{
-			 nuevoAdj = new Vertice(idAdj,null);
+			 nuevoAdj = new Vertex(idAdj,null);
 			}
 			vertices.put(idAdj, nuevoAdj);
 			
@@ -77,7 +77,7 @@ public class Graph<K extends Comparable<K>, V, A extends Comparable<A>> implemen
 			//nuevoVertice.addAdj(idAdj); //correccion ya se había agregado al inicializar el nodo
 			
 			//Se crea el arco
-			Arco arc=new Arco(null, nuevoVertice, nuevoAdj);//Como identificar el arco con el grafo creado por ellos??
+			Arc arc=new Arc(null, nuevoVertice, nuevoAdj);//Como identificar el arco con el grafo creado por ellos??
 			//Se agrega a la lista de arcos del nodo
 			nuevoVertice.getArcos().add(arc);
 			//Se agrega a la lista de arcos del grafo
@@ -88,10 +88,10 @@ public class Graph<K extends Comparable<K>, V, A extends Comparable<A>> implemen
 
 	public void addVertexSecondForm(K idVertex, V infoVertex, LinkedList<A> adj) 
 	{
-		Vertice nuevoVertice = new Vertice(idVertex, infoVertex, adj);
+		Vertex nuevoVertice = new Vertex(idVertex, infoVertex, adj);
 		vertices.put(idVertex, nuevoVertice);
 		cantVertices++;
-		NodeList<Arco> actAdj=  adj.getFirstNode();
+		NodeList<Arc> actAdj=  adj.getFirstNode();
 
 		while(actAdj!=null && actAdj.getelem() != null)
 		{
@@ -105,9 +105,9 @@ public class Graph<K extends Comparable<K>, V, A extends Comparable<A>> implemen
 
 	public void addEdge(K idVertexInit, K idVertexFin, A infoArc) 
 	{
-		Vertice verticeInicio = getVertice(idVertexInit);
-		Vertice verticeFin = getVertice(idVertexFin);
-		Arco nuevoArco = new Arco(infoArc, verticeInicio, verticeFin);
+		Vertex verticeInicio = getVertice(idVertexInit);
+		Vertex verticeFin = getVertice(idVertexFin);
+		Arc nuevoArco = new Arc(infoArc, verticeInicio, verticeFin);
 		if(verticeInicio.getArco(infoArc)==null)
 		{
 			verticeInicio.getArcos().add(nuevoArco);
@@ -120,14 +120,14 @@ public class Graph<K extends Comparable<K>, V, A extends Comparable<A>> implemen
 
 	public void addEdgeSecondForm(K idVertexInit, K idVertexFin, A infoArc) 
 	{
-		Vertice verticeInicio = getVertice(idVertexInit);
+		Vertex verticeInicio = getVertice(idVertexInit);
 		//System.out.println(verticeInicio == null);
-		Vertice verticeFin = getVertice(idVertexFin);
+		Vertex verticeFin = getVertice(idVertexFin);
 		if(verticeFin==null)
 		{
-			verticeFin=new Vertice(idVertexFin, null);
+			verticeFin=new Vertex(idVertexFin, null);
 		}
-		Arco nuevoArco = new Arco(infoArc, verticeInicio, verticeFin);
+		Arc nuevoArco = new Arc(infoArc, verticeInicio, verticeFin);
 		verticeInicio.getArcos().add(nuevoArco);
 		arcos.add(nuevoArco);
 		
@@ -137,7 +137,7 @@ public class Graph<K extends Comparable<K>, V, A extends Comparable<A>> implemen
 	public V getInfoVertex(K idVertex) 
 	{
 		V rta = null;
-		Vertice temp = vertices.get(idVertex);
+		Vertex temp = vertices.get(idVertex);
 		if(temp!=null)
 		{
 			rta = temp.getInfo();
@@ -147,7 +147,7 @@ public class Graph<K extends Comparable<K>, V, A extends Comparable<A>> implemen
 
 	public void setInfoVertex(K idVertex, V infoVertex) 
 	{
-		Vertice buscado = getVertice(idVertex);
+		Vertex buscado = getVertice(idVertex);
 		buscado.setInfoVertex(idVertex, infoVertex);
 	}
 
@@ -155,7 +155,7 @@ public class Graph<K extends Comparable<K>, V, A extends Comparable<A>> implemen
 	public A getInfoArc(K idVertexIni, K idVertexFin) 
 	{
 		A rta = null;
-		Arco arcoBuscado = arcos.getObject(new Arco(null, new Vertice(idVertexIni, null), new Vertice(idVertexFin, null)));
+		Arc arcoBuscado = arcos.getObject(new Arc(null, new Vertex(idVertexIni, null), new Vertex(idVertexFin, null)));
 		if(arcoBuscado!=null)
 		{
 			rta = arcoBuscado.getInfoArco();
@@ -166,14 +166,14 @@ public class Graph<K extends Comparable<K>, V, A extends Comparable<A>> implemen
 
 	public void setInfoArc(K idVertexIni, K idVertexFin, A infoArc) 
 	{
-		Arco buscado = getArco(idVertexIni, idVertexFin);
+		Arc buscado = getArco(idVertexIni, idVertexFin);
 		buscado.setInfoArc(infoArc);
 	}
 
 	public Iterable<K> adj(K idVertex) 
 	{
-		Vertice verticeInteres = getVertice(idVertex);
-		LinkedList<Arco> arcosVertice = verticeInteres.getArcos();
+		Vertex verticeInteres = getVertice(idVertex);
+		LinkedList<Arc> arcosVertice = verticeInteres.getArcos();
 		return new IterableKeysAdjuntas(arcosVertice);
 	}
 
@@ -192,7 +192,7 @@ public class Graph<K extends Comparable<K>, V, A extends Comparable<A>> implemen
 		return new IteratorArcos();
 	}
 
-	public Iterator<Vertice> iteratorVertices()
+	public Iterator<Vertex> iteratorVertices()
 	{
 		return vertices.values();
 	}
@@ -209,40 +209,40 @@ public class Graph<K extends Comparable<K>, V, A extends Comparable<A>> implemen
 
 	public void desmarcarVertices()
 	{
-		Iterator<Vertice> iterator = iteratorVertices();
+		Iterator<Vertex> iterator = iteratorVertices();
 		while(iterator.hasNext())
 		{
 			iterator.next().desmarcar();
 		}
 	}
 
-	public Vertice getVertice(K idVertex)
+	public Vertex getVertice(K idVertex)
 	{
 		return vertices.get(idVertex);
 	}
 
-	public HashTableSC<K, Vertice> getVertices()
+	public HashTableSC<K, Vertex> getVertices()
 	{
 		return vertices;
 	}
 	
 
-	private Arco getArco(K idVertexIni, K idVertexFin)
+	private Arc getArco(K idVertexIni, K idVertexFin)
 	{
-		Arco arcoBuscado = new Arco(null, new Vertice(idVertexIni, null), new Vertice(idVertexFin, null));
+		Arc arcoBuscado = new Arc(null, new Vertex(idVertexIni, null), new Vertex(idVertexFin, null));
 		return arcos.getObject(arcoBuscado);
 	}
 
 	// -----------------------------------------------------------------
 	// Clases
 	// -----------------------------------------------------------------
-	public class Vertice implements Serializable
+	public class Vertex implements Serializable
 	{
 		private K key;
 
 		private V info;
 
-		private LinkedList<Arco> arcos;
+		private LinkedList<Arc> arcos;
 
 		private LinkedList<A> aList;
 
@@ -250,29 +250,29 @@ public class Graph<K extends Comparable<K>, V, A extends Comparable<A>> implemen
 
 		private boolean marcado;
 
-		public Vertice(K pKey, V pInfo)
+		public Vertex(K pKey, V pInfo)
 		{
 			key = pKey;
 			info = pInfo;
-			arcos = new LinkedList<Arco>();
+			arcos = new LinkedList<Arc>();
 			marcado = false;
 		}
 
-		public Vertice(K pKey, V pInfo, LinkedList<A> pAdj )
+		public Vertex(K pKey, V pInfo, LinkedList<A> pAdj )
 		{
 			key = pKey;
 			info = pInfo;
 			aList = pAdj;
-			arcos = new LinkedList<Arco>();
+			arcos = new LinkedList<Arc>();
 			marcado = false;
 		}
 
-		public Vertice(K pKey, V pInfo, ArregloDinamico<K> pAdjNodes )
+		public Vertex(K pKey, V pInfo, ArregloDinamico<K> pAdjNodes )
 		{
 			key = pKey;
 			info = pInfo;
 			adjNodes = pAdjNodes;
-			arcos = new LinkedList<Arco>();
+			arcos = new LinkedList<Arc>();
 			marcado = false;
 		}
 
@@ -291,12 +291,12 @@ public class Graph<K extends Comparable<K>, V, A extends Comparable<A>> implemen
 			return info;
 		}
 
-		public LinkedList<Arco> getArcos()
+		public LinkedList<Arc> getArcos()
 		{
 			return arcos;
 		}
 
-		public Arco getArco(A a)
+		public Arc getArco(A a)
 		{
 
 			if(arcos==null||arcos.getSize()==0)
@@ -308,10 +308,10 @@ public class Graph<K extends Comparable<K>, V, A extends Comparable<A>> implemen
 				NodeList actual= arcos.getFirstNode();
 				while(actual!=null)
 				{
-					Arco actArco=(Arco)actual.getelem();
+					Arc actArco=(Arc)actual.getelem();
 					if(actArco.getInfoArco().equals(a))
 					{
-						Arco resp=actArco;
+						Arc resp=actArco;
 						return resp;
 					}
 					actual=actual.getNext();
@@ -341,15 +341,15 @@ public class Graph<K extends Comparable<K>, V, A extends Comparable<A>> implemen
 		}
 	}
 
-	public class Arco implements Comparable<Arco>, Serializable
+	public class Arc implements Comparable<Arc>, Serializable
 	{
 		private A infoArco;
 
-		private Vertice verticeInit;
+		private Vertex verticeInit;
 
-		private Vertice verticeFin;
+		private Vertex verticeFin;
 
-		public Arco(A pInfoArco, Vertice pVerticeInit, Vertice pVerticeFin)
+		public Arc(A pInfoArco, Vertex pVerticeInit, Vertex pVerticeFin)
 		{
 			infoArco = pInfoArco;
 			verticeInit = pVerticeInit;
@@ -361,12 +361,12 @@ public class Graph<K extends Comparable<K>, V, A extends Comparable<A>> implemen
 			return infoArco;
 		}
 
-		public Vertice getVerticeInit()
+		public Vertex getVerticeInit()
 		{
 			return verticeInit;
 		}
 
-		public Vertice getVerticeFin()
+		public Vertex getVerticeFin()
 		{
 			return verticeFin;
 		}
@@ -377,7 +377,7 @@ public class Graph<K extends Comparable<K>, V, A extends Comparable<A>> implemen
 		}
 
 		@Override
-		public int compareTo(Arco o) 
+		public int compareTo(Arc o) 
 		{
 			int respuesta = -1;
 			if(verticeInit.getKey().compareTo(o.getVerticeInit().getKey())==0
@@ -393,7 +393,7 @@ public class Graph<K extends Comparable<K>, V, A extends Comparable<A>> implemen
 	{
 		private Iterator<K> iterator;
 
-		public IterableKeysAdjuntas(LinkedList<Arco> pArcos) 
+		public IterableKeysAdjuntas(LinkedList<Arc> pArcos) 
 		{
 			iterator = new IteratorKeysAdjuntas(pArcos);
 		}
@@ -409,12 +409,12 @@ public class Graph<K extends Comparable<K>, V, A extends Comparable<A>> implemen
 	{		
 		private K proximo;
 
-		private Iterator<Arco> iteratorArcos;
+		private Iterator<Arc> iteratorArcos;
 
-		public IteratorKeysAdjuntas(LinkedList<Arco> pArcos) 
+		public IteratorKeysAdjuntas(LinkedList<Arc> pArcos) 
 		{
 			iteratorArcos = pArcos.iterator();
-			Arco primerArco = iteratorArcos.next();
+			Arc primerArco = iteratorArcos.next();
 			if(primerArco != null)
 			{
 				proximo = primerArco.getVerticeFin().getKey();
@@ -435,7 +435,7 @@ public class Graph<K extends Comparable<K>, V, A extends Comparable<A>> implemen
 		public K next() 
 		{
 			K siguiente = proximo;
-			Arco actual = iteratorArcos.next();
+			Arc actual = iteratorArcos.next();
 			if(actual != null)
 			{
 				proximo = actual.getVerticeFin().getKey();
@@ -452,13 +452,13 @@ public class Graph<K extends Comparable<K>, V, A extends Comparable<A>> implemen
 	{
 		private A proximo;
 
-		private Iterator<Arco> iterator;
+		private Iterator<Arc> iterator;
 
 		public IteratorArcos() 
 		{
 			iterator = arcos.iterator();
 
-			Arco primerArco = iterator.next();
+			Arc primerArco = iterator.next();
 			if(primerArco != null)
 			{
 				proximo = primerArco.getInfoArco();
@@ -479,7 +479,7 @@ public class Graph<K extends Comparable<K>, V, A extends Comparable<A>> implemen
 		public A next() 
 		{
 			A siguiente = proximo;
-			Arco actual = iterator.next();
+			Arc actual = iterator.next();
 			if(actual != null)
 			{
 				proximo = actual.getInfoArco();
