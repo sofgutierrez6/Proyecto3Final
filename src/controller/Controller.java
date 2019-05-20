@@ -575,7 +575,7 @@ public class Controller {
 	 * @param idVertice1 
 	 */
 	public void caminoCostoMinimoA1(int idVertice1, int idVertice2) {
-		// TODO Auto-generated method stub
+		
 	}
 
 	// TODO El tipo de retorno de los m�todos puede ajustarse seg�n la conveniencia
