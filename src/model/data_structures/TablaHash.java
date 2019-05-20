@@ -25,7 +25,7 @@ public class TablaHash<K extends Comparable<K>, V>
 			sizeArreglo = 2;
 			cantElementos = 0;
 			factorDeCarga = 0;
-			arreglo = (NodoTablaHash[]) new Object[sizeArreglo];
+			arreglo =  new Object[sizeArreglo];
 		}
 
 		// -----------------------------------------------------------------
