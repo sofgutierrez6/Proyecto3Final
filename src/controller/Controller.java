@@ -108,7 +108,8 @@ public class Controller {
 		boolean fin=false;
 		Counter contador = new Counter();
 		// Mantiene el programa corriendo hasta que el usuario decida temrinarlo. 
-
+		Controller controller = new Controller();
+		
 		while(!fin) {
 
 			int idVertice1 = 0;
@@ -118,7 +119,7 @@ public class Controller {
 
 			int option = sc.nextInt();
 
-			Controller controller = new Controller();
+			
 			
 			//Recorre las posibles opciones que ingresa el usuario al ejecutar el programa.
 			switch(option){
@@ -174,7 +175,7 @@ public class Controller {
 				view.printMessage("Ingrese El id del segundo vertice (Ej. 901839): ");
 				idVertice2 = sc.nextInt();*/
 
-				System.out.println("Antes: "+controller.grafoJson2.V());
+				System.out.println("Antes: "+grafoJson2.V());
 				startTime = System.currentTimeMillis();
 				controller.caminoCostoMinimoA1(idVertice1, idVertice2);
 				endTime = System.currentTimeMillis();
@@ -603,14 +604,19 @@ public class Controller {
 		
 		System.out.println("Cola: "+grafoPrueba.getVertices().keysQueue().size());*/
 		System.out.println("Tamaño grafo: "+grafoJson2.V());
-		/*TablaHash<Long,Grafo<Long,VOIntersections,Long>.Vertice> ver=grafoJson2.getVertices();
+		TablaHash<Long,Grafo<Long,VOIntersections,Long>.Vertice> ver=grafoJson2.getVertices();
+		int[] distTo= new int[grafoJson2.V()];
+		Long[] edgeTo= new Long[grafoJson2.V()];
 		int c=0;
 		for(int i=0;i<grafoJson2.V();i++)
 		{
+			//distTo[i]=Integer.POs
 			ver.get(i);
 			c++;	
 		}
-		System.out.println(c);*/
+		System.out.println(c);
+		
+		
 	}
 
 	// TODO El tipo de retorno de los mï¿½todos puede ajustarse segï¿½n la conveniencia
