@@ -113,12 +113,13 @@ public class Controller {
 
 			int idVertice1 = 0;
 			int idVertice2 = 0;
-			Controller controller = new Controller();
 
 			view.printMenu();
 
 			int option = sc.nextInt();
 
+			Controller controller = new Controller();
+			
 			//Recorre las posibles opciones que ingresa el usuario al ejecutar el programa.
 			switch(option){
 			case 0:
@@ -168,14 +169,14 @@ public class Controller {
 				break;
 
 			case 1:
-				view.printMessage("Ingrese El id del primer vertice (Ej. 901839): ");
+				/*view.printMessage("Ingrese El id del primer vertice (Ej. 901839): ");
 				idVertice1 = sc.nextInt();
 				view.printMessage("Ingrese El id del segundo vertice (Ej. 901839): ");
-				idVertice2 = sc.nextInt();
+				idVertice2 = sc.nextInt();*/
 
-
+				System.out.println("Antes: "+controller.grafoJson2.V());
 				startTime = System.currentTimeMillis();
-				caminoCostoMinimoA1(idVertice1, idVertice2);
+				controller.caminoCostoMinimoA1(idVertice1, idVertice2);
 				endTime = System.currentTimeMillis();
 				duration = endTime - startTime;
 				view.printMessage("Tiempo del requerimiento: " + duration + " milisegundos");
@@ -602,14 +603,14 @@ public class Controller {
 		
 		System.out.println("Cola: "+grafoPrueba.getVertices().keysQueue().size());*/
 		System.out.println("Tamaño grafo: "+grafoJson2.V());
-		TablaHash<Long,Grafo<Long,VOIntersections,Long>.Vertice> ver=grafoJson2.getVertices();
+		/*TablaHash<Long,Grafo<Long,VOIntersections,Long>.Vertice> ver=grafoJson2.getVertices();
 		int c=0;
 		for(int i=0;i<grafoJson2.V();i++)
 		{
 			ver.get(i);
 			c++;	
 		}
-		System.out.println(c);
+		System.out.println(c);*/
 	}
 
 	// TODO El tipo de retorno de los mï¿½todos puede ajustarse segï¿½n la conveniencia
