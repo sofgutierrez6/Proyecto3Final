@@ -18,7 +18,7 @@ public class VOIntersections implements Comparable<VOIntersections> {
 	/** Cantidad de infracciones que se cometieron en esta intersección.*/
 	private int cantidad;
 	
-	
+	private Double acomulado;
 	/**Arreglo dinamico con id de infracciones */
 	private ArregloDinamico<Long> infracciones;
 	
@@ -35,7 +35,8 @@ public class VOIntersections implements Comparable<VOIntersections> {
 		id = pId;
 		lat = pLat;
 		lon = pLon;
-		cantidad = 0;
+		cantidad = pInfracciones.darTamano();
+		acomulado=0.0;
 		infracciones=pInfracciones;
 	}
 	
@@ -55,6 +56,18 @@ public class VOIntersections implements Comparable<VOIntersections> {
 		return cantidad;
 	}
 	
+	public Double getAcomulado()
+	{
+		return acomulado;
+	}
+	public void aumentarAcomulado(int mas)
+	{
+		acomulado+=mas;
+	}
+	public void setAcomulado(Double a)
+	{
+		acomulado=a;
+	}
 	/**
 	 * Agrega una instancia a la cantidad de infracciones que se cometieron. 
 	 */

@@ -32,7 +32,10 @@ public class TablaHash<K extends Comparable<K>, V>
 		// M�todos
 		// -----------------------------------------------------------------
 
-		
+		public Object[] arreglo()
+		{
+			return arreglo;
+		}
 		public int hash(K key) 
 		{
 			return ((key.hashCode() & 0x7fffffff)%sizeArreglo);

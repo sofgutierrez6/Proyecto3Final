@@ -1,17 +1,21 @@
 package model.data_structures;
 
+import java.util.Comparator;
+
 public class MinPQ <T extends Comparable<T>>{
 
 	private int size;
 	private int tamanioMax;
 	private T max;
 	private ArregloDinamico<T> heap;
-	public MinPQ(int n)
+	private Comparator<T> comparador;
+	public MinPQ(int n, Comparator<T> comparador)
 	{
 		size=0;
 		tamanioMax=n+1;
 		heap= new ArregloDinamico<T>(tamanioMax);
-		max=heap.darElemento(1);		
+		max=heap.darElemento(1);
+		this.comparador=comparador;
 	}
 	/**
 	 * Retorna número de elementos presentes en la cola de prioridad
@@ -70,9 +74,14 @@ public class MinPQ <T extends Comparable<T>>{
 	 * @param w segundo objeto de comparacion
 	 * @return true si v es menor que w usando el metodo compareTo. false en caso contrario.
 	 */
-	private static boolean more(Comparable v, Comparable w)
-	{			
-		return v.compareTo(w)>0?true:false;
+	private boolean more(T v, T w)
+	{		
+		boolean resp=false;
+		if(comparador.compare(v,w)>0)
+		{
+			resp =true;
+		}
+		return resp;
 	}
 	/**
 	 * swim
@@ -80,7 +89,7 @@ public class MinPQ <T extends Comparable<T>>{
 	 */
 	private void swim(int k)
 	{
-		while (k > 1 && more(k/2, k))
+		while (k > 1 && more(heap.darElemento(k/2), heap.darElemento(k)))
 		{
 			heap.exchange(k/2, k);
 			k = k/2;
@@ -96,11 +105,22 @@ public class MinPQ <T extends Comparable<T>>{
 		while (2*k <= size)
 		{
 			int j = 2*k;
-			if (j < size && more(j, j+1)) j++;
-			if (!more(k, j)) break;
+			if (j < size && more(heap.darElemento(j), heap.darElemento(j+1))) j++;
+			if (!more(heap.darElemento(k), heap.darElemento(j))) break;
 			heap.exchange(k, j);
 			k = j;
 		}
+	}
+	public boolean contains(T x)
+	{
+		for(int i= 0; i<heap.darTamano();i++)
+		{
+			if(heap.darElemento(i).compareTo(x)==0)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
