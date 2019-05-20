@@ -248,6 +248,8 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 		private K key;
 
 		private V info;
+		
+		private Vertice next;
 
 		private LinkedList<Arco> arcos;
 
@@ -318,6 +320,15 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 		public void setCameFrom(K came)
 		{
 			cameFrom= came;
+		}
+		public void setNext(Vertice next)
+		{
+			this.next=next;
+		}
+		
+		public Vertice getNext()
+		{
+			return next;
 		}
 		public Arco getArco(A a)
 		{

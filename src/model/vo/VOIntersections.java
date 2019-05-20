@@ -94,5 +94,10 @@ public class VOIntersections implements Comparable<VOIntersections> {
 		
 		return (int) id - (int) o.getId();
 	}
+	
+	public String toString()
+	{
+		return "id: "+id+" lat: "+lat+" lon: "+lon;
+	}
 
 }

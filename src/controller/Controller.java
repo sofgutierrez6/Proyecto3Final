@@ -179,13 +179,13 @@ public class Controller {
 				break;
 
 			case 1:
-				System.out.println("Cola: "+grafoPrueba.getVertices().keysQueue().size());
-				view.printMessage("Ingrese El id del primer vertice (Ej. 901839): ");
+				//System.out.println("Cola: "+grafoPrueba.getVertices().keysQueue().size());
+				view.printMessage("Ingrese El id del primer vertice (Ej. 611328751): ");
 				id1 = sc.next();
-				view.printMessage("Ingrese El id del segundo vertice (Ej. 901839): ");
+				view.printMessage("Ingrese El id del segundo vertice (Ej. 611286570): ");
 				id2 = sc.next();
 
-				System.out.println("Antes: "+grafoJson2.V());
+				//System.out.println("Antes: "+grafoJson2.V());
 				startTime = System.currentTimeMillis();
 				controller.caminoCostoMinimoA1(id1, id2);
 				endTime = System.currentTimeMillis();
@@ -601,51 +601,26 @@ public class Controller {
 	 * @param idVertice2 
 	 * @param idVertice1 
 	 */
-	public void caminoCostoMinimoA1(String idVertice1, String idVertice2) {
-		/*Iterator it= grafoPrueba.iteratorVertices();
-		Vertex v=(Vertex) it.next();
-		int i=0;
-		while(it.hasNext())
+	public void caminoCostoMinimoA1(String idVertice1, String idVertice2)
+	{
+		double dist=0.0;
+		Long goal=Long.parseLong(idVertice1);
+		Vertice verGoal=grafoJson2.getVertice(goal);
+		if(verGoal==null)
 		{
-			v=(Vertex) it.next();
-			i++;
+			System.out.println("El vertice final no existe");
 		}
-		System.out.println("Iterador "+i);
-
-		System.out.println("Cola: "+grafoPrueba.getVertices().keysQueue().size());*/
-		System.out.println("Tamaño grafo: "+grafoJson2.V());
-		TablaHash<Long,Grafo<Long,VOIntersections,Long>.Vertice> ver=grafoJson2.getVertices();
-		Double[] distTo= new Double[grafoJson2.V()];
-		Long[] edgeTo= new Long[grafoJson2.V()];
-		//MinPQ<Double> menorCosto = new MinPQ<Double>(grafoJson2.V());
-		int c=0;
-
-		for(int i=0;i<ver.size();i++)
+		Vertice inicio=dijkstra(goal, Long.parseLong(idVertice2));
+		Vertice actual=inicio;
+		while((inicio!=null) && (verGoal!=null)&&goal!=((VOIntersections) actual.getInfo()).getId())
 		{
-			NodoTablaHash actual=ver.get(i);
-
-			if(actual!=null)
-			{
-				distTo[i]=Double.POSITIVE_INFINITY;	
-			}
-			c++;	
+			VOIntersections VOactual= (VOIntersections) actual.getInfo();
+			System.out.println(VOactual.toString());
+			VOIntersections VOnext=(VOIntersections) actual.getNext().getInfo();
+			distance(VOactual.getLat(), VOactual.getLon(), VOnext.getLat(), VOnext.getLon());
+			actual=actual.getNext();
 		}
-		long idVertIni=Long.parseLong(idVertice1);
-		int index= ver.getIndex(idVertIni);
-		distTo[index]=0.0;
-		Vertice vertIni= grafoJson2.getVertice(idVertIni);
-
-		//Se recorren lo adyacentes 
-		ArregloDinamico<Long> adj = vertIni.getAdjNodes();
-		for(int j=0; j<adj.darTamano();j++)
-		{
-			Long actual=adj.darElemento(j);
-			int k=ver.getIndex(actual);
-			distTo[k]=(double) grafoJson2.getVertice(actual).getInfo().getCantidad();
-		}
-
-
-
+		System.out.println("Distancia estimada en km: "+dist);
 
 	}
 
@@ -839,17 +814,23 @@ public class Controller {
 	}
 
 
-	public void dijkstra(Long inicio, Long goal)
+	public Vertice dijkstra(Long inicio, Long goal)
 	{
 		Long actual=inicio;
+		
 		Vertice verInicio=grafoJson2.getVertice(inicio);
+		if(verInicio==null)
+		{
+			System.out.println("No existe vertice");
+			return null;
+		}
 		Vertice verActual=verInicio;
 		Double[] dist=new Double[grafoJson2.V()];
 		ComparadorXAccidentes comparador= new ComparadorXAccidentes();
 		MinPQ<VOIntersections> pq= new MinPQ<VOIntersections>(grafoJson2.V(), comparador);
 		TablaHash<Long,Grafo<Long,VOIntersections,Long>.Vertice> ver=grafoJson2.getVertices();
 		//Se recorren todos los nodos hasta que se llega al vertice indicado
-		for(int i=0; i<grafoJson2.V() && actual.compareTo(goal)!=0;i++)
+		for(int i=0; i<grafoJson2.V() /*&& actual.compareTo(goal)!=0*/;i++)
 		{
 			//Se inicializan todas las distancias menos las de los nodos adyacentes en infinito
 			for(int k=0;k<grafoJson2.V();k++)
@@ -866,7 +847,7 @@ public class Controller {
 				}
 				else
 				{*/
-					dist[k]=Double.POSITIVE_INFINITY;
+				dist[k]=Double.POSITIVE_INFINITY;
 				//}
 			}
 
@@ -884,6 +865,7 @@ public class Controller {
 					int  iAdj=grafoJson2.getVertices().getIndex(adjActual);
 					if(dist[iAdj]>dist[iActual]+((VOIntersections) verAdjActual.getInfo()).getCantidad())
 					{
+						verActual.setNext(verAdjActual);
 						verAdjActual.setCameFrom(actual);
 						dist[iAdj] = dist[iActual]+((VOIntersections) verAdjActual.getInfo()).getCantidad();
 						((VOIntersections) verAdjActual.getInfo()).setAcomulado(dist[iAdj]);
@@ -894,6 +876,7 @@ public class Controller {
 				}
 			}
 		}
+		return verInicio;
 	}
 	private void toJson()
 	{
@@ -1032,6 +1015,52 @@ public class Controller {
 			//obj.add("ID", actual.getId() );
 
 		}
+
+
+		/*Iterator it= grafoPrueba.iteratorVertices();
+		Vertex v=(Vertex) it.next();
+		int i=0;
+		while(it.hasNext())
+		{
+			v=(Vertex) it.next();
+			i++;
+		}
+		System.out.println("Iterador "+i);
+
+		System.out.println("Cola: "+grafoPrueba.getVertices().keysQueue().size());*/
+		/*System.out.println("Tamaño grafo: "+grafoJson2.V());
+		TablaHash<Long,Grafo<Long,VOIntersections,Long>.Vertice> ver=grafoJson2.getVertices();
+		Double[] distTo= new Double[grafoJson2.V()];
+		Long[] edgeTo= new Long[grafoJson2.V()];
+		//MinPQ<Double> menorCosto = new MinPQ<Double>(grafoJson2.V());
+		int c=0;
+
+		for(int i=0;i<ver.size();i++)
+		{
+			NodoTablaHash actual=ver.get(i);
+
+			if(actual!=null)
+			{
+				distTo[i]=Double.POSITIVE_INFINITY;	
+			}
+			c++;	
+		}
+		long idVertIni=Long.parseLong(idVertice1);
+		int index= ver.getIndex(idVertIni);
+		distTo[index]=0.0;
+		Vertice vertIni= grafoJson2.getVertice(idVertIni);
+
+		//Se recorren lo adyacentes 
+		ArregloDinamico<Long> adj = vertIni.getAdjNodes();
+		for(int j=0; j<adj.darTamano();j++)
+		{
+			Long actual=adj.darElemento(j);
+			int k=ver.getIndex(actual);
+			distTo[k]=(double) grafoJson2.getVertice(actual).getInfo().getCantidad();
+		}
+
+		 */
+
 
 
 	}
