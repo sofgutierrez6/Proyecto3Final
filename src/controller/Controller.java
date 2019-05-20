@@ -614,21 +614,37 @@ public class Controller {
 		Long[] edgeTo= new Long[grafoJson2.V()];
 		MinPQ<Double> menorCosto = new MinPQ<Double>(grafoJson2.V());
 		int c=0;
+		
 		for(int i=0;i<ver.size();i++)
 		{
 			NodoTablaHash actual=ver.get(i);
+			
 			if(actual!=null)
 			{
 				distTo[i]=Double.POSITIVE_INFINITY;	
 			}
 			c++;	
 		}
-		//menorCosto.
-		int index= ver.getIndex(Long.parseLong(idVertice1));
+		long idVertIni=Long.parseLong(idVertice1);
+		int index= ver.getIndex(idVertIni);
 		distTo[index]=0.0;
+		Vertice vertIni= grafoJson2.getVertice(idVertIni);
+		
+		//Se recorren lo adyacentes 
+		ArregloDinamico<Long> adj = vertIni.getAdjNodes();
+		for(int j=0; j<adj.darTamano();j++)
+		{
+			Long actual=adj.darElemento(j);
+			int k=ver.getIndex(actual);
+			distTo[k]=(double) grafoJson2.getVertice(actual).getInfo().getCantidad();
+		}
+		
+		
 		
 		
 	}
+	
+	
 
 	// TODO El tipo de retorno de los m�todos puede ajustarse seg�n la conveniencia
 	/**
@@ -817,6 +833,28 @@ public class Controller {
 		aAgregar.agregarInfraccion(id);
 	}
 
+	
+	public void dijkstra(Long inicio, Long goal)
+	{
+		Long actual=inicio;
+		Vertice verInicio=grafoJson2.getVertice(inicio);
+		Vertice verActual=verInicio;
+
+		while(actual.compareTo(goal)==0)
+		{
+			//Se recorren los adyacentes
+			for(int i=0; i<verActual.getAdjNodes().darTamano(); i++)
+			{
+				actual=(Long) verActual.getAdjNodes().darElemento(i);
+				verActual=grafoJson2.getVertice(actual);
+				if(true)
+				{
+					verActual.setCameFrom(actual);
+				}
+				
+			}
+		}
+	}
 	private void toJson()
 	{
 		JsonWriter writer;

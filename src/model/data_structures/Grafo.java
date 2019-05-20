@@ -61,7 +61,7 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 		Vertice nuevoVertice = new Vertice(idVertex, infoVertex, adj);
 		vertices.put(idVertex, nuevoVertice);
 		cantVertices++;
-	
+
 		//crear nodos a medida que se leen y luego si se vuelven a leer se les agrega atributos
 		for(int i=0; i<adj.darTamano();i++)
 		{
@@ -71,13 +71,13 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 			//Si no se crea uno con información vacía
 			if(nuevoAdj==null)
 			{
-			 nuevoAdj = new Vertice(idAdj,null);
+				nuevoAdj = new Vertice(idAdj,null);
 			}
 			vertices.put(idAdj, nuevoAdj);
-			
+
 			//Se agrega a la lista de nodos adyacentes
 			//nuevoVertice.addAdj(idAdj); //correccion ya se había agregado al inicializar el nodo
-			
+
 			//Se crea el arco
 			Arco arc=new Arco(null, nuevoVertice, nuevoAdj);//Como identificar el arco con el grafo creado por ellos??
 			//Se agrega a la lista de arcos del nodo
@@ -132,7 +132,7 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 		Arco nuevoArco = new Arco(infoArc, verticeInicio, verticeFin);
 		verticeInicio.getArcos().add(nuevoArco);
 		arcos.add(nuevoArco);
-		
+
 		cantEnlaces++;
 	}
 
@@ -238,6 +238,8 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 		return arcos.getObject(arcoBuscado);
 	}
 
+	
+
 	// -----------------------------------------------------------------
 	// Clases
 	// -----------------------------------------------------------------
@@ -254,6 +256,8 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 		private ArregloDinamico<K> adjNodes;
 
 		private boolean marcado;
+
+		private K cameFrom;
 
 		public Vertice(K pKey, V pInfo)
 		{
@@ -301,6 +305,20 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 			return arcos;
 		}
 
+		public ArregloDinamico<K> getAdjNodes()
+		{
+			return adjNodes;
+		}
+
+		public K cameFrom()
+		{
+			return cameFrom;
+		}
+
+		public void setCameFrom(K came)
+		{
+			cameFrom= came;
+		}
 		public Arco getArco(A a)
 		{
 
