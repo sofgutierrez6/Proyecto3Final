@@ -11,7 +11,7 @@ public class HashTableSC <Key, Value>{
 	    private int n;                                // number of key-value pairs
 	    private int m;                                // hash table size
 	    private SequentialSearchSt<Key, Value>[] st;  // array of linked-list symbol tables
-
+	    private SequentialSearchSt<Key, Value> lista; 
 
 	    /**
 	     * Initializes an empty symbol table.
@@ -26,6 +26,7 @@ public class HashTableSC <Key, Value>{
 	     */
 	    public HashTableSC(int m) {
 	        this.m = m;
+	        lista=new SequentialSearchSt<Key, Value>();
 	        st = (SequentialSearchSt<Key, Value>[]) new SequentialSearchSt[m];
 	        for (int i = 0; i < m; i++)
 	            st[i] = new SequentialSearchSt<Key, Value>();
@@ -119,8 +120,14 @@ public class HashTableSC <Key, Value>{
 	        int i = hash(key);
 	        if (!st[i].contains(key)) n++;
 	        st[i].put(key, val);
+	        //lista.put(key, val);
 	    } 
 
+	    public SequentialSearchSt<Key, Value> getList()
+	    {
+	    	return lista;
+	    }
+	    
 	    /**
 	     * Removes the specified key and its associated value from this symbol table     
 	     * (if the key is in this symbol table).    
@@ -142,9 +149,13 @@ public class HashTableSC <Key, Value>{
 	    // return keys in symbol table in a Queue
 	    public Queue<Key> keysQueue() {
 	        Queue<Key> queue = new Queue<Key>();
-	        for (int i = 0; i < m; i++) {
+	        for (int i = 0; i < m; i++) 
+	        {
 	            for (Key key : st[i].keys())
+	            {
 	                queue.enqueue(key);
+	            	System.out.println(i);
+	            }
 	        }
 	        return queue;
 	    } 

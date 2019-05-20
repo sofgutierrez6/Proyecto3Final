@@ -124,6 +124,12 @@ public class TablaHash<K extends Comparable<K>, V>
 			}
 			return respuesta;
 		}
+		
+		public NodoTablaHash get(int i)
+		{
+			
+			 return ((TablaHash<K, V>.NodoTablaHash) arreglo[i]);
+		}
 
 		public V getSecondForm(K key)
 		{

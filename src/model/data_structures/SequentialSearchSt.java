@@ -6,7 +6,7 @@ public class SequentialSearchSt <Key, Value>{
 	    private Node first;      // the linked list of key-value pairs
 
 	    // a helper linked list data type
-	    private class Node {
+	     public class Node {
 	        private Key key;
 	        private Value val;
 	        private Node next;
@@ -16,8 +16,27 @@ public class SequentialSearchSt <Key, Value>{
 	            this.val  = val;
 	            this.next = next;
 	        }
+	        
+	        public Key getKey()
+	        {
+	        	return key;
+	        }
+	        
+	        public Value getValue()
+	        {
+	        	return val;
+	        }
+	        
+	        public Node getNext()
+	        {
+	        	return next;
+	        }
 	    }
 
+	    public Node getFirst()
+	    {
+	    	return first;
+	    }
 	    /**
 	     * Initializes an empty symbol table.
 	     */

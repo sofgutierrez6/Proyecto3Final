@@ -145,10 +145,11 @@ public class Controller {
 					startTime = System.currentTimeMillis();
 					controller.loadJSON(RutaArchivo);
 					endTime = System.currentTimeMillis();
-					//System.out.println(grafoJson2.getVertices().size());
+					System.out.println(grafoJson2.getVertices().size());
 					System.out.println("Información del grafo:");
-					//System.out.println("Número de nodos: " + grafoJson2.V() + ", Número de arcos: " + grafoJson2.E());
-					System.out.println("Número de nodos: " + grafoPrueba.V() + ", Número de arcos: " + grafoPrueba.E());
+					System.out.println("Número de nodos: " + grafoJson2.V() + ", Número de arcos: " + grafoJson2.E());
+					//System.out.println("Número de nodos: " + grafoPrueba.V() + ", Número de arcos: " + grafoPrueba.E());
+					//System.out.println("Tama�o hash: "+grafoPrueba.getVertices().getList().size());
 					
 				}
 				
@@ -589,7 +590,7 @@ public class Controller {
 	 * @param idVertice1 
 	 */
 	public void caminoCostoMinimoA1(int idVertice1, int idVertice2) {
-		Iterator it= grafoPrueba.iteratorVertices();
+		/*Iterator it= grafoPrueba.iteratorVertices();
 		Vertex v=(Vertex) it.next();
 		int i=0;
 		while(it.hasNext())
@@ -597,9 +598,18 @@ public class Controller {
 			v=(Vertex) it.next();
 			i++;
 		}
-		System.out.println(i);
+		System.out.println("Iterador "+i);
 		
-		System.out.println(grafoPrueba.getVertices().keysQueue().size());
+		System.out.println("Cola: "+grafoPrueba.getVertices().keysQueue().size());*/
+		System.out.println("Tama�o grafo: "+grafoJson2.V());
+		TablaHash<Long,Grafo<Long,VOIntersections,Long>.Vertice> ver=grafoJson2.getVertices();
+		int c=0;
+		for(int i=0;i<grafoJson2.V();i++)
+		{
+			ver.get(i);
+			c++;	
+		}
+		System.out.println(c);
 	}
 
 	// TODO El tipo de retorno de los m�todos puede ajustarse seg�n la conveniencia
