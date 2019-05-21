@@ -380,7 +380,7 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 			return count;
 		}
 		
-		public Queue dfs(Vertice v, Queue cola)
+		public Queue<Vertice> dfs(Vertice v, Queue<Vertice> cola)
 		{
 			v.marcar();
 			
