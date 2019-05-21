@@ -671,14 +671,18 @@ public class Controller {
 		{
 			VOIntersections vo=maxHeap.delMax();
 			System.out.println(vo.toString()+" Cantidad accidentes: "+vo.getCantidad());
-			cola= new Queue();
+			cola= new Queue<Vertice>();
 			grafoJson2.dfs(grafoJson2.getVertice(vo.getId()), cola);
-			
+			System.out.println("El numero de componentes conectadas a: "+vo.getId()+ " es :"+ cola.size());
+			for(int k=0; k<cola.size();k++)
+			{
+				System.out.println(((Vertice) cola.dequeue()).getInfo().toString());
+			}
 		}
 		//Ahora se identifican las componentes conectadas
 		
-		ArregloDinamico<VOCC> ccs= grafoJson2.cc();
-		System.out.println("El numero de componentes conectadas en todo el grafo es: "+ccs.darTamano());
+		//ArregloDinamico<VOCC> ccs= grafoJson2.cc();
+		//System.out.println("El numero de componentes conectadas en todo el grafo es: "+ccs.darTamano());
 		
 		
 	}
