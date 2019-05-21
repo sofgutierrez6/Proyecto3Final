@@ -5,12 +5,10 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Stack;
 
-<<<<<<< HEAD
+
 import model.vo.VOCC;
-=======
 import model.data_structures.Graph.Arc;
 import model.data_structures.Graph.Vertex;
->>>>>>> 5d2f9b95d1cbf3fd2eb61581e79bb512b3530adb
 import model.vo.VOWay;
 
 public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> implements Serializable
