@@ -35,8 +35,10 @@ import model.data_structures.Graph.Vertex;
 import model.data_structures.Heap;
 import model.data_structures.IQueue;
 import model.data_structures.IStack;
+import model.data_structures.KruskalMST;
 import model.data_structures.LinkedList;
 import model.data_structures.MaxColaPrioridad;
+import model.data_structures.MinHeap;
 import model.data_structures.MinPQ;
 import model.data_structures.NodeList;
 import model.data_structures.Queue;
@@ -191,9 +193,9 @@ public class Controller {
 
 			case 1:
 				//System.out.println("Cola: "+grafoPrueba.getVertices().keysQueue().size());
-				view.printMessage("Ingrese El id del primer vertice (Ej. 611328751): ");
+				view.printMessage("Ingrese El id del primer vertice (Ej. 234661): ");
 				id1 = sc.next();
-				view.printMessage("Ingrese El id del segundo vertice (Ej. 611286570): ");
+				view.printMessage("Ingrese El id del segundo vertice (Ej. 234664): ");
 				id2 = sc.next();
 
 				//System.out.println("Antes: "+grafoJson2.V());
@@ -308,7 +310,7 @@ public class Controller {
 			case 6:
 
 				startTime = System.currentTimeMillis();
-				arbolMSTPrimC2();
+				arbolMSTPrimC2((long) 234661);
 				endTime = System.currentTimeMillis();
 				duration = endTime - startTime;
 				view.printMessage("Tiempo del requerimiento: " + duration + " milisegundos");
@@ -763,16 +765,18 @@ public class Controller {
 	 */
 	public void arbolMSTKruskalC1() {
 		// TODO Auto-generated method stub
-
+		KruskalMST kruski=new KruskalMST(grafoJson2);
 	}
 
 	// TODO El tipo de retorno de los m�todos puede ajustarse seg�n la conveniencia
 	/**
 	 * Requerimiento 2C: Calcular un �rbol de expansi�n m�nima (MST) con criterio distancia, utilizando el algoritmo de Prim. (REQ 2C)
 	 */
-	public void arbolMSTPrimC2() {
+	public void arbolMSTPrimC2(Long idVertex) {
 		// TODO Auto-generated method stub
-
+		Vertice v= grafoJson2.getVertice(idVertex);
+		ArregloDinamico arr=Prim(v);
+		mapa.pintarMapaConLineasIniciofin((VOIntersections)v.getInfo(),(VOIntersections)v.getInfo(), arr);
 	}
 
 	/**
@@ -993,6 +997,49 @@ public class Controller {
 			}
 		}
 		return verInicio;
+	}
+	
+	public ArregloDinamico Prim(Vertice v)
+	{
+		ArregloDinamico arr=new ArregloDinamico(5);
+		NodeList<Arco> actual=grafoJson2.getArcos().getFirstNode();
+		while(actual!=null)
+		{
+			double lat1 =(double) ((VOIntersections) ((Vertice) actual.getelem().getVerticeInit()).getInfo()).getLat();
+			double lat2=(double) ((VOIntersections) ((Vertice) actual.getelem().getVerticeFin()).getInfo()).getLat();
+			
+			double lon1 =(double) ((VOIntersections) ((Vertice) actual.getelem().getVerticeInit()).getInfo()).getLon();
+			double lon2=(double) ((VOIntersections) ((Vertice) actual.getelem().getVerticeFin()).getInfo()).getLon();
+			double dist=distance(lat1,lon1,lat2,lon2);
+			actual.getelem().setDistancia(dist);
+			actual=actual.getNext();
+		}
+		Vertice aa=v;
+		if(!aa.estaMarcado())
+		{
+			Arco minArc=min(aa);
+			Vertice min=minArc.getVerticeFin();
+			aa=min;			
+			arr.agregar(minArc);
+		}
+		return arr;
+	}
+	
+	public Arco min(Vertice v)
+	{
+		LinkedList adj= v.getArcos();
+		NodeList<Arco> arcoActual=adj.getFirstNode();
+		Arco min= arcoActual.getelem();
+		while(arcoActual!=null)
+		{
+			if(arcoActual.getelem().dist()<min.dist())			
+			{
+				min=arcoActual.getelem();
+			}
+			arcoActual=arcoActual.getNext();
+		}
+		min.getVerticeFin().marcar();
+		return min;
 	}
 	private void toJson()
 	{

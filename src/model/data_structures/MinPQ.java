@@ -1,6 +1,7 @@
 package model.data_structures;
 
 import java.util.Comparator;
+import model.data_structures.ArregloDinamico;
 
 public class MinPQ <T extends Comparable<T>>{
 

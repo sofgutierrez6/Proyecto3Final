@@ -8,14 +8,14 @@ public class KruskalMST
 	public KruskalMST(Grafo G)
 	{
 		mst = new Queue<Arco>();
-		MinPQ<Arco> pq = new MinPQ<Arco>(G.edges());
+		MinHeap<Arco> pq = new MinHeap<Arco>(G.edges());
 		UF uf = new UF(G.V());
 		while (!pq.isEmpty() && mst.size() < G.V()-1)
 		{
 			Arco e = pq.delMin(); // Get min weight edge on pq
-			int v = e.either(), w = e.other(v); // and its vertices.
-			if (uf.connected(v, w)) continue; // Ignore ineligible edges.
-			uf.union(v, w); // Merge components.
+			//int v = e.either(), w = e.other(v); // and its vertices.
+			//if (uf.connected(v, w)) continue; // Ignore ineligible edges.
+			//uf.union(v, w); // Merge components.
 			mst.enqueue(e); // Add edge to mst.
 		}
 	}
@@ -55,8 +55,8 @@ public class UF {
 		int j = find(q);
 		if (i == j) return;
 		// Make smaller root point to larger one.
-		if (sz[i] < sz[j]) { id[i] = j; sz[j] += sz[i]; }
-		else { id[j] = i; sz[i] += sz[j]; }
+		//if (sz[i] < sz[j]) { id[i] = j; sz[j] += sz[i]; }
+		//else { id[j] = i; sz[i] += sz[j]; }
 		count--;
 	}
 

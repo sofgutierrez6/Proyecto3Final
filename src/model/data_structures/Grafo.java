@@ -24,27 +24,28 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 	private int cantVertices;
 
 	private int cantEnlaces;
-	
+
 	/** Constante que representa el infinito para los nodos que no han sido marcados con BFS*/
 	private static final int INFINITY = Integer.MAX_VALUE;
-	
+
 	/** 
 	 * Arreglo que representa la existencia de un camino desde el nodo inicial hasta el nodo que est� en esa posici�n
 	 * Ej. Si marked[v] es verdadero significa que ya existe un camino entre s(inicial) y v */
-    private boolean[] marked;
-    
-    /**
-     * Arreglo en el que se encuentran los nodos anteriores en el camino m�s corto de s a v.
-     * Ej. edgeTo[v] = previous edge on shortest s-v path
-     */
-    private K[] edgeTo;
-    
-    /**
-     * Arreglo en el que se encuentra la distancia m�s corta que hay desde el inicial hasta ese punto
-     * Ej. distTo[v] = number of edges shortest s-v path
-     */
-    private int[] distTo;
+	private boolean[] marked;
 
+	/**
+	 * Arreglo en el que se encuentran los nodos anteriores en el camino m�s corto de s a v.
+	 * Ej. edgeTo[v] = previous edge on shortest s-v path
+	 */
+	private K[] edgeTo;
+
+	/**
+	 * Arreglo en el que se encuentra la distancia m�s corta que hay desde el inicial hasta ese punto
+	 * Ej. distTo[v] = number of edges shortest s-v path
+	 */
+	private int[] distTo;
+
+	private K[] edges;
 	// -----------------------------------------------------------------
 	// Contructores
 	// -----------------------------------------------------------------
@@ -52,15 +53,36 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 	{
 		vertices = new TablaHash<K, Vertice>();
 		arcos = new LinkedList<Arco>();
+
 		cantVertices = 0;
 		cantEnlaces = 0;
+	}
+
+	@SuppressWarnings("unchecked")
+	public K[] edges()
+	{
+		int n= arcos.getSize();
+		edges=(K[])new Object[n];
+		NodeList actual= arcos.getFirstNode();
+		int i=0;
+		while(actual!=null)
+		{
+			edges[i]=(K) actual.getelem();
+			actual=actual.getNext();
+			i++;
+		}
+		return edges;
+	}
+	public LinkedList<Arco> getArcos()
+	{
+		return arcos;
 	}
 	// -----------------------------------------------------------------
 	// M�todos
 	// -----------------------------------------------------------------
-	
+
 	// M�todos encargados de hacer el BFS -------------------------------------------------------------------------------------------------------------
-	
+
 	/**
 	 * M�todo que se encarga de ejecutar el algoritmo de BFS desde un vertice inicial
 	 * @param verticeInicial - El v�rtice desde el cual se quiere partir
@@ -76,7 +98,7 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 		bFS(verticeInicial);
 		return pathTo(verticeDestino);
 	}
-	
+
 	/**
 	 * Hace el algoritmo de BFS para un v�rtice inicial que llega por par�metro
 	 * @param verticeInicial
@@ -106,55 +128,55 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 			}
 		}
 	}
-	
+
 	public ArrayList<K> adyacentes(K pVertice) {
 		ArrayList<K> lista = new ArrayList<K>();
 		for(int i = 0; i < vertices.get(pVertice).getAdjNodes().darTamano(); i ++)
 			lista.add(vertices.get(pVertice).getAdjNodes().darElemento(i));
 		return lista;
 	}
-	
+
 	/**
 	 * Retorna si existe un camino hasta nodo indicado por par�metro
 	 * @param pVertice
 	 * @return verdadero si hay camino y falso de lo contrario
 	 */
-    public boolean hasPathTo(K pVertice) {
-//    	for(int i = 0; i < marked.length; i ++) {
-//    		System.out.println(i + " - " + marked[i]);
-//    	}
-        return marked[vertices.getIndex(pVertice)-2];
-    }
-	
-    /**
-     * Distancia desde el v�rtice inicial original al nodo dado por par�metro
-     * @param pV�rtice - 
-     * @return La cantidad de nodos visitados en el camino m�s corto desde el inicial. 
-     */
-    public int distTo(K pVertice) {
-        return distTo[vertices.getIndex(pVertice)-2];
-    }
-	
-    /**
-     * Retorna el camino desde el v�rtice inicial hacia el v�rtice dado por par�metro.
-     * @param pVertice
-     * @return Un iterable con todos los nodos que est�n en el camino 
-     */
-    public Queue<K> pathTo(K pVertice) {
-    	System.out.println(hasPathTo(pVertice));
-        if (!hasPathTo(pVertice)) 
-        	return null;
-        Queue<K> camino = new Queue<K>();
-        K x;
-        for (x = pVertice; distTo[vertices.getIndex(x)] != 0; x = edgeTo[vertices.getIndex(x)])
-            camino.enqueue(x);
-        camino.enqueue(x);
-        return camino;
-    }
-    
-    // ------------------------------------------------------------------------------------------------------------------------------------
-    
-	 
+	public boolean hasPathTo(K pVertice) {
+		//    	for(int i = 0; i < marked.length; i ++) {
+		//    		System.out.println(i + " - " + marked[i]);
+		//    	}
+		return marked[vertices.getIndex(pVertice)-2];
+	}
+
+	/**
+	 * Distancia desde el v�rtice inicial original al nodo dado por par�metro
+	 * @param pV�rtice - 
+	 * @return La cantidad de nodos visitados en el camino m�s corto desde el inicial. 
+	 */
+	public int distTo(K pVertice) {
+		return distTo[vertices.getIndex(pVertice)-2];
+	}
+
+	/**
+	 * Retorna el camino desde el v�rtice inicial hacia el v�rtice dado por par�metro.
+	 * @param pVertice
+	 * @return Un iterable con todos los nodos que est�n en el camino 
+	 */
+	public Queue<K> pathTo(K pVertice) {
+		System.out.println(hasPathTo(pVertice));
+		if (!hasPathTo(pVertice)) 
+			return null;
+		Queue<K> camino = new Queue<K>();
+		K x;
+		for (x = pVertice; distTo[vertices.getIndex(x)] != 0; x = edgeTo[vertices.getIndex(x)])
+			camino.enqueue(x);
+		camino.enqueue(x);
+		return camino;
+	}
+
+	// ------------------------------------------------------------------------------------------------------------------------------------
+
+
 
 	public int V() 
 	{
@@ -350,83 +372,108 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 		return vertices.getSecondForm(idVertex);
 	}
 
+	private static final int EARTH_RADIUS = 6371; // Approx Earth radius in KM
+
+	public static double distance(double startLat, double startLong, double endLat, double endLong)
+	{
+
+		double dLat  = Math.toRadians((endLat - startLat));
+		double dLong = Math.toRadians((endLong - startLong));
+
+		startLat = Math.toRadians(startLat);
+		endLat   = Math.toRadians(endLat);
+
+		double a = haversin(dLat) + Math.cos(startLat) * Math.cos(endLat) * haversin(dLong);
+		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+		return EARTH_RADIUS * c; // <-- d
+	}
+
+	public static double haversin(double val) {
+		return Math.pow(Math.sin(val / 2), 2);
+	}
+
+
 	private Arco getArco(K idVertexIni, K idVertexFin)
 	{
 		Arco arcoBuscado = new Arco(null, new Vertice(idVertexIni, null), new Vertice(idVertexFin, null));
 		return arcos.getObject(arcoBuscado);
 	}
 
-	
-		private int count;
-		private int[] id;
-		private ArregloDinamico<VOCC> ccs;
-		
-		
-		public ArregloDinamico<VOCC> cc()
+
+	private int count;
+	private int[] id;
+	private ArregloDinamico<VOCC> ccs;
+
+
+	public ArregloDinamico<VOCC> cc()
+	{
+		id = new int[V()];
+		Vertice actual=null;
+		ccs= new ArregloDinamico<VOCC>(5);
+		Queue cola;
+		for(int i=0; i<V();i++)
 		{
-			id = new int[V()];
-			Vertice actual=null;
-			ccs= new ArregloDinamico<VOCC>(5);
-			Queue cola;
-			for(int i=0; i<V();i++)
+			//Recorrer arreglo vertices
+			if(getVertices().get(i)!=null)
 			{
-				//Recorrer arreglo vertices
-				if(getVertices().get(i)!=null)
-				{
-					actual=getVertices().get(i).getValue();
-				}
-				if(actual!=null && !actual.marcado)
-				{
-					cola= new Queue();
-					cola = dfs(actual, cola);
-					ccs.agregar(new VOCC(cola));
-					count ++;
-				}
+				actual=getVertices().get(i).getValue();
 			}
-			return ccs;
-		}
-		
-		public int count()
-		{
-			return count;
-		}
-		
-		public Queue<Vertice> dfs(Vertice v, Queue<Vertice> cola)
-		{
-			v.marcar();
-			
-			id[getVertices().getIndex(v.getKey())]=count;
-			
-			cola.enqueue(v);
-			
-			
-			for(int i=0; i<v.adjNodes.darTamano();i++)
+			if(actual!=null && !actual.marcado)
 			{
-				Vertice adjActual=(Grafo<K, V, A>.Vertice) v.adjNodes.darElemento(i);
-				if(!adjActual.marcado)
-				{
-					dfs(adjActual, cola);
-				}
+				cola= new Queue();
+				cola = dfs(actual, cola);
+				ccs.agregar(new VOCC(cola));
+				count ++;
 			}
-			return cola;
 		}
-		
-		public int[] id()
+		return ccs;
+	}
+
+	public int count()
+	{
+		return count;
+	}
+
+	public Queue<Vertice> dfs(Vertice v, Queue<Vertice> cola)
+	{
+		v.marcar();
+
+		id[getVertices().getIndex(v.getKey())]=count;
+
+		cola.enqueue(v);
+
+
+		for(int i=0; i<v.adjNodes.darTamano();i++)
 		{
-			return id;
+			Vertice adjActual=(Grafo<K, V, A>.Vertice) v.adjNodes.darElemento(i);
+			if(!adjActual.marcado)
+			{
+				dfs(adjActual, cola);
+			}
 		}
+		return cola;
+	}
+
+	public int[] id()
+	{
+		return id;
+	}
+
+
 	
-	
+
+
 	// -----------------------------------------------------------------
 	// Clases
 	// -----------------------------------------------------------------
 	public class Vertice implements Serializable
 	{
-		
+
 		private K key;
 
 		private V info;
-		
+
 		private Vertice next;
 
 		private LinkedList<Arco> arcos;
@@ -438,7 +485,7 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 		private boolean marcado;
 
 		private K cameFrom;
-		
+
 		public Vertice(K pKey, V pInfo)
 		{
 			key = pKey;
@@ -503,7 +550,7 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 		{
 			this.next=next;
 		}
-		
+
 		public Vertice getNext()
 		{
 			return next;
@@ -557,10 +604,20 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 	{
 		private A infoArco;
 
+		private double distancia;
+
 		private Vertice verticeInit;
 
 		private Vertice verticeFin;
 
+		public void setDistancia(double d)
+		{
+			distancia=d;
+		}
+		public double dist()
+		{
+			return distancia;
+		}
 		public Arco(A pInfoArco, Vertice pVerticeInit, Vertice pVerticeFin)
 		{
 			infoArco = pInfoArco;
