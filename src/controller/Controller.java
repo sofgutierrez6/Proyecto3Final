@@ -336,12 +336,12 @@ public class Controller {
 
 			case 8:
 				view.printMessage("Ingrese El id del primer vertice (Ej. 901839): ");
-				idVertice1 = sc.nextInt();
+				id1 = sc.next();
 				view.printMessage("Ingrese El id del segundo vertice (Ej. 901839): ");
-				idVertice2 = sc.nextInt();
+				id2 = sc.next();
 
 				startTime = System.currentTimeMillis();
-				caminoMasCortoC4(idVertice1, idVertice2);
+				caminoMasCortoC4(id1, id2);
 				endTime = System.currentTimeMillis();
 				duration = endTime - startTime;
 				view.printMessage("Tiempo del requerimiento: " + duration + " milisegundos");
@@ -749,9 +749,29 @@ public class Controller {
 	 * @param idVertice2 
 	 * @param idVertice1 
 	 */
-	public void caminoMasCortoC4(int idVertice1, int idVertice2) {
+	public void caminoMasCortoC4(String idVertice1, String  idVertice2) {
 		// TODO Auto-generated method stub
+		Long goal=Long.parseLong(idVertice1);
+		Vertice inicio=dijkstra(goal, Long.parseLong(idVertice2));
+		Vertice actual=inicio;
+		Vertice verGoal=grafoJson2.getVertice(goal);
+		ArregloDinamico<VOIntersections> list= new ArregloDinamico<VOIntersections>(5);
+		if(verGoal==null)
+		{
+			System.out.println("El vertice final no existe");
+		}
+		while((inicio!=null) && (verGoal!=null)&&goal!=((VOIntersections) actual.getInfo()).getId())
+		{
 
+			VOIntersections VOactual= (VOIntersections) actual.getInfo();
+			list.agregar(VOactual);
+			System.out.println(VOactual.toString());
+			VOIntersections VOnext=(VOIntersections) actual.getNext().getInfo();
+			distance(VOactual.getLat(), VOactual.getLon(), VOnext.getLat(), VOnext.getLon());
+			actual=actual.getNext();
+
+		}
+		
 	}
 	/**
 	 * Determina cuál de los cuatrimestres convoca al método que los carga en órdne 
