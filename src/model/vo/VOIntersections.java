@@ -35,7 +35,7 @@ public class VOIntersections implements Comparable<VOIntersections> {
 		id = pId;
 		lat = pLat;
 		lon = pLon;
-		cantidad = pInfracciones.darTamano();
+		cantidad = pInfracciones==null?0:pInfracciones.darTamano();
 		acomulado=0.0;
 		infracciones=pInfracciones;
 	}
@@ -49,11 +49,19 @@ public class VOIntersections implements Comparable<VOIntersections> {
 		return id;
 	}
 	
+	public void setCantidad(int cant)
+	{
+		cantidad=cant;
+	}
 	/**
 	 * @return la cantidad de infracciones que se cometieron en esta intersección. 
 	 */
 	public int getCantidad() {
 		return cantidad;
+	}
+	public int getCant()
+	{
+		return infracciones.darTamano();
 	}
 	
 	public Double getAcomulado()

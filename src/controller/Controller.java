@@ -72,7 +72,7 @@ public class Controller {
 	private LinkedList<Long> idsNodos;
 
 	private Mapa mapa;
-	
+
 	ComparadorXAccidentes comparador;
 	// Constructor -------------------------------------------------------------------
 
@@ -166,7 +166,7 @@ public class Controller {
 					//System.out.println("Número de nodos: " + grafoPrueba.V() + ", Número de arcos: " + grafoPrueba.E());
 					//System.out.println("Tama�o hash: "+grafoPrueba.getVertices().getList().size());
 
-					Iterator iterador = grafo.getVertices().keys();
+					//Iterator iterador = grafo.getVertices().keys();
 
 				}
 
@@ -554,7 +554,7 @@ public class Controller {
 
 				//Se crea la instersecci�n con la informaci�n leida
 				VOIntersections nuevaInter= new VOIntersections(ID, LAT, LON, infracciones);
-
+				nuevaInter.setCantidad(infracciones.darTamano());
 				if(i<10)
 				{
 					list[i]=nuevaInter;
@@ -621,14 +621,14 @@ public class Controller {
 		Vertice actual=inicio;
 		while((inicio!=null) && (verGoal!=null)&&goal!=((VOIntersections) actual.getInfo()).getId())
 		{
-			
+
 			VOIntersections VOactual= (VOIntersections) actual.getInfo();
 			list.agregar(VOactual);
 			System.out.println(VOactual.toString());
 			VOIntersections VOnext=(VOIntersections) actual.getNext().getInfo();
 			distance(VOactual.getLat(), VOactual.getLon(), VOnext.getLat(), VOnext.getLon());
 			actual=actual.getNext();
-			
+
 		}
 		System.out.println("Distancia estimada en km: "+dist);
 
@@ -647,13 +647,25 @@ public class Controller {
 		// TODO Auto-generated method stub
 		Object[] arreglo = grafoJson2.getVertices().arreglo();
 		Heap<VOIntersections> maxHeap = new Heap<VOIntersections>(grafoJson2.V(), comparador);
+		NodoTablaHash node;
+		Vertice v=null;
 		for(int i=0; i<arreglo.length;i++)
 		{
-			maxHeap.agregar((VOIntersections) ((NodoTablaHash)arreglo[i]).getKey());
+			node=(NodoTablaHash)arreglo[i];
+			if(node!=null)
+			{
+				v=(Vertice)(node).getValue();
+			}
+			if(v!=null &&(VOIntersections) (v).getInfo()!=null)
+			{
+				maxHeap.agregar((VOIntersections) (v).getInfo());
+			}
+
 		}
 		for(int j=0;j<n;j++)
 		{
-			System.out.println(maxHeap.delMax().toString());
+			VOIntersections vo=maxHeap.delMax();
+			System.out.println(vo.toString()/*+" Cantidad accidentes: "+vo.getCantidad()*/);
 		}
 	}
 
@@ -837,7 +849,7 @@ public class Controller {
 	public Vertice dijkstra(Long inicio, Long goal)
 	{
 		Long actual=inicio;
-		
+
 		Vertice verInicio=grafoJson2.getVertice(inicio);
 		if(verInicio==null)
 		{
@@ -846,7 +858,7 @@ public class Controller {
 		}
 		Vertice verActual=verInicio;
 		Double[] dist=new Double[grafoJson2.V()];
-		
+
 		MinPQ<VOIntersections> pq= new MinPQ<VOIntersections>(grafoJson2.V(), comparador);
 		TablaHash<Long,Grafo<Long,VOIntersections,Long>.Vertice> ver=grafoJson2.getVertices();
 		//Se recorren todos los nodos hasta que se llega al vertice indicado
