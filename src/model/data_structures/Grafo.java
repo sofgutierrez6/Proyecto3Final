@@ -3,7 +3,10 @@ package model.data_structures;
 import java.io.Serializable;
 
 import java.util.Iterator;
+import java.util.Stack;
 
+import model.data_structures.Graph.Arc;
+import model.data_structures.Graph.Vertex;
 import model.vo.VOWay;
 
 public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> implements Serializable
@@ -19,6 +22,26 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 	private int cantVertices;
 
 	private int cantEnlaces;
+	
+	/** Constante que representa el infinito para los nodos que no han sido marcados con BFS*/
+	private static final int INFINITY = Integer.MAX_VALUE;
+	
+	/** 
+	 * Arreglo que representa la existencia de un camino desde el nodo inicial hasta el nodo que está en esa posición
+	 * Ej. Si marked[v] es verdadero significa que ya existe un camino entre s(inicial) y v */
+    private boolean[] marked;
+    
+    /**
+     * Arreglo en el que se encuentran los nodos anteriores en el camino más corto de s a v.
+     * Ej. edgeTo[v] = previous edge on shortest s-v path
+     */
+    private K[] edgeTo;
+    
+    /**
+     * Arreglo en el que se encuentra la distancia más corta que hay desde el inicial hasta ese punto
+     * Ej. distTo[v] = number of edges shortest s-v path
+     */
+    private int[] distTo;
 
 	// -----------------------------------------------------------------
 	// Contructores
@@ -33,10 +56,92 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 	// -----------------------------------------------------------------
 	// Mï¿½todos
 	// -----------------------------------------------------------------
-
-	//	public Vertice buscarVerticeMasCercano(double pLatitud, double pLongitud) {
-	//		
-	//	}
+	
+	// Métodos encargados de hacer el BFS -------------------------------------------------------------------------------------------------------------
+	
+	/**
+	 * Método que se encarga de ejecutar el algoritmo de BFS desde un vertice inicial
+	 * @param verticeInicial - El vértice desde el cual se quiere partir
+	 * @param verticeDestino - El vértice al cual se quiere llegar
+	 * @return Una Cola con los nodos que tiene el camino más corto entre los dos vértices
+	 */
+	@SuppressWarnings("unchecked")
+	public Stack<K> breadthFirstSearch(K verticeInicial, K verticeDestino) {
+		marked = new boolean[cantVertices];
+		edgeTo = (K[]) new Object[cantVertices];
+		distTo = new int[cantVertices];
+		bFS(verticeInicial);
+		return pathTo(verticeDestino);
+	}
+	
+	/**
+	 * Hace el algoritmo de BFS para un vértice inicial que llega por parámetro
+	 * @param verticeInicial
+	 */
+	private void bFS(K verticeInicial) {
+		//Inicializa el queue necesario y asigna infinito a todos los vertices por visitar
+		Queue<K> cola = new Queue<K>();
+		for(int v = 0; v < cantVertices; v++) {
+			distTo[v] = INFINITY;
+		}
+		// Establece el vértice inicial poniéndole 0 como la distancia y lo marca como vistado
+		distTo[vertices.getIndex(verticeInicial)] = 0;
+		marked[vertices.getIndex(verticeInicial)] = true;
+		cola.enqueue(verticeInicial);
+		// Recorre todos los nodos hasta que la cola esté vacía (esto significa que el algoritmo terminó)
+		while(!cola.isEmpty()) {
+			K vertice = cola.dequeue();
+			//Recorre todos los vértices adyacentes del vértice actual
+			for(K elemento : adj(vertice)) {
+				int indice = vertices.getIndex(elemento);
+				if(!marked[indice]) {
+					edgeTo[indice] = vertice;
+					distTo[indice] = distTo[vertices.getIndex(vertice)] + 1;
+					marked[indice] = true;
+					cola.enqueue(elemento);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Retorna si existe un camino hasta nodo indicado por parámetro
+	 * @param pVertice
+	 * @return verdadero si hay camino y falso de lo contrario
+	 */
+    public boolean hasPathTo(K pVertice) {
+        return marked[vertices.getIndex(pVertice)];
+    }
+	
+    /**
+     * Distancia desde el vértice inicial original al nodo dado por parámetro
+     * @param pVértice - 
+     * @return La cantidad de nodos visitados en el camino más corto desde el inicial. 
+     */
+    public int distTo(K pVertice) {
+        return distTo[vertices.getIndex(pVertice)];
+    }
+	
+    /**
+     * Retorna el camino desde el vértice inicial hacia el vértice dado por parámetro.
+     * @param pVertice
+     * @return Un iterable con todos los nodos que están en el camino 
+     */
+    public Stack<K> pathTo(K pVertice) {
+        if (!hasPathTo(pVertice)) 
+        	return null;
+        Stack<K> camino = new Stack<K>();
+        K x;
+        for (x = pVertice; distTo[vertices.getIndex(x)] != 0; x = edgeTo[vertices.getIndex(x)])
+            camino.push(x);
+        camino.push(x);
+        return camino;
+    }
+    
+    
+    // ------------------------------------------------------------------------------------------------------------------------------------
+    
+	 
 
 	public int V() 
 	{
@@ -245,6 +350,7 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 	// -----------------------------------------------------------------
 	public class Vertice implements Serializable
 	{
+		
 		private K key;
 
 		private V info;
@@ -258,7 +364,7 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 		private boolean marcado;
 
 		private K cameFrom;
-
+		
 		public Vertice(K pKey, V pInfo)
 		{
 			key = pKey;

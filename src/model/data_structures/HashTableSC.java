@@ -3,6 +3,7 @@ package model.data_structures;
 import java.util.Iterator;
 
 import model.data_structures.TablaHash.IteratorTablaHashSCKeys;
+import model.data_structures.TablaHash.NodoTablaHash;
 
 public class HashTableSC <Key, Value>{
 
@@ -83,6 +84,11 @@ public class HashTableSC <Key, Value>{
 	        return get(key) != null;
 	    } 
 
+	    public int getIndex(Key key)
+		{
+			return hash(key);
+		}
+	    
 	    /**
 	     * Returns the value associated with the specified key in this symbol table.
 	     *

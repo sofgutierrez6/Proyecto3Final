@@ -85,7 +85,7 @@ public class TablaHash<K extends Comparable<K>, V>
 		{
 			V respuesta = null;
 			int index = hash(key);
-			NodoTablaHash actual = (NodoTablaHash)arreglo[index];
+			NodoTablaHash actual = (NodoTablaHash) arreglo[index];
 			NodoTablaHash anterior = null;
 			boolean eliminado = false;
 			while(actual != null && !eliminado)
