@@ -43,6 +43,7 @@ import model.data_structures.TablaHash;
 import model.data_structures.TablaHash.NodoTablaHash;
 import model.vo.Counter;
 import model.vo.LocationVO;
+import model.vo.VOCC;
 import model.vo.VODaylyStatistic;
 import model.vo.VOGeographicLocation;
 import model.vo.VOIntersections;
@@ -665,8 +666,14 @@ public class Controller {
 		for(int j=0;j<n;j++)
 		{
 			VOIntersections vo=maxHeap.delMax();
-			System.out.println(vo.toString()/*+" Cantidad accidentes: "+vo.getCantidad()*/);
+			System.out.println(vo.toString()+" Cantidad accidentes: "+vo.getCantidad());
 		}
+		//Ahora se identifican las componentes conectadas
+		
+		ArregloDinamico<VOCC> ccs= grafoJson2.cc();
+		System.out.println("El numero de componentes conectadas en todo el grafo es: "+ccs.darTamano());
+		
+		
 	}
 
 	// TODO El tipo de retorno de los m�todos puede ajustarse seg�n la conveniencia
