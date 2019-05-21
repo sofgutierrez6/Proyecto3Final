@@ -667,9 +667,11 @@ public class Controller {
 
 		}
 		Queue cola;
+		VOIntersections[] listMarcadores=new VOIntersections[n];
 		for(int j=0;j<n;j++)
 		{
 			VOIntersections vo=maxHeap.delMax();
+			listMarcadores[j]=vo;
 			System.out.println(vo.toString()+" Cantidad accidentes: "+vo.getCantidad());
 			cola= new Queue<Vertice>();
 			grafoJson2.dfs(grafoJson2.getVertice(vo.getId()), cola);
@@ -679,6 +681,7 @@ public class Controller {
 				System.out.println(((Vertice) cola.dequeue()).getInfo().toString());
 			}
 		}
+		mapa.pintarMapaConMarcadores(listMarcadores);
 		//Ahora se identifican las componentes conectadas
 		
 		//ArregloDinamico<VOCC> ccs= grafoJson2.cc();
