@@ -148,13 +148,13 @@ public class Controller {
 
 				if(ruta == 1)
 				{
-					RutaArchivo = "./data//WashingtonGraph.json"; //la ruta del archivo de Downtown
+					RutaArchivo = "./data//jsonPrueba.json"; //la ruta del archivo de Downtown
 					startTime = System.currentTimeMillis();
-					controller.loadGraphFromJson(RutaArchivo);
+					controller.loadJSON(RutaArchivo);
 					endTime = System.currentTimeMillis();
 					System.out.println("Información del grafo:");
-					System.out.println("Número de nodos: " + grafoJson.V() + ", Número de arcos: " + grafoJson.E());
-					mapa = new Mapa("Mapa del Downtown de Washington");
+					System.out.println("Número de nodos: " + grafoJson2.V() + ", Número de arcos: " + grafoJson2.E());
+					//mapa = new Mapa("Mapa del Downtown de Washington");
 				}
 
 				else if(ruta == 2)
@@ -176,9 +176,14 @@ public class Controller {
 
 				else
 				{
+					RutaArchivo = "./data//WashingtonGraph.json"; //la ruta del archivo de Downtown
 					startTime = System.currentTimeMillis();
+					controller.loadGraphFromJson(RutaArchivo);
 					endTime = System.currentTimeMillis();
-					System.out.println("error");
+					System.out.println("Información del grafo:");
+					System.out.println("Número de nodos: " + grafoJson.V() + ", Número de arcos: " + grafoJson.E());
+					
+					//System.out.println("error");
 				}
 
 
