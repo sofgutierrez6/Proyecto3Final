@@ -682,11 +682,11 @@ public class Controller {
 		}
 		mapa.pintarMapaConMarcadores(listMarcadores);
 		//Ahora se identifican las componentes conectadas
-		
+
 		//ArregloDinamico<VOCC> ccs= grafoJson2.cc();
 		//System.out.println("El numero de componentes conectadas en todo el grafo es: "+ccs.darTamano());
-		
-		
+
+
 	}
 
 	/**
@@ -810,7 +810,7 @@ public class Controller {
 			actual=actual.getNext();
 
 		}
-		
+
 	}
 	/**
 	 * Determina cuál de los cuatrimestres convoca al método que los carga en órdne 
@@ -1171,8 +1171,8 @@ public class Controller {
 		}
 
 		 */
-
-
-
 	}
+
+
+
 }
