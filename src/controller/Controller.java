@@ -148,13 +148,13 @@ public class Controller {
 
 				if(ruta == 1)
 				{
-					RutaArchivo = "./data//jsonPrueba.json"; //la ruta del archivo de Downtown
+					RutaArchivo = "./data//WashingtonGraph.json"; //la ruta del archivo de Downtown
 					startTime = System.currentTimeMillis();
-					controller.loadJSON(RutaArchivo);
+					controller.loadGraphFromJson(RutaArchivo);
 					endTime = System.currentTimeMillis();
 					System.out.println("Información del grafo:");
-					System.out.println("Número de nodos: " + grafoJson2.V() + ", Número de arcos: " + grafoJson2.E());
-					//mapa = new Mapa("Mapa del Downtown de Washington");
+					System.out.println("Número de nodos: " + grafoJson.V() + ", Número de arcos: " + grafoJson.E());
+					mapa = new Mapa("Mapa del Downtown de Washington");
 				}
 
 				else if(ruta == 2)
@@ -176,14 +176,9 @@ public class Controller {
 
 				else
 				{
-					RutaArchivo = "./data//WashingtonGraph.json"; //la ruta del archivo de Downtown
 					startTime = System.currentTimeMillis();
-					controller.loadGraphFromJson(RutaArchivo);
 					endTime = System.currentTimeMillis();
-					System.out.println("Información del grafo:");
-					System.out.println("Número de nodos: " + grafoJson.V() + ", Número de arcos: " + grafoJson.E());
-					
-					//System.out.println("error");
+					System.out.println("error");
 				}
 
 
@@ -710,10 +705,9 @@ public class Controller {
 		for(int i = 0; i < cola.size(); i++)
 			arreglito[i] = (VOIntersections) grafo.getVertices().get(cola.dequeue());
 		// Pinta el mapa. 
-		//mapa.pintarMapaConMarcadores(arreglito);
+		mapa.pintarMapaConMarcadores(arreglito);
 	}
 
-	// TODO El tipo de retorno de los m�todos puede ajustarse seg�n la conveniencia
 	/**
 	 * Requerimiento 2B:  Definir una cuadricula regular de N columnas por M filas. que incluya las longitudes y latitudes dadas
 	 * @param  lonMin: Longitud minima presente dentro de la cuadricula
@@ -723,9 +717,42 @@ public class Controller {
 	 * @param  columnas: Numero de columnas de la cuadricula
 	 * @param  filas: Numero de filas de la cuadricula
 	 */
-	public void definirCuadriculaB2(double lonMin, double lonMax, double latMin, double latMax, int columnas,
-			int filas) {
-		// TODO Auto-generated method stub
+	public void definirCuadriculaB2(double lonMin, double lonMax, double latMin, double latMax, int columnas, int filas) {
+		// Para encontrar los sitios donde hay que poner los filas y columnas toca dividir la diferencia entre la cantidad de filas y columnas
+		double espacioLat = (latMax - latMin)/columnas;
+		double espacioLon = (lonMax - lonMin)/filas;
+		int contador = 0;
+		VOIntersections[] arreglo = new VOIntersections[columnas * filas];
+		// Hacer un arreglo que representa espacioLat x espacioLon
+		for(int i = 0; i < columnas; i ++) {
+			double latitud = latMin + (i * espacioLat);
+			for(int j = 0; j < filas; j ++) {
+				double longitud = lonMin + (j * espacioLon);
+				//Se inicia el iterador que va a recorrer los vertices en el grafo y las variables auxiliares
+				Iterator<Vertice> iterador = grafo.getVertices().keys();
+				VOIntersections masCercano = null;
+				double distanciaActual = Double.MAX_VALUE;
+				// Se recorre cada uno de los vértices y se va guardando la información del más cercano hasta el momento
+				while(iterador.hasNext()) {
+					Vertice v = (Vertice) iterador.next();
+					VOIntersections actual = (VOIntersections) v.getInfo();
+					double vLat = actual.getLat();
+					double vLon = actual.getLon();
+					double dist = distance(vLat,vLon,latitud,longitud);
+					// Si el actual es más cercano que el último más cercano, entonces lo reemplaza
+					if(dist < distanciaActual) {
+						masCercano = actual;
+						distanciaActual = dist;
+					}
+				}
+				// Al final se agrega al arreglo el vértice que resultò ser más cerano. . 
+				arreglo[contador] = masCercano;
+				System.out.println("Más cercano: " + masCercano + " a esquina " + contador + 
+						" en:(" + i + "," + j + "), con latitud: " + masCercano.getLat() + "y longitud: " + masCercano.getLon());
+				contador ++;
+			}
+		}
+		mapa.pintarMapaConMarcadores(arreglo);
 	}
 
 	// TODO El tipo de retorno de los m�todos puede ajustarse seg�n la conveniencia
