@@ -5,8 +5,12 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Stack;
 
+<<<<<<< HEAD
+import model.vo.VOCC;
+=======
 import model.data_structures.Graph.Arc;
 import model.data_structures.Graph.Vertex;
+>>>>>>> 5d2f9b95d1cbf3fd2eb61581e79bb512b3530adb
 import model.vo.VOWay;
 
 public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> implements Serializable
@@ -344,7 +348,66 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 	}
 
 	
-
+		private int count;
+		private int[] id;
+		private ArregloDinamico<VOCC> ccs;
+		
+		
+		public ArregloDinamico<VOCC> cc()
+		{
+			id = new int[V()];
+			Vertice actual=null;
+			ccs= new ArregloDinamico<VOCC>(5);
+			Queue cola;
+			for(int i=0; i<V();i++)
+			{
+				//Recorrer arreglo vertices
+				if(getVertices().get(i)!=null)
+				{
+					actual=getVertices().get(i).getValue();
+				}
+				if(actual!=null && !actual.marcado)
+				{
+					cola= new Queue();
+					cola = dfs(actual, cola);
+					ccs.agregar(new VOCC(cola));
+					count ++;
+				}
+			}
+			return ccs;
+		}
+		
+		public int count()
+		{
+			return count;
+		}
+		
+		public Queue dfs(Vertice v, Queue cola)
+		{
+			v.marcar();
+			
+			id[getVertices().getIndex(v.getKey())]=count;
+			
+			cola.enqueue(v);
+			
+			
+			for(int i=0; i<v.adjNodes.darTamano();i++)
+			{
+				Vertice adjActual=(Grafo<K, V, A>.Vertice) v.adjNodes.darElemento(i);
+				if(!adjActual.marcado)
+				{
+					dfs(adjActual, cola);
+				}
+			}
+			return cola;
+		}
+		
+		public int[] id()
+		{
+			return id;
+		}
+	
+	
 	// -----------------------------------------------------------------
 	// Clases
 	// -----------------------------------------------------------------
