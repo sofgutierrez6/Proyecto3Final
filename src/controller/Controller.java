@@ -697,9 +697,9 @@ public class Controller {
 	 */
 	@SuppressWarnings("unchecked")
 	public void caminoLongitudMinimoaB1(long idVertice1, long idVertice2) {
-		// Llama al método de BFS que se encarga de devolver el camino más corto entre los dos vértices
-		Queue<Long> cola = grafo.breadthFirstSearch(idVertice1, idVertice2);
-		System.out.println(cola.size());
+		// Llama al método de BFS que se encarga de devolver el camino más corto entre los dos vértices 
+		System.out.println(grafoJson2.V());
+		Queue<Long> cola = grafoJson2.breadthFirstSearch(idVertice1, idVertice2);
 		VOIntersections[] arreglito = new VOIntersections[cola.size()];
 		// Recorre las posiciones del arreglo creado y le va metiendo los objetos del método anterior para mandarlo al mapa
 		for(int i = 0; i < cola.size(); i++)
