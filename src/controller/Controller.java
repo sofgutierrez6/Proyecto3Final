@@ -584,7 +584,7 @@ public class Controller {
 				numCargados++;
 			}
 			//pinta nodos
-			mapa.pintarMapa(list);
+			mapa.pintarMapaConMarcadores(list);
 			System.out.println("El n�mero de arcos teoricos: "+ numeroArcos);
 		}
 		catch (Exception e)
@@ -608,6 +608,7 @@ public class Controller {
 		double dist=0.0;
 		Long goal=Long.parseLong(idVertice1);
 		Vertice verGoal=grafoJson2.getVertice(goal);
+		ArregloDinamico<VOIntersections> list= new ArregloDinamico<VOIntersections>(5);
 		if(verGoal==null)
 		{
 			System.out.println("El vertice final no existe");
@@ -616,14 +617,18 @@ public class Controller {
 		Vertice actual=inicio;
 		while((inicio!=null) && (verGoal!=null)&&goal!=((VOIntersections) actual.getInfo()).getId())
 		{
+			
 			VOIntersections VOactual= (VOIntersections) actual.getInfo();
+			list.agregar(VOactual);
 			System.out.println(VOactual.toString());
 			VOIntersections VOnext=(VOIntersections) actual.getNext().getInfo();
 			distance(VOactual.getLat(), VOactual.getLon(), VOnext.getLat(), VOnext.getLon());
 			actual=actual.getNext();
+			
 		}
 		System.out.println("Distancia estimada en km: "+dist);
 
+		mapa.pintarMapaConLineas(list);
 	}
 
 
