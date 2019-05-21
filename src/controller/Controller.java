@@ -30,6 +30,7 @@ import model.data_structures.Grafo.Vertice;
 import model.data_structures.Graph;
 import model.data_structures.Graph.Arc;
 import model.data_structures.Graph.Vertex;
+import model.data_structures.Heap;
 import model.data_structures.IQueue;
 import model.data_structures.IStack;
 import model.data_structures.LinkedList;
@@ -111,7 +112,7 @@ public class Controller {
 
 		Scanner sc = new Scanner(System.in);
 		boolean fin=false;
-		Counter contador = new Counter();
+		//Counter contador = new Counter();
 		// Mantiene el programa corriendo hasta que el usuario decida temrinarlo. 
 		Controller controller = new Controller();
 
@@ -155,7 +156,7 @@ public class Controller {
 					startTime = System.currentTimeMillis();
 					controller.loadJSON(RutaArchivo);
 					endTime = System.currentTimeMillis();
-					System.out.println(grafoJson2.getVertices().arreglo().length);
+					//System.out.println(grafoJson2.getVertices().arreglo().length);
 					System.out.println("Información del grafo:");
 					System.out.println("Número de nodos: " + grafoJson2.V() + ", Número de arcos: " + grafoJson2.E());
 					mapa = new Mapa("Mapa de Washington D.C");
@@ -364,7 +365,7 @@ public class Controller {
 					System.out.println(e.getMessage());
 				}*/
 				//Lectura XML
-				grafo = contador.load(args);
+				//grafo = contador.load(args);
 				System.out.println();
 				System.out.println("Carga del grafo con la informaci�n del archivo .XML:");
 				System.out.println("Informaci�n del grafo:");
@@ -641,7 +642,8 @@ public class Controller {
 	 */
 	public void mayorNumeroVerticesA2(int n) {
 		// TODO Auto-generated method stub
-
+		Object[] arreglo = grafoJson2.getVertices().arreglo();
+		Heap<VOIntersections> maxHeap = new Heap<VOIntersections>(24);
 	}
 
 	// TODO El tipo de retorno de los m�todos puede ajustarse seg�n la conveniencia
