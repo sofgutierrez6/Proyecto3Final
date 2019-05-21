@@ -72,6 +72,8 @@ public class Controller {
 	private LinkedList<Long> idsNodos;
 
 	private Mapa mapa;
+	
+	ComparadorXAccidentes comparador;
 	// Constructor -------------------------------------------------------------------
 
 	/**
@@ -96,6 +98,7 @@ public class Controller {
 		idsNodos= new LinkedList<Long>();
 
 		mapa = new Mapa("Información Washington D.C");
+		comparador= new ComparadorXAccidentes();
 	}
 
 	// Métodos -----------------------------------------------------------------------------
@@ -643,7 +646,15 @@ public class Controller {
 	public void mayorNumeroVerticesA2(int n) {
 		// TODO Auto-generated method stub
 		Object[] arreglo = grafoJson2.getVertices().arreglo();
-		Heap<VOIntersections> maxHeap = new Heap<VOIntersections>(24);
+		Heap<VOIntersections> maxHeap = new Heap<VOIntersections>(grafoJson2.V(), comparador);
+		for(int i=0; i<arreglo.length;i++)
+		{
+			maxHeap.agregar((VOIntersections) ((NodoTablaHash)arreglo[i]).getKey());
+		}
+		for(int j=0;j<n;j++)
+		{
+			System.out.println(maxHeap.delMax().toString());
+		}
 	}
 
 	// TODO El tipo de retorno de los m�todos puede ajustarse seg�n la conveniencia
@@ -835,7 +846,7 @@ public class Controller {
 		}
 		Vertice verActual=verInicio;
 		Double[] dist=new Double[grafoJson2.V()];
-		ComparadorXAccidentes comparador= new ComparadorXAccidentes();
+		
 		MinPQ<VOIntersections> pq= new MinPQ<VOIntersections>(grafoJson2.V(), comparador);
 		TablaHash<Long,Grafo<Long,VOIntersections,Long>.Vertice> ver=grafoJson2.getVertices();
 		//Se recorren todos los nodos hasta que se llega al vertice indicado

@@ -1,17 +1,27 @@
 package model.data_structures;
 
+import java.util.Comparator;
+
 public class Heap <T extends Comparable<T>>
 {
 	
 	private T[] pq;
 	private int N = 0;
 	private int tamanoMax;
+	private Comparator<T> comparador;
 	
-	public Heap(int max)
+	public Heap(int max )
 	{
 		tamanoMax = max;
 		pq = (T[]) new Comparable[ max + 1];
 		
+	}
+	
+	public Heap(int max,Comparator<T> comparador  )
+	{
+		tamanoMax = max;
+		pq = (T[]) new Comparable[ max + 1];
+		this.comparador=comparador;
 	}
 	
 	public boolean estaVacia()
@@ -52,7 +62,7 @@ public class Heap <T extends Comparable<T>>
 	{
 		T first = pq[i];
 		T last = pq[j];
-		return ((Comparable) first).compareTo(last) < 0;
+		return comparador.compare(first,last) < 0;
 		
 		//return ((Comparable<?>) pq[i]).compareTo( (Comparable<?>) pq[j]) < 0;
 		
