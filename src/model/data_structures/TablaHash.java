@@ -38,6 +38,7 @@ public class TablaHash<K extends Comparable<K>, V>
 		}
 		public int hash(K key) 
 		{
+			if(key == null) System.out.println("HPTA");
 			return ((key.hashCode() & 0x7fffffff)%sizeArreglo);
 		}
 

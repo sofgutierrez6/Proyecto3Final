@@ -1,7 +1,7 @@
 package model.data_structures;
 
 import java.io.Serializable;
-
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Stack;
 
@@ -69,9 +69,9 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 	 */
 	@SuppressWarnings("unchecked")
 	public Queue<K> breadthFirstSearch(K verticeInicial, K verticeDestino) {
-		System.out.println("hola");
+		System.out.println("El tamaño del arreglo es: " + cantVertices);
 		marked = new boolean[cantVertices];
-		edgeTo = (K[]) new Object[cantVertices];
+		edgeTo =  (K[]) new Comparable[cantVertices];
 		distTo = new int[cantVertices];
 		bFS(verticeInicial);
 		return pathTo(verticeDestino);
@@ -88,23 +88,30 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 			distTo[v] = INFINITY;
 		}
 		// Establece el v�rtice inicial poni�ndole 0 como la distancia y lo marca como vistado
-		distTo[vertices.getIndex(verticeInicial)] = 0;
-		marked[vertices.getIndex(verticeInicial)] = true;
+		distTo[vertices.getIndex(verticeInicial)-2] = 0;
+		marked[vertices.getIndex(verticeInicial)-2] = true;
 		cola.enqueue(verticeInicial);
 		// Recorre todos los nodos hasta que la cola est� vac�a (esto significa que el algoritmo termin�)
 		while(!cola.isEmpty()) {
 			K vertice = cola.dequeue();
 			//Recorre todos los v�rtices adyacentes del v�rtice actual
-			for(K elemento : adj(vertice)) {
+			for(K elemento : adyacentes(vertice)) {
 				int indice = vertices.getIndex(elemento);
-				if(!marked[indice]) {
-					edgeTo[indice] = vertice;
-					distTo[indice] = distTo[vertices.getIndex(vertice)] + 1;
-					marked[indice] = true;
+				if(!marked[indice-2]) {
+					edgeTo[indice-2] = vertice;
+					distTo[indice-2] = distTo[vertices.getIndex(vertice)-2] + 1;
+					marked[indice-2] = true;
 					cola.enqueue(elemento);
 				}
 			}
 		}
+	}
+	
+	public ArrayList<K> adyacentes(K pVertice) {
+		ArrayList<K> lista = new ArrayList<K>();
+		for(int i = 0; i < vertices.get(pVertice).getAdjNodes().darTamano(); i ++)
+			lista.add(vertices.get(pVertice).getAdjNodes().darElemento(i));
+		return lista;
 	}
 	
 	/**
@@ -113,7 +120,10 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 	 * @return verdadero si hay camino y falso de lo contrario
 	 */
     public boolean hasPathTo(K pVertice) {
-        return marked[vertices.getIndex(pVertice)];
+//    	for(int i = 0; i < marked.length; i ++) {
+//    		System.out.println(i + " - " + marked[i]);
+//    	}
+        return marked[vertices.getIndex(pVertice)-2];
     }
 	
     /**
@@ -122,7 +132,7 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
      * @return La cantidad de nodos visitados en el camino m�s corto desde el inicial. 
      */
     public int distTo(K pVertice) {
-        return distTo[vertices.getIndex(pVertice)];
+        return distTo[vertices.getIndex(pVertice)-2];
     }
 	
     /**
@@ -131,6 +141,7 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
      * @return Un iterable con todos los nodos que est�n en el camino 
      */
     public Queue<K> pathTo(K pVertice) {
+    	System.out.println(hasPathTo(pVertice));
         if (!hasPathTo(pVertice)) 
         	return null;
         Queue<K> camino = new Queue<K>();
