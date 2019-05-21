@@ -101,7 +101,7 @@ public class Controller {
 
 		idsNodos= new LinkedList<Long>();
 
-		mapa = new Mapa("Información Washington D.C");
+		//mapa = new Mapa("Información Washington D.C");
 		comparador= new ComparadorXAccidentes();
 	}
 
@@ -159,16 +159,16 @@ public class Controller {
 
 				else if(ruta == 2)
 				{
-					RutaArchivo = "./data//finalGraph.json"; //ruta del archivo de la ciudad completa
+					RutaArchivo = "./data/jsonPrueba.json"; //ruta del archivo de la ciudad completa
 					startTime = System.currentTimeMillis();
 					controller.loadJSON(RutaArchivo);
 					endTime = System.currentTimeMillis();
 					//System.out.println(grafoJson2.getVertices().arreglo().length);
 					System.out.println("Información del grafo:");
 					System.out.println("Número de nodos: " + grafoJson2.V() + ", Número de arcos: " + grafoJson2.E());
-					mapa = new Mapa("Mapa de Washington D.C");
+					//mapa = new Mapa("Mapa de Washington D.C");
 					//System.out.println("Número de nodos: " + grafoPrueba.V() + ", Número de arcos: " + grafoPrueba.E());
-					//System.out.println("Tama�o hash: "+grafoPrueba.getVertices().getList().size());
+					//System.out.println("Tama�o hash: "+grafoPrueba.getVertices().getList().size());
 
 					//Iterator iterador = grafo.getVertices().keys();
 
@@ -592,7 +592,7 @@ public class Controller {
 				numCargados++;
 			}
 			//pinta nodos
-			mapa.pintarMapaConMarcadores(list);
+			//mapa.pintarMapaConMarcadores(list);
 			System.out.println("El n�mero de arcos teoricos: "+ numeroArcos);
 		}
 		catch (Exception e)
@@ -695,9 +695,17 @@ public class Controller {
 	 * @param idVertice2 
 	 * @param idVertice1 
 	 */
+	@SuppressWarnings("unchecked")
 	public void caminoLongitudMinimoaB1(long idVertice1, long idVertice2) {
-		Queue<Long> pila = grafo.breadthFirstSearch(idVertice1, idVertice2);
-		
+		// Llama al método de BFS que se encarga de devolver el camino más corto entre los dos vértices
+		Queue<Long> cola = grafo.breadthFirstSearch(idVertice1, idVertice2);
+		System.out.println(cola.size());
+		VOIntersections[] arreglito = new VOIntersections[cola.size()];
+		// Recorre las posiciones del arreglo creado y le va metiendo los objetos del método anterior para mandarlo al mapa
+		for(int i = 0; i < cola.size(); i++)
+			arreglito[i] = (VOIntersections) grafo.getVertices().get(cola.dequeue());
+		// Pinta el mapa. 
+		//mapa.pintarMapaConMarcadores(arreglito);
 	}
 
 	// TODO El tipo de retorno de los m�todos puede ajustarse seg�n la conveniencia
@@ -1100,7 +1108,7 @@ public class Controller {
 		System.out.println("Iterador "+i);
 
 		System.out.println("Cola: "+grafoPrueba.getVertices().keysQueue().size());*/
-		/*System.out.println("Tama�o grafo: "+grafoJson2.V());
+		/*System.out.println("Tama�o grafo: "+grafoJson2.V());
 		TablaHash<Long,Grafo<Long,VOIntersections,Long>.Vertice> ver=grafoJson2.getVertices();
 		Double[] distTo= new Double[grafoJson2.V()];
 		Long[] edgeTo= new Long[grafoJson2.V()];

@@ -29,18 +29,18 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 	private static final int INFINITY = Integer.MAX_VALUE;
 	
 	/** 
-	 * Arreglo que representa la existencia de un camino desde el nodo inicial hasta el nodo que está en esa posición
+	 * Arreglo que representa la existencia de un camino desde el nodo inicial hasta el nodo que estï¿½ en esa posiciï¿½n
 	 * Ej. Si marked[v] es verdadero significa que ya existe un camino entre s(inicial) y v */
     private boolean[] marked;
     
     /**
-     * Arreglo en el que se encuentran los nodos anteriores en el camino más corto de s a v.
+     * Arreglo en el que se encuentran los nodos anteriores en el camino mï¿½s corto de s a v.
      * Ej. edgeTo[v] = previous edge on shortest s-v path
      */
     private K[] edgeTo;
     
     /**
-     * Arreglo en el que se encuentra la distancia más corta que hay desde el inicial hasta ese punto
+     * Arreglo en el que se encuentra la distancia mï¿½s corta que hay desde el inicial hasta ese punto
      * Ej. distTo[v] = number of edges shortest s-v path
      */
     private int[] distTo;
@@ -59,16 +59,17 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 	// Mï¿½todos
 	// -----------------------------------------------------------------
 	
-	// Métodos encargados de hacer el BFS -------------------------------------------------------------------------------------------------------------
+	// Mï¿½todos encargados de hacer el BFS -------------------------------------------------------------------------------------------------------------
 	
 	/**
-	 * Método que se encarga de ejecutar el algoritmo de BFS desde un vertice inicial
-	 * @param verticeInicial - El vértice desde el cual se quiere partir
-	 * @param verticeDestino - El vértice al cual se quiere llegar
-	 * @return Una Cola con los nodos que tiene el camino más corto entre los dos vértices
+	 * Mï¿½todo que se encarga de ejecutar el algoritmo de BFS desde un vertice inicial
+	 * @param verticeInicial - El vï¿½rtice desde el cual se quiere partir
+	 * @param verticeDestino - El vï¿½rtice al cual se quiere llegar
+	 * @return Una Cola con los nodos que tiene el camino mï¿½s corto entre los dos vï¿½rtices
 	 */
 	@SuppressWarnings("unchecked")
 	public Queue<K> breadthFirstSearch(K verticeInicial, K verticeDestino) {
+		System.out.println("hola");
 		marked = new boolean[cantVertices];
 		edgeTo = (K[]) new Object[cantVertices];
 		distTo = new int[cantVertices];
@@ -77,7 +78,7 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 	}
 	
 	/**
-	 * Hace el algoritmo de BFS para un vértice inicial que llega por parámetro
+	 * Hace el algoritmo de BFS para un vï¿½rtice inicial que llega por parï¿½metro
 	 * @param verticeInicial
 	 */
 	private void bFS(K verticeInicial) {
@@ -86,14 +87,14 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 		for(int v = 0; v < cantVertices; v++) {
 			distTo[v] = INFINITY;
 		}
-		// Establece el vértice inicial poniéndole 0 como la distancia y lo marca como vistado
+		// Establece el vï¿½rtice inicial poniï¿½ndole 0 como la distancia y lo marca como vistado
 		distTo[vertices.getIndex(verticeInicial)] = 0;
 		marked[vertices.getIndex(verticeInicial)] = true;
 		cola.enqueue(verticeInicial);
-		// Recorre todos los nodos hasta que la cola esté vacía (esto significa que el algoritmo terminó)
+		// Recorre todos los nodos hasta que la cola estï¿½ vacï¿½a (esto significa que el algoritmo terminï¿½)
 		while(!cola.isEmpty()) {
 			K vertice = cola.dequeue();
-			//Recorre todos los vértices adyacentes del vértice actual
+			//Recorre todos los vï¿½rtices adyacentes del vï¿½rtice actual
 			for(K elemento : adj(vertice)) {
 				int indice = vertices.getIndex(elemento);
 				if(!marked[indice]) {
@@ -107,7 +108,7 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 	}
 	
 	/**
-	 * Retorna si existe un camino hasta nodo indicado por parámetro
+	 * Retorna si existe un camino hasta nodo indicado por parï¿½metro
 	 * @param pVertice
 	 * @return verdadero si hay camino y falso de lo contrario
 	 */
@@ -116,18 +117,18 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
     }
 	
     /**
-     * Distancia desde el vértice inicial original al nodo dado por parámetro
-     * @param pVértice - 
-     * @return La cantidad de nodos visitados en el camino más corto desde el inicial. 
+     * Distancia desde el vï¿½rtice inicial original al nodo dado por parï¿½metro
+     * @param pVï¿½rtice - 
+     * @return La cantidad de nodos visitados en el camino mï¿½s corto desde el inicial. 
      */
     public int distTo(K pVertice) {
         return distTo[vertices.getIndex(pVertice)];
     }
 	
     /**
-     * Retorna el camino desde el vértice inicial hacia el vértice dado por parámetro.
+     * Retorna el camino desde el vï¿½rtice inicial hacia el vï¿½rtice dado por parï¿½metro.
      * @param pVertice
-     * @return Un iterable con todos los nodos que están en el camino 
+     * @return Un iterable con todos los nodos que estï¿½n en el camino 
      */
     public Queue<K> pathTo(K pVertice) {
         if (!hasPathTo(pVertice)) 
@@ -139,7 +140,6 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
         camino.enqueue(x);
         return camino;
     }
-    
     
     // ------------------------------------------------------------------------------------------------------------------------------------
     
@@ -175,7 +175,7 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 			K idAdj=adj.darElemento(i);
 			//Se busca si el vertice ya fue creado anteriormente
 			Vertice nuevoAdj=getVertice(idAdj);
-			//Si no se crea uno con información vacía
+			//Si no se crea uno con informaciï¿½n vacï¿½a
 			if(nuevoAdj==null)
 			{
 				nuevoAdj = new Vertice(idAdj,null);
@@ -183,7 +183,7 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 			vertices.put(idAdj, nuevoAdj);
 
 			//Se agrega a la lista de nodos adyacentes
-			//nuevoVertice.addAdj(idAdj); //correccion ya se había agregado al inicializar el nodo
+			//nuevoVertice.addAdj(idAdj); //correccion ya se habï¿½a agregado al inicializar el nodo
 
 			//Se crea el arco
 			Arco arc=new Arco(null, nuevoVertice, nuevoAdj);//Como identificar el arco con el grafo creado por ellos??

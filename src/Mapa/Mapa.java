@@ -42,23 +42,18 @@ public class Mapa extends MapView{
 				}
 			}
 		});
-	
 	}
-	
 	
 	public void ponerZoom(double pZoom) {
 		map.setZoom(pZoom);
 	}
 	
-	public void pintarMapaConMarcadores(VOIntersections[] listMarcadores )
+	public void pintarMapaConMarcadores(VOIntersections[] listMarcadores)
 	{
 		JFrame frame = new JFrame(nombre);
 		frame.add(this,BorderLayout.CENTER);
 		frame.setSize(700, 500);
 		frame.setVisible(true);
-		//Pinta lineas y marcoders desde acá
-		//ponerMarcador(38.89894777000,-76.94837018300);
-		//hacerLinea(new LatLng(38.89894777000,-76.94837018300),new LatLng(38.9,-76.99));
 		ponerMarcadores(listMarcadores);
 		
 	}
@@ -72,7 +67,7 @@ public class Mapa extends MapView{
 	public void ponerMarcadores(VOIntersections[] list)
 	{
 		double lat, lon;
-		for(int i=0; i<list.length; i++)
+		for(int i=0; i<list.length || i < 300; i++)
 		{
 			lat=list[i].getLat();
 			lon=list[i].getLon();
