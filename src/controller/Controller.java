@@ -41,7 +41,6 @@ import model.data_structures.MinPQ;
 import model.data_structures.NodeList;
 import model.data_structures.Queue;
 import model.data_structures.RedBlackBST;
-import model.data_structures.SequentialSearchSt;
 import model.data_structures.TablaHash;
 import model.data_structures.TablaHash.NodoTablaHash;
 import model.vo.Counter;

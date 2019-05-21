@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
@@ -8,7 +8,7 @@
 	<classpathentry kind="lib" path="jxmaps-1.3.1 2/demo/jxmapsdemo.jar"/>
 	<classpathentry kind="lib" path="jxmaps-1.3.1.jar"/>
 	<classpathentry kind="lib" path="lib/lib/jxmaps-win-1.3.1.jar"/>
-<<<<<<< HEAD
+
 	<classpathentry kind="lib" path="E:/T8_2019f1/lib/commons-csv-1.6.jar"/>
 	<classpathentry kind="lib" path="E:/T8_2019f1/lib/gson-2.8.2.jar"/>
 	<classpathentry kind="lib" path="E:/T8_2019f1/lib/license.jar"/>
@@ -17,7 +17,6 @@
 	<classpathentry kind="lib" path="E:/T8_2019f1/lib/xercesImpl.jar"/>
 	<classpathentry kind="lib" path="E:/T8_2019f1/lib/xercesSamples.jar"/>
 	<classpathentry kind="lib" path="E:/T8_2019f1/lib/xml-apis.jar"/>
-=======
 	<classpathentry kind="lib" path="/Users/santiagocala/Desktop/Universidad De Los Andes/Estructuras de Datos/Talleres/T8_2019f1/lib/commons-csv-1.6.jar"/>
 	<classpathentry kind="lib" path="/Users/santiagocala/Desktop/Universidad De Los Andes/Estructuras de Datos/Talleres/T8_2019f1/lib/gson-2.8.2.jar"/>
 	<classpathentry kind="lib" path="/Users/santiagocala/Desktop/Universidad De Los Andes/Estructuras de Datos/Talleres/T8_2019f1/lib/license.jar"/>
@@ -26,40 +25,7 @@
 	<classpathentry kind="lib" path="/Users/santiagocala/Desktop/Universidad De Los Andes/Estructuras de Datos/Talleres/T8_2019f1/lib/xercesImpl.jar"/>
 	<classpathentry kind="lib" path="/Users/santiagocala/Desktop/Universidad De Los Andes/Estructuras de Datos/Talleres/T8_2019f1/lib/xercesSamples.jar"/>
 	<classpathentry kind="lib" path="/Users/santiagocala/Desktop/Universidad De Los Andes/Estructuras de Datos/Talleres/T8_2019f1/lib/xml-apis.jar"/>
-	<classpathentry kind="lib" path="jxmaps-1.3.1 2/lib/jxmaps-mac-1.3.1.jar"/>
->>>>>>> 44b462481199c9675376c01e5b5445978c90c64f
+	<classpathentry kind="lib" path="jxmaps-1.3.1 2/lib/jxmaps-mac-1.3.1.jar"/>}
 	<classpathentry kind="output" path="bin"/>
-</classpath>
-=======
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="test"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="jxmaps-1.3.1 2/demo/jxmapsdemo.jar"/>
-	<classpathentry kind="lib" path="jxmaps-1.3.1.jar"/>
-	<classpathentry kind="lib" path="lib/lib/jxmaps-win-1.3.1.jar"/>
-<<<<<<< HEAD
-	<classpathentry kind="lib" path="/Users/santiagocala/Desktop/Universidad De Los Andes/Estructuras de Datos/Talleres/T8_2019f1/lib/commons-csv-1.6.jar"/>
-	<classpathentry kind="lib" path="/Users/santiagocala/Desktop/Universidad De Los Andes/Estructuras de Datos/Talleres/T8_2019f1/lib/gson-2.8.2.jar"/>
-	<classpathentry kind="lib" path="/Users/santiagocala/Desktop/Universidad De Los Andes/Estructuras de Datos/Talleres/T8_2019f1/lib/license.jar"/>
-	<classpathentry kind="lib" path="/Users/santiagocala/Desktop/Universidad De Los Andes/Estructuras de Datos/Talleres/T8_2019f1/lib/resolver.jar"/>
-	<classpathentry kind="lib" path="/Users/santiagocala/Desktop/Universidad De Los Andes/Estructuras de Datos/Talleres/T8_2019f1/lib/serializer.jar"/>
-	<classpathentry kind="lib" path="/Users/santiagocala/Desktop/Universidad De Los Andes/Estructuras de Datos/Talleres/T8_2019f1/lib/xercesImpl.jar"/>
-	<classpathentry kind="lib" path="/Users/santiagocala/Desktop/Universidad De Los Andes/Estructuras de Datos/Talleres/T8_2019f1/lib/xercesSamples.jar"/>
-	<classpathentry kind="lib" path="/Users/santiagocala/Desktop/Universidad De Los Andes/Estructuras de Datos/Talleres/T8_2019f1/lib/xml-apis.jar"/>
-	<classpathentry kind="lib" path="jxmaps-1.3.1 2/lib/jxmaps-mac-1.3.1.jar"/>
-=======
-	<classpathentry kind="lib" path="E:/T8_2019f1/lib/commons-csv-1.6.jar"/>
-	<classpathentry kind="lib" path="E:/T8_2019f1/lib/gson-2.8.2.jar"/>
-	<classpathentry kind="lib" path="E:/T8_2019f1/lib/license.jar"/>
-	<classpathentry kind="lib" path="E:/T8_2019f1/lib/resolver.jar"/>
-	<classpathentry kind="lib" path="E:/T8_2019f1/lib/serializer.jar"/>
-	<classpathentry kind="lib" path="E:/T8_2019f1/lib/xercesImpl.jar"/>
-	<classpathentry kind="lib" path="E:/T8_2019f1/lib/xercesSamples.jar"/>
-	<classpathentry kind="lib" path="E:/T8_2019f1/lib/xml-apis.jar"/>
->>>>>>> af81ee2ecd34858d365d6be41af0f31014fcbec4
-	<classpathentry kind="output" path="bin"/>
-</classpath>
->>>>>>> 2e62d6d7c34b2fe378f05dcee19516aff71ee1ce
+
+
