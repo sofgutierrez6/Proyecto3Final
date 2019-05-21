@@ -666,10 +666,14 @@ public class Controller {
 			}
 
 		}
+		Queue cola;
 		for(int j=0;j<n;j++)
 		{
 			VOIntersections vo=maxHeap.delMax();
 			System.out.println(vo.toString()+" Cantidad accidentes: "+vo.getCantidad());
+			cola= new Queue();
+			grafoJson2.dfs(grafoJson2.getVertice(vo.getId()), cola);
+			
 		}
 		//Ahora se identifican las componentes conectadas
 		
