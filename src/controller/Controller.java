@@ -14,6 +14,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.Stack;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -37,6 +39,7 @@ import model.data_structures.LinkedList;
 import model.data_structures.MaxColaPrioridad;
 import model.data_structures.MinPQ;
 import model.data_structures.NodeList;
+import model.data_structures.Queue;
 import model.data_structures.RedBlackBST;
 import model.data_structures.SequentialSearchSt;
 import model.data_structures.TablaHash;
@@ -669,15 +672,14 @@ public class Controller {
 		}
 	}
 
-	// TODO El tipo de retorno de los m�todos puede ajustarse seg�n la conveniencia
 	/**
 	 * Requerimiento 1B: Encontrar el camino m�s corto para un viaje entre dos ubicaciones geogr�ficas 
 	 * @param idVertice2 
 	 * @param idVertice1 
 	 */
-	public void caminoLongitudMinimoaB1(int idVertice1, int idVertice2) {
-		// TODO Auto-generated method stub
-
+	public void caminoLongitudMinimoaB1(long idVertice1, long idVertice2) {
+		Queue<Long> pila = grafo.breadthFirstSearch(idVertice1, idVertice2);
+		
 	}
 
 	// TODO El tipo de retorno de los m�todos puede ajustarse seg�n la conveniencia

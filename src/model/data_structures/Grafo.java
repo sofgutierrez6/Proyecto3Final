@@ -66,7 +66,7 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
 	 * @return Una Cola con los nodos que tiene el camino más corto entre los dos vértices
 	 */
 	@SuppressWarnings("unchecked")
-	public Stack<K> breadthFirstSearch(K verticeInicial, K verticeDestino) {
+	public Queue<K> breadthFirstSearch(K verticeInicial, K verticeDestino) {
 		marked = new boolean[cantVertices];
 		edgeTo = (K[]) new Object[cantVertices];
 		distTo = new int[cantVertices];
@@ -127,14 +127,14 @@ public class Grafo <K extends Comparable<K>, V, A extends Comparable<A>> impleme
      * @param pVertice
      * @return Un iterable con todos los nodos que están en el camino 
      */
-    public Stack<K> pathTo(K pVertice) {
+    public Queue<K> pathTo(K pVertice) {
         if (!hasPathTo(pVertice)) 
         	return null;
-        Stack<K> camino = new Stack<K>();
+        Queue<K> camino = new Queue<K>();
         K x;
         for (x = pVertice; distTo[vertices.getIndex(x)] != 0; x = edgeTo[vertices.getIndex(x)])
-            camino.push(x);
-        camino.push(x);
+            camino.enqueue(x);
+        camino.enqueue(x);
         return camino;
     }
     
