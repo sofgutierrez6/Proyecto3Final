@@ -77,6 +77,8 @@ public class Controller {
 	private Mapa mapa;
 
 	ComparadorXAccidentes comparador;
+	
+	VOIntersections[] punto5;
 	// Constructor -------------------------------------------------------------------
 
 	/**
@@ -752,6 +754,7 @@ public class Controller {
 			}
 		}
 		mapa.pintarMapaConMarcadores(arreglo);
+		punto5 = arreglo;
 	}
 
 	// TODO El tipo de retorno de los m�todos puede ajustarse seg�n la conveniencia
@@ -772,17 +775,19 @@ public class Controller {
 
 	}
 
-	// TODO El tipo de retorno de los m�todos puede ajustarse seg�n la conveniencia
 	/**
 	 * Requerimiento 3C: Calcular los caminos de costo m�nimo con criterio distancia que conecten los v�rtices resultado
 	 * de la aproximaci�n de las ubicaciones de la cuadricula N x M encontrados en el punto 5.
 	 */
 	public void caminoCostoMinimoDijkstraC3() {
-		// TODO Auto-generated method stub
-
+		// Inicializa los valores de la esquina superior izquierda y de la esquina inferior derecha para que el
+		// algoritmo recorra en lo posible todos los nodos
+		VOIntersections min = punto5[0];
+		VOIntersections max  = punto5[punto5.length-1];
+		//Ejecuta Dijsktra para el cumplir con la tarea
+		dijkstra(min.getId(), max.getId());
 	}
 
-	// TODO El tipo de retorno de los m�todos puede ajustarse seg�n la conveniencia
 	/**
 	 * Requerimiento 4C:Encontrar el camino m�s corto para un viaje entre dos ubicaciones geogr�ficas escogidas aleatoriamente al interior del grafo.
 	 * @param idVertice2 
